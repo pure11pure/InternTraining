@@ -32,9 +32,16 @@
           <nz-collapse-panel *ngFor="let hData of headData; let i = index" [nzHeader]="hData.title"
             [nzActive]="hData.active" [nzDisabled]="hData.disabled" (nzActiveChange)="onExpandChange(hData.id, $event)">
             <!-- nz-table = 'ตารางข้อมูลพนักงาน' -->
-            <input type="text">
             <nz-table #fixedTable [nzData]="hData.data" [nzScroll]="{ x: '1000px', y: '240px'}" class="mx-3" nzBordered>
               <thead>
+                <!-- Search -->
+                <input nz-input
+                [(ngModel)]="search" type="text" 
+                (ngModelChange)="searchEmployees()"
+                class="form-control search"
+                placeholder="ค้าหา (รหัสผู้ใช้งาน, ชื่อ-นามสกุล)" 
+                aria-describedby="basic-addon1" />
+
                 <tr>
                   <th nzLeft>ลำดับ</th>
                   <th nzLeft>รหัสผู้ใช้งาน</th>
@@ -52,13 +59,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let user of hData.data; let index = index">
+                <!-- <tr *ngFor="let user of hData.data; let index = index"> -->
+                  <tr *ngFor="let user of filteredEmployees; let index = index">
                   <td nzLeft>{{ user.id }}</td>
                   <td nzLeft>{{ user.employee_id }}</td>
                   <td nzBreakWord>{{ user.first_name }} {{user.last_name}} </td>
                   <td nzBreakWord>{{ formatDateDDMMYYY(user.birth_date) }}</td>
-                  <td nzBreakWord>{{ user.age }}</td>
-                  <td nzBreakWord>{{ user.gender }}</td>
+                  <td nzBreakWord>{{ calculateAge(user.birth_date) }}</td>
+                  <td nzBreakWord>{{ user.gender === 'male' ? 'ชาย' : user.gender === 'female' ? 'หญิง' : 'ไม่ระบุ' }}</td>
                   <td nzBreakWord>{{ formatDateDDMMYYY(user.update_time) }}</td>
                   <td nzBreakWord>{{ user.update_by_name }}</td>
                   <td>
@@ -101,7 +109,7 @@
           <p style="margin-right: 10px;">วันเกิด</p>
         </div>
         <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
-          <nz-date-picker [(ngModel)]="birth_date" nzFormat="dd-MM-yyyy" nzSize="large" style="margin-inline: 20px; width: 100%;" nzPlaceHolder="dd/mm/yyyy" (ngModelChange)="calculateAge()"></nz-date-picker>
+          <nz-date-picker [(ngModel)]="birth_date" nzFormat="dd-MM-yyyy" nzSize="large" style="margin-inline: 20px; width: 100%;" nzPlaceHolder="dd/mm/yyyy" (ngModelChange)="calculateAge(birth_date)"></nz-date-picker>
         </div>
         <!-- อายุ -->
         <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">

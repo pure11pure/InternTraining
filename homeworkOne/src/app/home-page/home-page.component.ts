@@ -7,7 +7,7 @@ interface Employee {
   first_name: string,
   last_name: string,
   birth_date: string
-  age: number,
+  // age: number,
   gender: string,
   update_time: string,
   update_by_name: string
@@ -21,6 +21,7 @@ interface Employee {
 export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
+    this.searchEmployees()
   }
 
   constructor(
@@ -70,6 +71,25 @@ export class HomePageComponent implements OnInit {
   }
 
   /**
+ * Search
+ */
+  search?: any;
+  filteredEmployees: Employee[] = [];
+  searchEmployees(): void {
+    console.log(this.search)
+    if (this.search) {
+      this.filteredEmployees = this.employees.filter(employee =>
+        employee.first_name.toLowerCase().includes(this.search.toLowerCase()) ||
+        employee.last_name.toLowerCase().includes(this.search.toLowerCase()) ||
+        employee.employee_id.toString().includes(this.search)
+      );
+    } else {
+      this.filteredEmployees = this.employees;
+    }
+    
+  }
+
+  /**
    * Add & Edit Employee Modal
    */
   isVisible = false;
@@ -84,7 +104,8 @@ export class HomePageComponent implements OnInit {
       this.first_name = data.first_name;
       this.last_name = data.last_name;
       this.birth_date = new Date(data.birth_date);
-      this.calculateAge()
+      this.age = this.calculateAge(this.birth_date)
+      // this.calculateAge()
       this.gender = data.gender;
     }
     console.log(command, data)
@@ -100,7 +121,7 @@ export class HomePageComponent implements OnInit {
         first_name: this.first_name ? this.first_name : '',
         last_name: this.last_name ? this.last_name : '',
         birth_date: this.birth_date + '',
-        age: this.age ? this.age : 0,
+        // age: this.age ? this.age : 0,
         gender: this.gender ? this.gender : '',
         update_time: new Date() + '',
         update_by_name: this.user
@@ -117,7 +138,7 @@ export class HomePageComponent implements OnInit {
         first_name: this.first_name ? this.first_name : '',
         last_name: this.last_name ? this.last_name : '',
         birth_date: this.birth_date + '',
-        age: this.age ? this.age : 0,
+        // age: this.age ? this.age : 0,
         gender: this.gender ? this.gender : '',
         update_time: new Date() + '',
         update_by_name: this.user
@@ -162,10 +183,10 @@ export class HomePageComponent implements OnInit {
     return lastEmployeeId + 1;
   }
 
-  calculateAge() {
-    if (this.birth_date) {
+  calculateAge(birth_date: any) : any {
+    if (birth_date) {
       const today = new Date();
-      const birthDate = new Date(this.birth_date);
+      const birthDate = new Date(birth_date);
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDifference = today.getMonth() - birthDate.getMonth();
       // condition 1 = ยังไม่ถึงเดือนเกิด
@@ -173,8 +194,7 @@ export class HomePageComponent implements OnInit {
       if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
-
-      this.age = age;
+      return age;
 
       // ถ้า age น้อยกว่า 0 
     }
@@ -216,6 +236,7 @@ export class HomePageComponent implements OnInit {
   deleteEmployee(user: any) {
     this.showDeleteConfirm(user)
   }
+
 
 
 
