@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import employeesData from '../employees.json'
+import { BsDatepickerDirective, BsDaterangepickerDirective, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { listLocales } from 'ngx-bootstrap/chronos';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { thBeLocale } from 'ngx-bootstrap/locale';
+defineLocale('th-be', thBeLocale);
+
 interface Employee {
   id: number,
   employee_id: number,
   first_name: string,
   last_name: string,
-  birth_date: string
+  birth_date: string,
+  age: number,
   gender: string,
   update_time: string,
   update_by_name: string
@@ -24,9 +31,14 @@ export class HomePageComponent implements OnInit {
   }
 
   constructor(
-    private modal: NzModalService
+    private modal: NzModalService,
+    private localeService: BsLocaleService
   ) {
+    this.localeService.use(this.locale);
   }
+
+  locale = 'th-be';
+  locales = listLocales();
 
   user: string = 'pure';
   isCollapsed = false; //trigger menu
@@ -77,7 +89,7 @@ export class HomePageComponent implements OnInit {
   pageSize: number = 5;
   PageIndex : number = 1;
   searchEmployees(): void {
-    console.log(this.search)
+    // console.log(this.search)
     if (this.search) {
       this.filteredEmployees = this.employees.filter(employee =>
         employee.first_name.toLowerCase().includes(this.search.toLowerCase()) ||
@@ -133,30 +145,31 @@ export class HomePageComponent implements OnInit {
         first_name: this.first_name ? this.first_name : '',
         last_name: this.last_name ? this.last_name : '',
         birth_date: this.birth_date + '',
-        // age: this.age ? this.age : 0,
+        age: this.age ? this.age : 0,
         gender: this.gender ? this.gender : '',
         update_time: new Date() + '',
         update_by_name: this.user
       };
-      console.log("editData", editData)
+      console.log("editData")
       this.employees[indexToUpdate] = editData;
       this.modeEdit = false;
     }
     else {
-      console.log('save');
       const formData: Employee = {
         id: this.getId(),
         employee_id: this.getNewEmployeeId(),
         first_name: this.first_name ? this.first_name : '',
         last_name: this.last_name ? this.last_name : '',
         birth_date: this.birth_date + '',
-        // age: this.age ? this.age : 0,
+        age: this.age ? this.age : 0,
         gender: this.gender ? this.gender : '',
         update_time: new Date() + '',
         update_by_name: this.user
       };
       this.employees.push(formData)
+      console.log('save');    
     }
+    this.searchEmployees() //รีค่า filteredEmployees
     this.isVisible = false;
     this.clearForm();
   }
@@ -201,11 +214,13 @@ export class HomePageComponent implements OnInit {
       const birthDate = new Date(birth_date);
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDifference = today.getMonth() - birthDate.getMonth();
+      console.log(today, birthDate, age, monthDifference)
       // condition 1 = ยังไม่ถึงเดือนเกิด
       // condition 2 = ยังไม่ถึงวันเกิด แต่เดือนเดียวกัน
       if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
+      this.age = age
       return age;
 
       // ถ้า age น้อยกว่า 0 
