@@ -1,0 +1,133 @@
+<nz-layout>
+    <!-- <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+      <div class="logo"></div>
+      <ul nz-menu nzTheme="dark" nzMode="inline">
+        <li nz-submenu nzTitle="User" nzIcon="user">
+          <ul>
+            <li nz-menu-item>Tom</li>
+            <li nz-menu-item>Bill</li>
+            <li nz-menu-item>Alex</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Team" nzIcon="team">
+          <ul>
+            <li nz-menu-item>Team 1</li>
+            <li nz-menu-item>Team 2</li>
+          </ul>
+        </li>
+        <li nz-menu-item>
+          <span nz-icon nzType="file"></span>
+          <span>File</span>
+        </li>
+      </ul>
+    </nz-sider> -->
+    <nz-layout>
+      <nz-header>
+        <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          (click)="isCollapsed = !isCollapsed"></span>
+      </nz-header>
+      <nz-content>
+        <!-- nz-collapse = 'หัวข้อผู้ใช้งาน' -->
+        <nz-collapse [nzExpandIconPosition]="'right'">
+          <nz-collapse-panel *ngFor="let hData of headData; let i = index" [nzHeader]="hData.title"
+            [nzActive]="hData.active" [nzDisabled]="hData.disabled" (nzActiveChange)="onExpandChange(hData.id, $event)">
+            <!-- nz-table = 'ตารางข้อมูลพนักงาน' -->
+            <input type="text">
+            <nz-table #fixedTable [nzData]="hData.data" [nzScroll]="{ x: '1000px', y: '240px'}" class="mx-3" nzBordered>
+              <thead>
+                <tr>
+                  <th nzLeft>ลำดับ</th>
+                  <th nzLeft>รหัสผู้ใช้งาน</th>
+                  <th>ชื่อ-นามสกุล</th>
+                  <th>วันเกิด</th>
+                  <th>อายุ</th>
+                  <th>เพศ</th>
+                  <th>วันที่บันทึก</th>
+                  <th>บันทึกโดย</th>
+                  <!-- Add Employee -->
+                  <th>
+                    <span class="trigger plusCircle" nz-icon [nzType]="'plus-circle'" (click)="modalAddAndEditEmployee('add', '')">
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of hData.data; let index = index">
+                  <td nzLeft>{{ user.id }}</td>
+                  <td nzLeft>{{ user.employee_id }}</td>
+                  <td nzBreakWord>{{ user.first_name }} {{user.last_name}} </td>
+                  <td nzBreakWord>{{ formatDateDDMMYYY(user.birth_date) }}</td>
+                  <td nzBreakWord>{{ user.age }}</td>
+                  <td nzBreakWord>{{ user.gender }}</td>
+                  <td nzBreakWord>{{ formatDateDDMMYYY(user.update_time) }}</td>
+                  <td nzBreakWord>{{ user.update_by_name }}</td>
+                  <td>
+                    <button (click)="modalAddAndEditEmployee('edit', user)">edit</button>
+                    <button (click)="deleteEmployee(user)">delete</button></td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+  <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+  
+  
+  
+  <nz-modal [nzStyle]="{ top: '20p', width: '70%', 'border-radius': '20px'}" [nzClosable]="true" [(nzVisible)]="isVisible" (nzOnCancel)="cancleData()">
+    <div *nzModalTitle class="nz-modal-header">กรุณากรอกข้อมูลการใช้งาน</div>
+    <ng-container *nzModalContent>
+      <div nz-row>
+        <!-- ชื่อ -->
+        <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+          <p style="margin-right: 10px;">ชื่อ</p>
+        </div>
+        <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+          <input nz-input placeholder="Basic usage" [(ngModel)]="first_name" type="text" class="form-control"
+            placeholder="" aria-describedby="basic-addon1" />
+        </div>
+        <!-- นามสกุล -->
+        <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+          <p style="margin-right: 10px;">นามสกุล</p>
+        </div>
+        <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+          <input nz-input placeholder="Basic usage" [(ngModel)]="last_name" type="text" class="form-control"
+            placeholder="" aria-describedby="basic-addon1" />
+        </div>
+        <!-- วันเกิด -->
+        <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+          <p style="margin-right: 10px;">วันเกิด</p>
+        </div>
+        <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+          <nz-date-picker [(ngModel)]="birth_date" nzFormat="dd-MM-yyyy" nzSize="large" style="margin-inline: 20px; width: 100%;" nzPlaceHolder="dd/mm/yyyy" (ngModelChange)="calculateAge()"></nz-date-picker>
+        </div>
+        <!-- อายุ -->
+        <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+          <p style="margin-right: 10px;">อายุ</p>
+        </div>
+        <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+          <input nz-input placeholder="Basic usage" [(ngModel)]="age" type="text" class="form-control"
+            placeholder="" aria-describedby="basic-addon1" disabled=""/>
+        </div>
+        <!-- เพศ -->
+        <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+          <p style="margin-right: 10px;">เพศ</p>
+        </div>
+        <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="กรุณาเลือกเพศ" [(ngModel)]="gender" nzSize="large" style="margin-inline: 20px; width: 100%;">
+            <nz-option nzLabel="ชาย" nzValue="male"></nz-option>
+            <nz-option nzLabel="หญิง" nzValue="female"></nz-option>
+            <nz-option nzLabel="ไม่ระบุ" nzValue="other"></nz-option>
+          </nz-select>
+        </div>
+  
+      </div>
+  
+    </ng-container>
+    <div *nzModalFooter class="nz-modal-footer">
+      <button nz-button nzType="default" (click)="saveData()" type="button" class="btn btn-primary">บันทึก</button>
+      <button nz-button nzType="primary" (click)="cancleData()" type="button" class="btn btn-danger">ยกเลิก</button>
+    </div>
+  </nz-modal>
