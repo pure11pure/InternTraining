@@ -7,7 +7,6 @@ interface Employee {
   first_name: string,
   last_name: string,
   birth_date: string
-  // age: number,
   gender: string,
   update_time: string,
   update_by_name: string
@@ -75,6 +74,8 @@ export class HomePageComponent implements OnInit {
  */
   search?: any;
   filteredEmployees: Employee[] = [];
+  pageSize: number = 5;
+  PageIndex : number = 1;
   searchEmployees(): void {
     console.log(this.search)
     if (this.search) {
@@ -83,10 +84,21 @@ export class HomePageComponent implements OnInit {
         employee.last_name.toLowerCase().includes(this.search.toLowerCase()) ||
         employee.employee_id.toString().includes(this.search)
       );
+
     } else {
       this.filteredEmployees = this.employees;
     }
+      let start = (this.PageIndex - 1) * this.pageSize;
+      let end = this.PageIndex * this.pageSize;
+      this.filteredEmployees = this.filteredEmployees.slice(start, end);
+
+      console.log(this.filteredEmployees)
     
+    
+  }
+  handlePageIndexChange(pageIndex: number): void {
+    this.PageIndex = pageIndex;
+    this.searchEmployees()
   }
 
   /**

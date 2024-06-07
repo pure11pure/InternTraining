@@ -22,6 +22,7 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 /**
  * Component
@@ -63,7 +64,8 @@ registerLocaleData(en);
     NzIconModule,
     NzModalModule,
     NzSelectModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzPaginationModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
