@@ -1,90 +1,122 @@
-html, body {
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-  }
-  
-  .layout {
-    height: 100vh; /* Ensure the layout takes the full height of the viewport */
-    display: flex;
-    flex-direction: column;
-  }
-  /*
+@import '../../styles.scss';
+
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
     Button
   */
-  .trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  .trigger:hover {
-    color: #1890ff;
-  }
-  .plusCircle{
-    font-size: 24px;
-    display: flex;
-    justify-content: center; /* จัดตำแหน่งให้อยู่ตรงกลางแนวนอน */
-    align-items: center; /* จัดตำแหน่งให้อยู่ตรงกลางแนวตั้ง */
-  }
-  
-  
-  .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px;
-  }
-  
-  nz-header {
-    background: #fff;
-    padding: 0;
-  }
-  
-  nz-content {
-    margin: 0 16px;
-  }
-  
-  .inner-content {
-    padding: 24px;
-    background: #fff;
-    min-height: 360px;
-  }
-  
-  nz-footer {
-    text-align: center;
-  }
-  
-  /*
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  color: #ffffff;
+  transition: color 0.1s;
+}
+
+.trigger:hover {
+  color: $second-color;
+}
+
+.plusCircle {
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+.plusCircle:hover {
+  color: $primary-color;
+}
+
+/*
+Sider (ยังไม่ใช้)
+*/
+.logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+
+/*
+navbar
+*/
+
+nz-header {
+  background: $primary-color;
+  padding: 0;
+}
+
+/*
+Content
+*/
+nz-content {
+  margin: 0 16px;
+}
+nz-collapse {
+  background-color: $second-color;
+}
+
+// table
+td{
+  background-color: $third-color;
+}
+input {
+  margin-inline: 20px;
+}
+
+.search {
+  width: 500px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/*
+footer
+*/
+nz-footer {
+  text-align: center;
+}
+
+/*
   Modal
   */
-  .nz-modal-footer {
-    display: flex;
-    justify-content: center; /* จัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
-    align-items: center; /* จัดให้เนื้อหาอยู่ตรงกลางแนวตั้ง */
-    gap: 8px; /* ระยะห่างระหว่างปุ่ม */
-  }
-  ::ng-deep .ant-modal-header {
-    background: #4c8cbc !important;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-  }
-  ::ng-deep .ant-modal-close-x {
-    color: white;
-  }
-  ::ng-deep .ant-modal-content{
-    border-radius: 20px;
-  }
-  .nz-modal-header{
-    color: #ffffff;
-  }
+.nz-modal-footer {
+  display: flex;
+  justify-content: center;
+  /* จัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
+  align-items: center;
+  /* จัดให้เนื้อหาอยู่ตรงกลางแนวตั้ง */
+  gap: 8px;
+  /* ระยะห่างระหว่างปุ่ม */
+}
 
-  input{
-    margin-inline: 20px;
-  }
-  .search{
-    width: 500px;
-    margin-top  : 10px;
-    margin-bottom: 10px;
-  }
-  
+::ng-deep .ant-modal-header {
+  background: $primary-color !important;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+::ng-deep .ant-modal-close-x {
+  color: white;
+}
+
+::ng-deep .ant-modal-content {
+  border-radius: 20px;
+}
+
+.nz-modal-header {
+  color: #ffffff;
+}

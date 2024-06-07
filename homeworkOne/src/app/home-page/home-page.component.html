@@ -21,14 +21,13 @@
         </li>
       </ul>
     </nz-sider> -->
-    <nz-layout>
       <nz-header>
         <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
           (click)="isCollapsed = !isCollapsed"></span>
       </nz-header>
       <nz-content>
         <!-- nz-collapse = 'หัวข้อผู้ใช้งาน' -->
-        <nz-collapse [nzExpandIconPosition]="'right'">
+        <nz-collapse [nzExpandIconPosition]="'right'" >
           <nz-collapse-panel *ngFor="let hData of headData; let i = index" [nzHeader]="hData.title"
             [nzActive]="hData.active" [nzDisabled]="hData.disabled" (nzActiveChange)="onExpandChange(hData.id, $event)">
             <!-- nz-table = 'ตารางข้อมูลพนักงาน' -->
@@ -42,7 +41,7 @@
                 placeholder="ค้าหา (รหัสผู้ใช้งาน, ชื่อ-นามสกุล)" 
                 aria-describedby="basic-addon1" />
 
-                <tr>
+                <tr class="header-row">
                   <th nzLeft>ลำดับ</th>
                   <th nzLeft>รหัสผู้ใช้งาน</th>
                   <th>ชื่อ-นามสกุล</th>
@@ -53,7 +52,7 @@
                   <th>บันทึกโดย</th>
                   <!-- Add Employee -->
                   <th>
-                    <span class="trigger plusCircle" nz-icon [nzType]="'plus-circle'" (click)="modalAddAndEditEmployee('add', '')">
+                    <span class="trigger plusCircle" nz-icon [nzType]="'plus-circle'" nzTheme="fill" (click)="modalAddAndEditEmployee('add', '')">
                     </span>
                   </th>
                 </tr>
@@ -79,7 +78,6 @@
         </nz-collapse>
       </nz-content>
     </nz-layout>
-  </nz-layout>
   <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
   
   
