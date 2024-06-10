@@ -1,17 +1,12 @@
 @import '../../styles.scss';
 
-html,
-body {
-  height: 100vh;
-  margin: 0;
-  overflow: hidden;
-}
 
-.layout {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+
+// .layout {
+//   height: 100vh;
+//   display: flex;
+//   flex-direction: column;
+// }
 
 /*
     Button
@@ -41,6 +36,27 @@ body {
   color: $primary-color;
 }
 
+.btnEdit, .btnDelete {
+  background-color: $second-color;
+  transition: color 0.1s;
+  border-radius: 10px;
+  border: 0;
+  width: 5vw;
+  margin: 1px;
+
+  &:hover{
+    background-color: $third-color;
+  }
+}
+.btnEdit:active {
+  background-color: $light-yellow; // สีเมื่อปุ่ม edit ถูกกด
+}
+
+.btnDelete:active {
+  background-color: $light-red; // สีเมื่อปุ่ม delete ถูกกด
+}
+
+
 /*
 Sider (ยังไม่ใช้)
 */
@@ -57,13 +73,18 @@ navbar
 nz-header {
   background: $primary-color;
   padding: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
 }
 
 /*
 Content
 */
 nz-content {
-  margin: 0 16px;
+  margin: 16px;
+  margin-top: 64px;
+  margin-bottom: 64px;
 }
 nz-collapse {
   background-color: $second-color;
@@ -88,6 +109,10 @@ footer
 */
 nz-footer {
   text-align: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 1000;
 }
 
 /*

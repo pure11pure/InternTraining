@@ -33,11 +33,12 @@
         <!-- nz-table = 'ตารางข้อมูลพนักงาน' -->
         <nz-table #fixedTable [nzData]="hData.data" 
         [nzScroll]="{ x: '1000px'}"
-        [nzPageSize]="pageSize" 
-        [nzPageIndex]="PageIndex"
         (nzPageIndexChange)="handlePageIndexChange($event)"
         class="mx-3" nzBordered
         nzShowPagination
+        [nzTotal]="TotalSize"
+        [nzPageIndex]="PageIndex"
+        [nzFrontPagination]="false" 
         >
           <thead>
             <!-- Search -->
@@ -47,16 +48,16 @@
 
             <tr class="header-row">
               <th nzLeft >ลำดับ</th>
-              <th nzLeft>รหัสผู้ใช้งาน</th>
+              <th nzLeft nzWidth="10%">รหัสผู้ใช้งาน</th>
               <th nzWidth="20%">ชื่อ-นามสกุล</th>
-              <th nzWidth="15%">วันเกิด</th>
+              <th nzWidth="12%">วันเกิด</th>
               <th>อายุ</th>
               <th>เพศ</th>
               <th nzWidth="15%">วันที่บันทึก</th>
               <th>บันทึกโดย</th>
               <!-- Add Employee -->
               <th nzWidth="15%">
-                <span class="trigger plusCircle" nz-icon [nzType]="'plus-circle'" nzTheme="fill"
+                <span class="trigger plusCircle" nz-icon nz-button [nzType]="'plus-circle'" nzTheme="fill"
                   (click)="modalAddAndEditEmployee('add', '')">
                 </span>
               </th>
@@ -71,16 +72,15 @@
               <td nzBreakWord>{{ formatDateDDMMYYY(user.birth_date) }}</td>
               <td nzBreakWord>{{ user.age }}</td>
               <td nzBreakWord>{{ user.gender === 'male' ? 'ชาย' : user.gender === 'female' ? 'หญิง' : 'ไม่ระบุ' }}</td>
-              <td nzBreakWord>{{ formatDateDDMMYYY(user.update_time) }}</td>
+              <td nzBreakWord>{{ formatDateDDMMYYY(user.update_time)}}</td>
               <td nzBreakWord>{{ user.update_by_name }}</td>
               <td>
-                <button (click)="modalAddAndEditEmployee('edit', user)">edit</button>
-                <button (click)="deleteEmployee(user)">delete</button>
+                <button nz-button (click)="modalAddAndEditEmployee('edit', user)" class="btnEdit">edit</button>
+                <button nz-button (click)="deleteEmployee(user)" class="btnDelete">delete</button>
               </td>
             </tr>
           </tbody>
         </nz-table>
-        <!-- <nz-pagination [nzPageIndex]="1" [nzTotal]="500"></nz-pagination> -->
       </nz-collapse-panel>
     </nz-collapse>
   </nz-content>

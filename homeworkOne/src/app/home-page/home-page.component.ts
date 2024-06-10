@@ -51,6 +51,7 @@ export class HomePageComponent implements OnInit {
       active: true,
       disabled: false,
       data: this.employees
+      // data: this.employees
     },
     // {
     //   id: 2,
@@ -87,27 +88,35 @@ export class HomePageComponent implements OnInit {
   search?: any;
   filteredEmployees: Employee[] = [];
   pageSize: number = 5;
-  PageIndex : number = 1;
+  PageIndex: number = 1;
+  TotalSize: number = 0;
   searchEmployees(): void {
-    // console.log(this.search)
+    console.log("Emp", this.headData[0].data)
     if (this.search) {
+      console.log("employees", this.employees)
       this.filteredEmployees = this.employees.filter(employee =>
         employee.first_name.toLowerCase().includes(this.search.toLowerCase()) ||
         employee.last_name.toLowerCase().includes(this.search.toLowerCase()) ||
         employee.employee_id.toString().includes(this.search)
       );
+      console.log("filter", this.filteredEmployees)
 
     } else {
       this.filteredEmployees = this.employees;
-    }
       let start = (this.PageIndex - 1) * this.pageSize;
       let end = this.PageIndex * this.pageSize;
       this.filteredEmployees = this.filteredEmployees.slice(start, end);
+    }
 
-      console.log(this.filteredEmployees)
-    
-    
+    this.TotalSize = this.employees.length * 2
+    console.log("len", this.TotalSize)
+
+
+    console.log("filteredEmployees", this.filteredEmployees)
+
+
   }
+
   handlePageIndexChange(pageIndex: number): void {
     this.PageIndex = pageIndex;
     this.searchEmployees()
@@ -121,15 +130,20 @@ export class HomePageComponent implements OnInit {
   id?: number;
   empId?: number;
   modalAddAndEditEmployee(command: string, data: any) {
+    this.modeEdit = false;
     if (command == 'edit') {
       this.modeEdit = true;
       this.id = data.id;
       this.empId = data.employee_id
       this.first_name = data.first_name;
       this.last_name = data.last_name;
-      this.birth_date = new Date(data.birth_date);
+
+      if(data.birth_date !== 'undefined'){
+        this.birth_date = new Date(data.birth_date);
+      }
+      
+
       this.age = this.calculateAge(this.birth_date)
-      // this.calculateAge()
       this.gender = data.gender;
     }
     console.log(command, data)
@@ -167,11 +181,10 @@ export class HomePageComponent implements OnInit {
         update_by_name: this.user
       };
       this.employees.push(formData)
-      console.log('save');    
+      console.log('save');
     }
     this.searchEmployees() //รีค่า filteredEmployees
-    this.isVisible = false;
-    this.clearForm();
+    this.cancleData()
   }
 
   cancleData(): void {
@@ -208,7 +221,7 @@ export class HomePageComponent implements OnInit {
     return lastEmployeeId + 1;
   }
 
-  calculateAge(birth_date: any) : any {
+  calculateAge(birth_date: any): any {
     if (birth_date) {
       const today = new Date();
       const birthDate = new Date(birth_date);
@@ -222,18 +235,24 @@ export class HomePageComponent implements OnInit {
       }
       this.age = age
       return age;
-
       // ถ้า age น้อยกว่า 0 
     }
   }
 
+  formattedDate?: any; 
   formatDateDDMMYYY(data: any) {
+    if(data !== 'undefined'){
+      console.log("in")
     const date = new Date(data)
     const day = date.getDate().toString().padStart(2, '0'); // แปลงเป็นสตริงและเติมเลข 0 ถ้าจำนวนน้อยกว่า 10
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // เพิ่ม 1 เพราะเดือนเริ่มที่ 0
-    const year = date.getFullYear();
-    const formattedDate = `${day}-${month}-${year}`;
-    return formattedDate;
+    const year = date.getFullYear() + 543;
+    this.formattedDate = `${day}/${month}/${year}`;
+    } else {
+      this.formattedDate = ''
+    }
+    console.log("formattedDate", this.formattedDate)
+    return this.formattedDate;
   }
 
   /**
