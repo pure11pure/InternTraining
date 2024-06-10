@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import employeesData from '../employees.json'
-import { BsDatepickerDirective, BsDaterangepickerDirective, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { listLocales } from 'ngx-bootstrap/chronos';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { thBeLocale } from 'ngx-bootstrap/locale';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 defineLocale('th-be', thBeLocale);
 
 interface Employee {
@@ -32,7 +33,8 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private modal: NzModalService,
-    private localeService: BsLocaleService
+    private localeService: BsLocaleService,
+    private notification: NzNotificationService
   ) {
     this.localeService.use(this.locale);
   }
@@ -138,10 +140,10 @@ export class HomePageComponent implements OnInit {
       this.first_name = data.first_name;
       this.last_name = data.last_name;
 
-      if(data.birth_date !== 'undefined'){
+      if (data.birth_date !== 'undefined') {
         this.birth_date = new Date(data.birth_date);
       }
-      
+
 
       this.age = this.calculateAge(this.birth_date)
       this.gender = data.gender;
@@ -166,6 +168,7 @@ export class HomePageComponent implements OnInit {
       };
       console.log("editData")
       this.employees[indexToUpdate] = editData;
+      this.createNotification('success', 'แก้ไข')
       this.modeEdit = false;
     }
     else {
@@ -181,6 +184,7 @@ export class HomePageComponent implements OnInit {
         update_by_name: this.user
       };
       this.employees.push(formData)
+      this.createNotification('success', 'บันทึก')
       console.log('save');
     }
     this.searchEmployees() //รีค่า filteredEmployees
@@ -198,6 +202,28 @@ export class HomePageComponent implements OnInit {
     this.birth_date = undefined;
     this.age = undefined;
     this.gender = '';
+  }
+
+  // Notification
+  createNotification(type: string, command: string): void {
+    if (command == 'บันทึก') {
+      this.notification.create(
+        type,
+        'บันทึกพนักงานเสร็จสิ้น',
+        ''
+      );
+    } else if (command = 'แก้ไข') {
+      this.notification.create(
+        type,
+        'แก้ไขพนักงานเสร็จสิ้น',
+        ''
+      );
+    }
+
+    setTimeout(() => {
+      this.notification.remove();
+    }, 3000);
+
   }
   /**
    * Form
@@ -235,19 +261,22 @@ export class HomePageComponent implements OnInit {
       }
       this.age = age
       return age;
-      // ถ้า age น้อยกว่า 0 
+
+
+      // เวื่อนไข ถ้า age น้อยกว่า 0 
     }
   }
 
-  formattedDate?: any; 
+  // เปลี่ยน คศ. เป็น พศ.
+  formattedDate?: any;
   formatDateDDMMYYY(data: any) {
-    if(data !== 'undefined'){
+    if (data !== 'undefined') {
       console.log("in")
-    const date = new Date(data)
-    const day = date.getDate().toString().padStart(2, '0'); // แปลงเป็นสตริงและเติมเลข 0 ถ้าจำนวนน้อยกว่า 10
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // เพิ่ม 1 เพราะเดือนเริ่มที่ 0
-    const year = date.getFullYear() + 543;
-    this.formattedDate = `${day}/${month}/${year}`;
+      const date = new Date(data)
+      const day = date.getDate().toString().padStart(2, '0'); // แปลงเป็นสตริงและเติมเลข 0 ถ้าจำนวนน้อยกว่า 10
+      const month = (date.getMonth() + 1).toString().padStart(2, '0'); // เพิ่ม 1 เพราะเดือนเริ่มที่ 0
+      const year = date.getFullYear() + 543;
+      this.formattedDate = `${day}/${month}/${year}`;
     } else {
       this.formattedDate = ''
     }
@@ -261,8 +290,8 @@ export class HomePageComponent implements OnInit {
   showDeleteConfirm(user: any): void {
     this.modal.confirm({
       nzTitle: 'Are you sure delete this employee?',
-      nzContent: `<p>รหัสพนักงาน:  ${user.employee_id}</p>
-      <p>ชื่อ:  ${user.first_name} ${user.last_name}</p>`,
+      nzContent: `<span>รหัสพนักงาน:  ${user.employee_id}</span><br>
+      <span>ชื่อ:  ${user.first_name} ${user.last_name}</span>`,
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOkDanger: true,
@@ -270,6 +299,7 @@ export class HomePageComponent implements OnInit {
         const indexToDelete = this.employees.findIndex(employee => employee.id === user.id);
         if (indexToDelete !== -1) {
           this.employees.splice(indexToDelete, 1);
+          this.searchEmployees() 
           console.log("ลบข้อมูลเรียบร้อยแล้ว");
         } else {
           console.log("ไม่พบข้อมูลที่ต้องการลบ");

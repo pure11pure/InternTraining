@@ -24,7 +24,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 /**
  * Component
@@ -69,7 +69,7 @@ registerLocaleData(en);
     NzDatePickerModule,
     NzPaginationModule,
     BsDatepickerModule.forRoot(),
-    NzAlertModule
+    NzNotificationModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

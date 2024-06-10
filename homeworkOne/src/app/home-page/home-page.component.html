@@ -43,7 +43,7 @@
           <thead>
             <!-- Search -->
             <input nz-input [(ngModel)]="search" type="text" (ngModelChange)="searchEmployees()"
-              class="form-control search" placeholder="ค้าหา (รหัสผู้ใช้งาน, ชื่อ-นามสกุล)"
+              class="form-control search" placeholder="ค้นหา (รหัสผู้ใช้งาน, ชื่อ-นามสกุล)"
               aria-describedby="basic-addon1" />
 
             <tr class="header-row">
@@ -66,7 +66,7 @@
           <tbody>
             <!-- <tr *ngFor="let user of hData.data; let index = index"> -->
             <tr *ngFor="let user of filteredEmployees; let index = index">
-              <td nzLeft>{{ user.id }}</td>
+              <td nzLeft>{{ (index+1) + (PageIndex-1)*pageSize}} </td>
               <td nzLeft>{{ user.employee_id }}</td>
               <td nzBreakWord>{{ user.first_name }} {{user.last_name}} </td>
               <td nzBreakWord>{{ formatDateDDMMYYY(user.birth_date) }}</td>
@@ -95,26 +95,26 @@
   <ng-container *nzModalContent>
     <div nz-row>
       <!-- ชื่อ -->
-      <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+      <div nz-col nzSpan="3" class="headerModal">
         <p style="margin-right: 10px;">ชื่อ</p>
       </div>
-      <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+      <div nz-col nzSpan="9" class="inputModal">
         <input nz-input placeholder="Basic usage" [(ngModel)]="first_name" type="text" class="form-control"
           placeholder="" aria-describedby="basic-addon1" />
       </div>
       <!-- นามสกุล -->
-      <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+      <div nz-col nzSpan="3" class="headerModal">
         <p style="margin-right: 10px;">นามสกุล</p>
       </div>
-      <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+      <div nz-col nzSpan="9" class="inputModal">
         <input nz-input placeholder="Basic usage" [(ngModel)]="last_name" type="text" class="form-control"
           placeholder="" aria-describedby="basic-addon1" />
       </div>
       <!-- วันเกิด -->
-      <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+      <div nz-col nzSpan="3" class="headerModal">
         <p style="margin-right: 10px;">วันเกิด</p>
       </div>
-      <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+      <div nz-col nzSpan="9" class="inputModal">
         <!-- <nz-date-picker [(ngModel)]="birth_date" nzFormat="dd-MM-yyyy" nzSize="large"
           style="margin-inline: 20px; width: 100%;" nzPlaceHolder="dd/mm/yyyy"
           (ngModelChange)="calculateAge(birth_date)"></nz-date-picker> -->
@@ -130,18 +130,18 @@
       </div>
 
       <!-- อายุ -->
-      <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+      <div nz-col nzSpan="3" class="headerModal">
         <p style="margin-right: 10px;">อายุ</p>
       </div>
-      <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+      <div nz-col nzSpan="9" class="inputModal">
         <input nz-input placeholder="Basic usage" [(ngModel)]="age" type="text" class="form-control" placeholder=""
           aria-describedby="basic-addon1" disabled="" />
       </div>
       <!-- เพศ -->
-      <div nz-col nzSpan="3" style="display: flex; align-items: center; justify-content: flex-end; ">
+      <div nz-col nzSpan="3" class="headerModal">
         <p style="margin-right: 10px;">เพศ</p>
       </div>
-      <div nz-col nzSpan="9" style="display: flex; align-items: center; margin-bottom: 10px;">
+      <div nz-col nzSpan="9" class="inputModal">
         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="กรุณาเลือกเพศ" [(ngModel)]="gender" nzSize="large"
           style="margin-inline: 20px; width: 100%;">
           <nz-option nzLabel="ชาย" nzValue="male"></nz-option>

@@ -1,13 +1,6 @@
 @import '../../styles.scss';
 
 
-
-// .layout {
-//   height: 100vh;
-//   display: flex;
-//   flex-direction: column;
-// }
-
 /*
     Button
   */
@@ -144,4 +137,16 @@ nz-footer {
 
 .nz-modal-header {
   color: #ffffff;
+}
+
+.headerModal{
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-end; 
+}
+
+.inputModal{
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 10px;
 }
