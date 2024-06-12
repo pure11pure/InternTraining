@@ -45,6 +45,8 @@ export class HomePageComponent implements OnInit {
   user: string = 'pure';
   isCollapsed = false; //trigger menu
   employees: Employee[] = employeesData;
+  isVisibleFilter = true;  //false
+  isVisiblePagination = true;
 
   headData = [
     {
@@ -93,34 +95,51 @@ export class HomePageComponent implements OnInit {
   PageIndex: number = 1;
   TotalSize: number = 0;
   searchEmployees(): void {
-    console.log("Emp", this.headData[0].data)
-    if (this.search) {
-      console.log("employees", this.employees)
-      this.filteredEmployees = this.employees.filter(employee =>
-        employee.first_name.toLowerCase().includes(this.search.toLowerCase()) ||
-        employee.last_name.toLowerCase().includes(this.search.toLowerCase()) ||
-        employee.employee_id.toString().includes(this.search)
-      );
-      console.log("filter", this.filteredEmployees)
-
-    } else {
-      this.filteredEmployees = this.employees;
-      let start = (this.PageIndex - 1) * this.pageSize;
-      let end = this.PageIndex * this.pageSize;
-      this.filteredEmployees = this.filteredEmployees.slice(start, end);
-    }
-
+    this.isVisiblePagination = true;
+    this.filteredEmployees = this.employees;
+    let start = (this.PageIndex - 1) * this.pageSize;
+    let end = this.PageIndex * this.pageSize;
+    this.filteredEmployees = this.filteredEmployees.slice(start, end);
     this.TotalSize = this.employees.length * 2
-    console.log("len", this.TotalSize)
-
-
     console.log("filteredEmployees", this.filteredEmployees)
-
-
   }
 
   handlePageIndexChange(pageIndex: number): void {
     this.PageIndex = pageIndex;
+    this.searchEmployees()
+  }
+
+  /**
+   * filter
+   */
+  fullname_filter?: string;
+  employee_id_filter?: string;
+  age_filter?: number;
+  gender_filter?: string;
+  update_time_filter?: string;
+  update_by_name_filter?: string;
+
+  filterEmployees() {
+    console.log(this.fullname_filter, ' ', this.employee_id_filter, ' ', this.age_filter, ' ', this.gender_filter, ' ', this.update_time_filter, ' ', this.update_by_name_filter)
+    this.filteredEmployees = this.employees.filter(employee => {
+      return (this.fullname_filter ? employee.first_name.includes(this.fullname_filter) : true)
+        && (this.employee_id_filter ? employee.employee_id.toString().includes(this.employee_id_filter) : true)
+        && (this.age_filter ? employee.age === this.age_filter : true)
+        && (this.gender_filter ? employee.gender === this.gender_filter : true)
+        && (this.update_time_filter ? employee.update_time === this.update_time_filter : true)
+        && (this.update_by_name_filter ? employee.update_by_name.includes(this.update_by_name_filter) : true);
+    });
+    this.isVisiblePagination = false;
+  }
+
+  clearFormFilter() {
+    this.fullname_filter = '';
+    this.employee_id_filter = undefined;
+    this.age_filter = undefined;
+    this.gender_filter = '';
+    this.update_time_filter = '';
+    this.update_by_name_filter = '';
+    this.filteredEmployees = [...this.employees];
     this.searchEmployees()
   }
 
@@ -185,6 +204,7 @@ export class HomePageComponent implements OnInit {
       };
       this.employees.push(formData)
       this.createNotification('success', 'บันทึก')
+      console.log(formData)
       console.log('save');
     }
     this.searchEmployees() //รีค่า filteredEmployees
@@ -253,7 +273,6 @@ export class HomePageComponent implements OnInit {
       const birthDate = new Date(birth_date);
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDifference = today.getMonth() - birthDate.getMonth();
-      console.log(today, birthDate, age, monthDifference)
       // condition 1 = ยังไม่ถึงเดือนเกิด
       // condition 2 = ยังไม่ถึงวันเกิด แต่เดือนเดียวกัน
       if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
@@ -261,7 +280,6 @@ export class HomePageComponent implements OnInit {
       }
       this.age = age
       return age;
-
 
       // เวื่อนไข ถ้า age น้อยกว่า 0 
     }
@@ -271,7 +289,6 @@ export class HomePageComponent implements OnInit {
   formattedDate?: any;
   formatDateDDMMYYY(data: any) {
     if (data !== 'undefined') {
-      console.log("in")
       const date = new Date(data)
       const day = date.getDate().toString().padStart(2, '0'); // แปลงเป็นสตริงและเติมเลข 0 ถ้าจำนวนน้อยกว่า 10
       const month = (date.getMonth() + 1).toString().padStart(2, '0'); // เพิ่ม 1 เพราะเดือนเริ่มที่ 0
@@ -280,7 +297,6 @@ export class HomePageComponent implements OnInit {
     } else {
       this.formattedDate = ''
     }
-    console.log("formattedDate", this.formattedDate)
     return this.formattedDate;
   }
 
@@ -299,7 +315,7 @@ export class HomePageComponent implements OnInit {
         const indexToDelete = this.employees.findIndex(employee => employee.id === user.id);
         if (indexToDelete !== -1) {
           this.employees.splice(indexToDelete, 1);
-          this.searchEmployees() 
+          this.searchEmployees()
           console.log("ลบข้อมูลเรียบร้อยแล้ว");
         } else {
           console.log("ไม่พบข้อมูลที่ต้องการลบ");

@@ -29,7 +29,8 @@
   color: $primary-color;
 }
 
-.btnEdit, .btnDelete {
+.btnEdit,
+.btnDelete {
   background-color: $second-color;
   transition: color 0.1s;
   border-radius: 10px;
@@ -37,16 +38,31 @@
   width: 5vw;
   margin: 1px;
 
-  &:hover{
+  &:hover {
     background-color: $third-color;
   }
 }
+
 .btnEdit:active {
   background-color: $light-yellow; // สีเมื่อปุ่ม edit ถูกกด
 }
 
 .btnDelete:active {
   background-color: $light-red; // สีเมื่อปุ่ม delete ถูกกด
+}
+
+.btn-filter {
+  margin: 5px;
+}
+
+.filterIcon {
+  color: black;
+  font-size: medium;
+  margin-left: 5px;
+}
+
+.btn-filter-child {
+  border: 1px #000 solid;
 }
 
 
@@ -79,14 +95,16 @@ nz-content {
   margin-top: 64px;
   margin-bottom: 64px;
 }
+
 nz-collapse {
   background-color: $second-color;
 }
 
 // table
-td{
+td {
   background-color: $third-color;
 }
+
 input {
   margin-inline: 20px;
 }
@@ -139,14 +157,14 @@ nz-footer {
   color: #ffffff;
 }
 
-.headerModal{
-  display: flex; 
-  align-items: center; 
-  justify-content: flex-end; 
+.headerModal {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-.inputModal{
-  display: flex; 
-  align-items: center; 
+.inputModal {
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
 }
