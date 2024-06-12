@@ -94,13 +94,16 @@ export class HomePageComponent implements OnInit {
   pageSize: number = 5;
   PageIndex: number = 1;
   TotalSize: number = 0;
+
+  
+
   searchEmployees(): void {
     this.isVisiblePagination = true;
     this.filteredEmployees = this.employees;
     let start = (this.PageIndex - 1) * this.pageSize;
     let end = this.PageIndex * this.pageSize;
     this.filteredEmployees = this.filteredEmployees.slice(start, end);
-    this.TotalSize = this.employees.length * 2
+    this.TotalSize = this.employees.length * 2;
     console.log("filteredEmployees", this.filteredEmployees)
   }
 
@@ -126,10 +129,12 @@ export class HomePageComponent implements OnInit {
         && (this.employee_id_filter ? employee.employee_id.toString().includes(this.employee_id_filter) : true)
         && (this.age_filter ? employee.age === this.age_filter : true)
         && (this.gender_filter ? employee.gender === this.gender_filter : true)
-        && (this.update_time_filter ? employee.update_time === this.update_time_filter : true)
+        && (this.update_time_filter ? (new Date(employee.update_time).toDateString()) === (new Date(this.update_time_filter).toDateString()) : true)
         && (this.update_by_name_filter ? employee.update_by_name.includes(this.update_by_name_filter) : true);
     });
     this.isVisiblePagination = false;
+    this.pageSize = 5;
+    this.PageIndex = 1;
   }
 
   clearFormFilter() {
