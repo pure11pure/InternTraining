@@ -34,25 +34,29 @@
   background-color: $second-color;
   transition: color 0.1s;
   border-radius: 10px;
-  border: 0;
-  width: 5vw;
-  margin: 1px;
+  width: 6vw;
+  margin: 0px 5px;
+  font-size: small;
 
   &:hover {
     background-color: $third-color;
   }
 }
 
-.btnEdit:active {
-  background-color: $light-yellow; // สีเมื่อปุ่ม edit ถูกกด
-}
+// .btnEdit:active {
+//   background-color: $light-yellow; // สีเมื่อปุ่ม edit ถูกกด
+// }
 
-.btnDelete:active {
-  background-color: $light-red; // สีเมื่อปุ่ม delete ถูกกด
-}
+// .btnDelete:active {
+//   background-color: $light-red; // สีเมื่อปุ่ม delete ถูกกด
+// }
 
 .btn-filter {
   margin: 5px;
+
+  // &:active {
+  //   background-color: $third-color;
+  // }
 }
 
 .filterIcon {
@@ -63,6 +67,7 @@
 
 .btn-filter-child {
   border: 1px #000 solid;
+  margin: 0px 5px ;
 }
 
 

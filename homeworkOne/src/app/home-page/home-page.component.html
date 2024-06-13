@@ -11,7 +11,7 @@
         <!-- Search Filter -->
         <div nz-row>
           <!-- button show filter -->
-          <div nz-col nzSpan="3">
+          <div nz-col nzSpan="3" style="text-align: right;">
             <button (click)="isVisibleFilter = !isVisibleFilter" class="btn-filter btn">
               <span>ค้นหาเพิ่มเติม</span>
               <span nz-icon nzType="filter" nzTheme="outline" class="filterIcon"></span>
@@ -77,7 +77,7 @@
               </div>
             </div> <!-- row 2 -->
             <div nz-row style="margin-inline: 10vh; margin: 20px; display: flex; justify-content: center;" *ngIf="isVisibleFilter">
-                <button class="btn btn-filter-child" (click)="filterEmployees()">ค้นหา</button>
+                <button class="btn btn-filter-child" (click)="filterEmployees('')">ค้นหา</button>
                 <button class="btn btn-filter-child" (click)="clearFormFilter()">ล้าง</button>
             </div> <!-- row 3 -->
           </div>
@@ -86,25 +86,21 @@
 
         <!-- nz-table = 'ตารางข้อมูลพนักงาน' -->
         <nz-table #fixedTable [nzData]="hData.data" [nzScroll]="{ x: '1000px'}"
-          (nzPageIndexChange)="handlePageIndexChange($event)" class="mx-3" nzBordered [nzShowPagination]="isVisiblePagination"
+          (nzPageIndexChange)="handlePageIndexChange($event)" class="mx-3" nzBordered
           [nzTotal]="TotalSize" [nzPageIndex]="PageIndex" [nzFrontPagination]="false">
           <thead>
-            <!-- Search -->
-            <!-- <input nz-input [(ngModel)]="search" type="text" (ngModelChange)="searchEmployees()"
-              class="form-control search" placeholder="ค้นหา (รหัสผู้ใช้งาน, ชื่อ-นามสกุล)"
-              aria-describedby="basic-addon1" /> -->
             <tr class="header-row">
-              <th nzLeft>ลำดับ</th>
+              <th nzLeft >ลำดับ</th>
               <th nzLeft nzWidth="10%">รหัสผู้ใช้งาน</th>
               <th nzWidth="20%">ชื่อ-นามสกุล</th>
-              <th nzWidth="12%">วันเกิด</th>
-              <th>อายุ</th>
+              <th nzWidth="10%">วันเกิด</th>
+              <th >อายุ</th>
               <th>เพศ</th>
-              <th nzWidth="15%">วันที่บันทึก</th>
+              <th nzWidth="10%">วันที่บันทึก</th>
               <th>บันทึกโดย</th>
               <!-- Add Employee -->
-              <th nzWidth="15%">
-                <span class="trigger plusCircle" nz-icon nz-button [nzType]="'plus-circle'" nzTheme="fill"
+              <th nzWidth="18%">
+                <span class="trigger plusCircle btn" nz-icon nz-button [nzType]="'plus-circle'" nzTheme="fill"
                   (click)="modalAddAndEditEmployee('add', '')">
                 </span>
               </th>
@@ -112,7 +108,7 @@
           </thead>
           <tbody>
             <!-- <tr *ngFor="let user of hData.data; let index = index"> -->
-            <tr *ngFor="let user of filteredEmployees; let index = index">
+            <tr *ngFor="let user of dataShowEmployees; let index = index">
               <td nzLeft>{{ (index+1) + (PageIndex-1)*pageSize}} </td>
               <td nzLeft>{{ user.employee_id }}</td>
               <td nzBreakWord>{{ user.first_name }} {{user.last_name}} </td>
@@ -121,9 +117,9 @@
               <td nzBreakWord>{{ user.gender === 'male' ? 'ชาย' : user.gender === 'female' ? 'หญิง' : 'ไม่ระบุ' }}</td>
               <td nzBreakWord>{{ formatDateDDMMYYY(user.update_time)}}</td>
               <td nzBreakWord>{{ user.update_by_name }}</td>
-              <td>
-                <button nz-button (click)="modalAddAndEditEmployee('edit', user)" class="btnEdit">edit</button>
-                <button nz-button (click)="deleteEmployee(user)" class="btnDelete">delete</button>
+              <td style="text-align: center;">
+                <button nz-button (click)="modalAddAndEditEmployee('edit', user)" class="btnEdit btn">edit</button>
+                <button nz-button (click)="deleteEmployee(user)" class="btnDelete btn">delete</button>
               </td>
             </tr>
           </tbody>
@@ -138,7 +134,7 @@
 <!-- Modal -->
 <nz-modal [nzStyle]="{ top: '20p', width: '70%', 'border-radius': '20px'}" [nzClosable]="true" [(nzVisible)]="isVisible"
   (nzOnCancel)="cancleData()">
-  <div *nzModalTitle class="nz-modal-header">กรุณากรอกข้อมูลการใช้งาน</div>
+  <div *nzModalTitle class="nz-modal-header">กรุณากรอกข้อมูลการใช้งาน {{modeEdit ? '&nbsp;&nbsp;(แก้ไข)' : ''}} </div>
   <ng-container *nzModalContent>
     <div nz-row>
       <!-- ชื่อ -->

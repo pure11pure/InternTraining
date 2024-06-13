@@ -28,7 +28,7 @@ interface Employee {
 export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
-    this.searchEmployees()
+    this.dataShowFirst()
   }
 
   constructor(
@@ -45,8 +45,7 @@ export class HomePageComponent implements OnInit {
   user: string = 'pure';
   isCollapsed = false; //trigger menu
   employees: Employee[] = employeesData;
-  isVisibleFilter = true;  //false
-  isVisiblePagination = true;
+  isVisibleFilter = false;  //btn 'ค้นหาเพิ่มเติม'
 
   headData = [
     {
@@ -87,29 +86,32 @@ export class HomePageComponent implements OnInit {
   }
 
   /**
- * Search
+ * filter Search
  */
-  search?: any;
   filteredEmployees: Employee[] = [];
+  dataEmployees: Employee[] = [];  // filter / no_filter
+  dataShowEmployees: Employee[] = []; // show 5 rows
   pageSize: number = 5;
   PageIndex: number = 1;
   TotalSize: number = 0;
 
-  
+  dataShowFirst(): void{
+    this.dataEmployees = this.employees;
+    this.PaginationEmployees();
+  }
 
-  searchEmployees(): void {
-    this.isVisiblePagination = true;
-    this.filteredEmployees = this.employees;
+  PaginationEmployees(): void {
+    console.log("dataEmployees", this.dataEmployees)
     let start = (this.PageIndex - 1) * this.pageSize;
     let end = this.PageIndex * this.pageSize;
-    this.filteredEmployees = this.filteredEmployees.slice(start, end);
-    this.TotalSize = this.employees.length * 2;
-    console.log("filteredEmployees", this.filteredEmployees)
+    this.dataShowEmployees = this.dataEmployees.slice(start, end);
+    this.TotalSize = this.dataEmployees.length * 2;
+    console.log("dataShowEmployees", this.dataShowEmployees)
   }
 
   handlePageIndexChange(pageIndex: number): void {
     this.PageIndex = pageIndex;
-    this.searchEmployees()
+    this.PaginationEmployees()
   }
 
   /**
@@ -122,7 +124,7 @@ export class HomePageComponent implements OnInit {
   update_time_filter?: string;
   update_by_name_filter?: string;
 
-  filterEmployees() {
+  filterEmployees(command: string) {
     console.log(this.fullname_filter, ' ', this.employee_id_filter, ' ', this.age_filter, ' ', this.gender_filter, ' ', this.update_time_filter, ' ', this.update_by_name_filter)
     this.filteredEmployees = this.employees.filter(employee => {
       return (this.fullname_filter ? employee.first_name.includes(this.fullname_filter) : true)
@@ -132,9 +134,15 @@ export class HomePageComponent implements OnInit {
         && (this.update_time_filter ? (new Date(employee.update_time).toDateString()) === (new Date(this.update_time_filter).toDateString()) : true)
         && (this.update_by_name_filter ? employee.update_by_name.includes(this.update_by_name_filter) : true);
     });
-    this.isVisiblePagination = false;
-    this.pageSize = 5;
+
+    console.log("command",command)
+
+    if(!(command == 'delete')){
+      this.pageSize = 5;
     this.PageIndex = 1;
+    }
+    this.dataEmployees = this.filteredEmployees;
+    this.PaginationEmployees();
   }
 
   clearFormFilter() {
@@ -144,8 +152,8 @@ export class HomePageComponent implements OnInit {
     this.gender_filter = '';
     this.update_time_filter = '';
     this.update_by_name_filter = '';
-    this.filteredEmployees = [...this.employees];
-    this.searchEmployees()
+    this.dataEmployees = [...this.employees];
+    this.PaginationEmployees()
   }
 
   /**
@@ -167,8 +175,6 @@ export class HomePageComponent implements OnInit {
       if (data.birth_date !== 'undefined') {
         this.birth_date = new Date(data.birth_date);
       }
-
-
       this.age = this.calculateAge(this.birth_date)
       this.gender = data.gender;
     }
@@ -212,7 +218,9 @@ export class HomePageComponent implements OnInit {
       console.log(formData)
       console.log('save');
     }
-    this.searchEmployees() //รีค่า filteredEmployees
+    this.dataEmployees = this.employees;
+    this.filterEmployees('');
+    // this.PaginationEmployees() //รีค่า filteredEmployees
     this.cancleData()
   }
 
@@ -320,7 +328,7 @@ export class HomePageComponent implements OnInit {
         const indexToDelete = this.employees.findIndex(employee => employee.id === user.id);
         if (indexToDelete !== -1) {
           this.employees.splice(indexToDelete, 1);
-          this.searchEmployees()
+          this.filterEmployees('delete');
           console.log("ลบข้อมูลเรียบร้อยแล้ว");
         } else {
           console.log("ไม่พบข้อมูลที่ต้องการลบ");
