@@ -44,7 +44,7 @@ export class HomePageComponent implements OnInit {
   locales = listLocales();  //calendar[bootstrap]
 
   isCollapsed = false; //trigger menu (optional)
-  
+
   user: string = 'pure';
   employees: Employee[] = [];
 
@@ -195,7 +195,6 @@ export class HomePageComponent implements OnInit {
     this.createDate_filter = '';
     this.birthday_filter = '';
     this.createBy_filter = '';
-    this.dataEmployees = [...this.employees];
     this.PaginationEmployees()
   }
 
