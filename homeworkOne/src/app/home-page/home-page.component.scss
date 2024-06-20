@@ -34,8 +34,9 @@
   background-color: $second-color;
   transition: color 0.1s;
   border-radius: 10px;
-  width: 6vw;
-  margin: 0px 5px;
+  width: 5vw;
+  margin: 0px 3px;
+  // padding: 0;
   font-size: small;
 
   &:hover {
@@ -43,20 +44,8 @@
   }
 }
 
-// .btnEdit:active {
-//   background-color: $light-yellow; // สีเมื่อปุ่ม edit ถูกกด
-// }
-
-// .btnDelete:active {
-//   background-color: $light-red; // สีเมื่อปุ่ม delete ถูกกด
-// }
-
 .btn-filter {
   margin: 5px;
-
-  // &:active {
-  //   background-color: $third-color;
-  // }
 }
 
 .filterIcon {

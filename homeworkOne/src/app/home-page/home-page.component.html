@@ -25,7 +25,7 @@
                 <p style="margin-right: 10px;">รหัสผู้ใช้งาน</p>
               </div>
               <div nz-col nzSpan="5" class="inputModal">
-                <input nz-input placeholder="Basic usage" [(ngModel)]="employee_id_filter" type="text" class="form-control"
+                <input nz-input placeholder="Basic usage" [(ngModel)]="idUsers_filter" type="text" class="form-control"
                 placeholder="" aria-describedby="basic-addon1" />
               </div>
               <!-- ชื่อ-นามสกุล -->
@@ -64,15 +64,15 @@
               </div>
               <div nz-col nzSpan="5" class="inputModal">
                 <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
-                  style="margin-inline: 20px; width: 100%;" [(ngModel)]="update_time_filter"
-                  (ngModelChange)="calculateAge(birth_date)" PlaceHolder="dd/mm/yyyy">
+                  style="margin-inline: 20px; width: 100%;" [(ngModel)]="createDate_filter"
+                  (ngModelChange)="calculateAge(birthday)" PlaceHolder="dd/mm/yyyy">
               </div>
               <!-- บันทึกโดย -->
               <div nz-col nzSpan="3" class="headerModal">
                 <p style="margin-right: 10px;">บันทึกโดย</p>
               </div>
               <div nz-col nzSpan="5" class="inputModal">
-                <input nz-input placeholder="Basic usage" [(ngModel)]="update_by_name_filter" type="text" class="form-control"
+                <input nz-input placeholder="Basic usage" [(ngModel)]="createBy_filter" type="text" class="form-control"
                   placeholder="" aria-describedby="basic-addon1" />
               </div>
             </div> <!-- row 2 -->
@@ -90,7 +90,7 @@
           [nzTotal]="TotalSize" [nzPageIndex]="PageIndex" [nzFrontPagination]="false">
           <thead>
             <tr class="header-row">
-              <th nzLeft >ลำดับ</th>
+              <th nzLeft nzWidth="6%">ลำดับ</th>
               <th nzLeft nzWidth="10%">รหัสผู้ใช้งาน</th>
               <th nzWidth="20%">ชื่อ-นามสกุล</th>
               <th nzWidth="10%">วันเกิด</th>
@@ -110,13 +110,13 @@
             <!-- <tr *ngFor="let user of hData.data; let index = index"> -->
             <tr *ngFor="let user of dataShowEmployees; let index = index">
               <td nzLeft>{{ (index+1) + (PageIndex-1)*pageSize}} </td>
-              <td nzLeft>{{ user.employee_id }}</td>
-              <td nzBreakWord>{{ user.first_name }} {{user.last_name}} </td>
-              <td nzBreakWord>{{ formatDateDDMMYYY(user.birth_date) }}</td>
+              <td nzLeft>{{ user.idUsers }}</td>
+              <td nzBreakWord>{{ user.firstName }} {{user.lastName}} </td>
+              <td nzBreakWord>{{ formatDateDDMMYYY(user.birthday) }}</td>
               <td nzBreakWord>{{ user.age }}</td>
               <td nzBreakWord>{{ user.gender === 'male' ? 'ชาย' : user.gender === 'female' ? 'หญิง' : 'ไม่ระบุ' }}</td>
-              <td nzBreakWord>{{ formatDateDDMMYYY(user.update_time)}}</td>
-              <td nzBreakWord>{{ user.update_by_name }}</td>
+              <td nzBreakWord>{{ formatDateDDMMYYY(user.createDate)}}</td>
+              <td nzBreakWord>{{ user.createBy }}</td>
               <td style="text-align: center;">
                 <button nz-button (click)="modalAddAndEditEmployee('edit', user)" class="btnEdit btn">edit</button>
                 <button nz-button (click)="deleteEmployee(user)" class="btnDelete btn">delete</button>
@@ -128,7 +128,7 @@
     </nz-collapse>
   </nz-content>
 </nz-layout>
-<nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+<nz-footer>PUrangotanE</nz-footer>
 
 
 <!-- Modal -->
@@ -142,7 +142,7 @@
         <p style="margin-right: 10px;">ชื่อ</p>
       </div>
       <div nz-col nzSpan="9" class="inputModal">
-        <input nz-input placeholder="Basic usage" [(ngModel)]="first_name" type="text" class="form-control"
+        <input nz-input placeholder="Basic usage" [(ngModel)]="firstName" type="text" class="form-control"
           placeholder="" aria-describedby="basic-addon1" />
       </div>
       <!-- นามสกุล -->
@@ -150,7 +150,7 @@
         <p style="margin-right: 10px;">นามสกุล</p>
       </div>
       <div nz-col nzSpan="9" class="inputModal">
-        <input nz-input placeholder="Basic usage" [(ngModel)]="last_name" type="text" class="form-control"
+        <input nz-input placeholder="Basic usage" [(ngModel)]="lastName" type="text" class="form-control"
           placeholder="" aria-describedby="basic-addon1" />
       </div>
       <!-- วันเกิด -->
@@ -158,11 +158,11 @@
         <p style="margin-right: 10px;">วันเกิด</p>
       </div>
       <div nz-col nzSpan="9" class="inputModal">
-        <!-- <nz-date-picker [(ngModel)]="birth_date" nzFormat="dd-MM-yyyy" nzSize="large"
+        <!-- <nz-date-picker [(ngModel)]="birthday" nzFormat="dd-MM-yyyy" nzSize="large"
           style="margin-inline: 20px; width: 100%;" nzPlaceHolder="dd/mm/yyyy"
-          (ngModelChange)="calculateAge(birth_date)"></nz-date-picker> -->
+          (ngModelChange)="calculateAge(birthday)"></nz-date-picker> -->
         <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
-          style="margin-inline: 20px; width: 100%;" [(ngModel)]="birth_date" (ngModelChange)="calculateAge(birth_date)"
+          style="margin-inline: 20px; width: 100%;" [(ngModel)]="birthday" (ngModelChange)="calculateAge(birthday)"
           PlaceHolder="dd/mm/yyyy">
       </div>
 
