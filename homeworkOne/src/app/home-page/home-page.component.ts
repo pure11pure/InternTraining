@@ -30,7 +30,7 @@ interface Employee {
 export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
-    this.getAll();    
+    this.getAll();
   }
 
   constructor(
@@ -67,10 +67,10 @@ export class HomePageComponent implements OnInit {
         this.employees = response;
         console.log("getAll: ", this.employees);
         this.dataShowFirst()
-      })  
+      })
   }
 
-  deleleApi(idUsers: any ) {
+  deleleApi(idUsers: any) {
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-delete', idUsers).toPromise().then((response) => {
         console.log("deleleApi: ", idUsers)
@@ -78,7 +78,7 @@ export class HomePageComponent implements OnInit {
       })
   }
 
-  addApi(data: any){
+  addApi(data: any) {
     console.log("addApi: ", data)
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-add', data).toPromise().then((response) => {
@@ -87,12 +87,22 @@ export class HomePageComponent implements OnInit {
       })
   }
 
-  editApi(data: any){
+  editApi(data: any) {
     console.log("editApi: ", data)
     this.http.post<any>(
-      '  http://localhost:8778/pure-controller/jpa-edit', data).toPromise().then((response) => {
+      'http://localhost:8778/pure-controller/jpa-edit', data).toPromise().then((response) => {
         console.log("response post [jpa-edit]");
         this.getAll()
+      })
+  }
+
+  searchApi(data: any) {
+    console.log("searchApi: ", data)
+    this.http.post<any>(
+      'http://localhost:8778/pure-controller/jpa-search', data).toPromise().then((response) => {
+        console.log("response post [jpa-search]");
+        this.dataEmployees = response;
+        this.PaginationEmployees();
       })
   }
 
@@ -125,7 +135,7 @@ export class HomePageComponent implements OnInit {
   PageIndex: number = 1;
   TotalSize: number = 0;
 
-  dataShowFirst(): void{
+  dataShowFirst(): void {
     console.log("employees dataShowFirst", this.employees)
     this.dataEmployees = this.employees;
     this.PaginationEmployees();
@@ -148,28 +158,34 @@ export class HomePageComponent implements OnInit {
    * filter
    */
   fullname_filter?: string;
-  idUsers_filter?: string;
+  idUsers_filter?: number;
   age_filter?: number;
   gender_filter?: string;
   createDate_filter?: string;
   createBy_filter?: string;
+  birthday_filter?: string;
 
   filterEmployees(command: string) {
-    console.log(this.fullname_filter, ' ', this.idUsers_filter, ' ', this.age_filter, ' ', this.gender_filter, ' ', this.createDate_filter, ' ', this.createBy_filter)
-    this.filteredEmployees = this.employees.filter(employee => {
-      return (this.fullname_filter ? employee.firstName.includes(this.fullname_filter) : true)
-        && (this.idUsers_filter ? employee.idUsers.toString().includes(this.idUsers_filter) : true)
-        && (this.age_filter ? employee.age === this.age_filter : true)
-        && (this.gender_filter ? employee.gender === this.gender_filter : true)
-        && (this.createDate_filter ? (new Date(employee.createDate).toDateString()) === (new Date(this.createDate_filter).toDateString()) : true)
-        && (this.createBy_filter ? employee.createBy.includes(this.createBy_filter) : true);
-    });
+    const nameParts: string[] = this.fullname_filter ? this.fullname_filter.split(" ") : [];
+    let [first_name = "", last_name = ""] = nameParts;
 
-    console.log("command",command)
+    const formData: Employee = {
+      idUsers: this.idUsers_filter ? this.idUsers_filter : 0,
+      firstName: first_name ? first_name : '',
+      lastName: last_name ? last_name : '',
+      birthday: this.formatDateChange(this.birthday_filter + ''),
+      age: this.age_filter ? this.age_filter : 0,
+      gender: this.gender_filter ? this.gender_filter : '',
+      createDate: this.formatDateChange(this.createDate_filter + ''),
+      createBy: this.createBy_filter ? this.createBy_filter :''
+    };
 
-    if(!(command == 'delete')){
+    this.searchApi(formData)
+    console.log("command", command)
+
+    if (!(command == 'delete')) {
       this.pageSize = 5;
-    this.PageIndex = 1;
+      this.PageIndex = 1;
     }
     this.dataEmployees = this.filteredEmployees;
     this.PaginationEmployees();
@@ -181,6 +197,7 @@ export class HomePageComponent implements OnInit {
     this.age_filter = undefined;
     this.gender_filter = '';
     this.createDate_filter = '';
+    this.birthday_filter = '';
     this.createBy_filter = '';
     this.dataEmployees = [...this.employees];
     this.PaginationEmployees()
@@ -215,9 +232,7 @@ export class HomePageComponent implements OnInit {
 
   saveData(): void {
     if (this.modeEdit) {
-      // const indexToUpdate = this.employees.findIndex(employee => employee.id === this.id);
       const editData: Employee = {
-        // id: this.id ? this.id : 0,
         idUsers: this.empId ? this.empId : 0,
         firstName: this.firstName ? this.firstName : '',
         lastName: this.lastName ? this.lastName : '',
@@ -228,14 +243,12 @@ export class HomePageComponent implements OnInit {
         createBy: this.user
       };
       console.log("editData")
-      // this.employees[indexToUpdate] = editData;
       this.editApi(editData);
       this.createNotification('success', 'แก้ไข')
       this.modeEdit = false;
     }
     else {
       const formData: Employee = {
-        // id: this.getId(),
         idUsers: 0,
         firstName: this.firstName ? this.firstName : '',
         lastName: this.lastName ? this.lastName : '',
@@ -245,14 +258,11 @@ export class HomePageComponent implements OnInit {
         createDate: this.formatDateChange(new Date() + ''),
         createBy: this.user
       };
-      // this.employees.push(formData)
       this.addApi(formData);
       this.createNotification('success', 'บันทึก')
       console.log('save');
     }
     this.dataEmployees = this.employees;
-    // this.filterEmployees('');
-    // this.PaginationEmployees() //รีค่า filteredEmployees
     this.cancleData()
   }
 
@@ -300,18 +310,6 @@ export class HomePageComponent implements OnInit {
   gender?: string;
   message_age_error?: string;
 
-  getNewEmployeeId(): number {
-    const lastEmployee = this.employees[this.employees.length - 1];
-    const lastEmployeeId = lastEmployee ? lastEmployee.idUsers : 0;
-    return lastEmployeeId + 1;
-  }
-
-  // getId(): number {
-  //   const lastEmployee = this.employees[this.employees.length - 1];
-  //   const lastEmployeeId = lastEmployee ? lastEmployee.id : 0;
-  //   return lastEmployeeId + 1;
-  // }
-
   calculateAge(birthday: any): any {
     if (birthday) {
       const today = new Date();
@@ -345,16 +343,18 @@ export class HomePageComponent implements OnInit {
     return this.formattedDate;
   }
 
-
-  formatDateChange(dateToString: string){
-    // Sun Jan 01 2017 08:08:26 GMT+0700 > 2002-06-19T08:44:08.344Z
+  formatDateChange(dateToString: string) {
+    console.log(dateToString)
     const date = new Date(dateToString);
-    // Convert to ISO 8601 format (UTC)
-    const isoDate = date.toISOString();
-
-    console.log(isoDate)
-
-    return isoDate;
+    if (isNaN(date.getTime())) {
+      return "";
+    } else {
+      // Sun Jan 01 2017 08:08:26 GMT+0700 > 2002-06-19T08:44:08.344Z
+      const date = new Date(dateToString);
+      const isoDate = date.toISOString(); // Convert to ISO 8601 format (UTC)
+      console.log("dateChange", isoDate)
+      return isoDate;
+    }
   }
 
   /**
@@ -369,18 +369,7 @@ export class HomePageComponent implements OnInit {
       nzOkType: 'primary',
       nzOkDanger: true,
       nzOnOk: () => {
-        // const indexToDelete = this.employees.findIndex(employee => employee.id === user.id);
         this.deleleApi(user.idUsers);
-        // this.getAll();
-        // this.filterEmployees('delete');
-
-        // if (indexToDelete !== -1) {
-        //   this.employees.splice(indexToDelete, 1);
-        //   this.filterEmployees('delete');
-        //   console.log("ลบข้อมูลเรียบร้อยแล้ว");
-        // } else {
-        //   console.log("ไม่พบข้อมูลที่ต้องการลบ");
-        // }
       },
       nzCancelText: 'No',
       nzOnCancel: () => console.log('Cancel')
