@@ -5,7 +5,7 @@ import { listLocales } from 'ngx-bootstrap/chronos'; //calendar[bootstrap]
 import { defineLocale } from 'ngx-bootstrap/chronos'; //calendar[bootstrap]
 import { thBeLocale } from 'ngx-bootstrap/locale'; //calendar[bootstrap]
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http'; //API
 defineLocale('th-be', thBeLocale); //calendar[bootstrap]
 //calendar[npm install ngx-bootstrap@7.1.2 --save]
 
@@ -43,8 +43,7 @@ export class HomePageComponent implements OnInit {
   locale = 'th-be'; //calendar[bootstrap]
   locales = listLocales();  //calendar[bootstrap]
 
-  isCollapsed = false; //trigger menu (optional)
-
+  // user: string = 'jukbie';
   user: string = 'pure';
   employees: Employee[] = [];
 
@@ -81,7 +80,7 @@ export class HomePageComponent implements OnInit {
     // console.log("deleleApi: ", idUsers)
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-delete', idUsers).toPromise().then((response) => {
-        console.log("response post[jpa-delete] " );
+        console.log("response post[jpa-delete] ");
         this.searchEmployees('delete');
       })
   }
@@ -91,6 +90,7 @@ export class HomePageComponent implements OnInit {
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-add', data).toPromise().then((response) => {
         console.log("response post [jpa-add] ");
+        this.getAll();
         this.searchEmployees('add');
       })
   }
@@ -100,6 +100,7 @@ export class HomePageComponent implements OnInit {
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-edit', data).toPromise().then((response) => {
         console.log("response post [jpa-edit] ");
+        this.getAll();
         this.searchEmployees('edit');
       })
   }
@@ -151,6 +152,7 @@ export class HomePageComponent implements OnInit {
   getEmployees(): void {
     console.log("employees getEmployees", this.employees)
     this.dataEmployees = this.employees;
+    this.searchEmployees('');
     this.PaginationEmployees();
   }
 
@@ -179,19 +181,38 @@ export class HomePageComponent implements OnInit {
   createBy_filter?: string;
   birthday_filter?: string;
 
+  fullname_search?: string;
+  idUsers_search?: number;
+  age_search?: number;
+  gender_search?: string;
+  createDate_search?: string;
+  createBy_search?: string;
+  birthday_search?: string;
+
+  searchFilter(){
+    this.fullname_search = this.fullname_filter;
+    this.idUsers_search = this.idUsers_filter;
+    this.age_search = this.age_filter;
+    this.gender_search = this.gender_filter;
+    this.createDate_search = this.createDate_filter;
+    this.createBy_search = this.createBy_filter;
+    this.birthday_search = this.birthday_filter;
+    this.searchEmployees('');
+  }
+
   searchEmployees(command: string) {
-    const nameParts: string[] = this.fullname_filter ? this.fullname_filter.split(" ") : [];
+    const nameParts: string[] = this.fullname_search ? this.fullname_search.split(" ") : [];
     let [first_name = "", last_name = ""] = nameParts;
 
     const formData: Employee = {
-      idUsers: this.idUsers_filter ? this.idUsers_filter : 0,
+      idUsers: this.idUsers_search ? this.idUsers_search : 0,
       firstName: first_name ? first_name : '',
       lastName: last_name ? last_name : '',
-      birthday: this.formatDateChange(this.birthday_filter + ''),
-      age: this.age_filter ? this.age_filter : 0,
-      gender: this.gender_filter ? this.gender_filter : '',
-      createDate: this.formatDateChange(this.createDate_filter + ''),
-      createBy: this.createBy_filter ? this.createBy_filter : ''
+      birthday: this.formatDateChange(this.birthday_search + ''),
+      age: this.age_search ? this.age_search : 0,
+      gender: this.gender_search ? this.gender_search : '',
+      createDate: this.formatDateChange(this.createDate_search + ''),
+      createBy: this.createBy_search ? this.createBy_search : ''
     };
 
     this.searchApi(formData)
@@ -206,12 +227,31 @@ export class HomePageComponent implements OnInit {
     this.createDate_filter = '';
     this.birthday_filter = '';
     this.createBy_filter = '';
-    this.PaginationEmployees()
+    this.fullname_search = '';
+    this.idUsers_search = undefined;
+    this.age_search = undefined;
+    this.gender_search = '';
+    this.createDate_search = '';
+    this.birthday_search = '';
+    this.createBy_search = '';
+    this.getEmployees();
   }
 
   /**
    * Add & Edit Employee Modal
    */
+  capitalize(data : any, command : any) {
+    const pattern = /^[A-Za-z]*$/; // ตรวจสอบเฉพาะตัวอักษร A-Z หรือ a-z เท่านั้น
+    if (command == 'firstName') {
+      this.firstName = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
+      // if (!pattern.test(data)) {
+      //   this.firstName = ''; // รีเซ็ตค่า firstName เป็นค่าว่าง
+      // } 
+    } else if (command == 'lastName') {
+      this.lastName = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
+    }
+  }
+
   isVisible = false;
   modeEdit: boolean = false;
   id?: number;
@@ -248,10 +288,21 @@ export class HomePageComponent implements OnInit {
         createDate: this.formatDateChange(new Date() + ''),
         createBy: this.user
       };
-      console.log("editData")
-      this.editApi(editData);
-      this.createNotification('success', 'แก้ไข')
-      this.modeEdit = false;
+      const isValidValue = (value: any) => value !== '' && value !== null && value !== undefined;
+      const allFieldsFilled = Object.values(editData).every(isValidValue);
+
+      if (allFieldsFilled) {
+        console.log("editData")
+        this.editApi(editData);
+        this.createNotification('success', 'แก้ไข', editData.idUsers)
+        this.dataEmployees = this.employees;
+        this.cancleData()
+        this.modeEdit = false;
+      } else {
+        console.log("editData", editData)
+        this.createNotification('error', 'กรอกข้อมูลให้ครบ', '')
+      }
+
     }
     else {
       const formData: Employee = {
@@ -264,20 +315,25 @@ export class HomePageComponent implements OnInit {
         createDate: this.formatDateChange(new Date() + ''),
         createBy: this.user
       };
-      this.addApi(formData);
-      this.createNotification('success', 'บันทึก')
-      console.log('save');
+
+      const isValidValue = (value: any) => value !== '' && value !== null && value !== undefined;
+      const allFieldsFilled = Object.values(formData).every(isValidValue);
+
+      if (allFieldsFilled) {
+        console.log('save');
+        this.addApi(formData);
+        this.createNotification('success', 'บันทึก', '')
+        this.dataEmployees = this.employees;
+        this.cancleData()
+      } else {
+        console.log("formData", formData)
+        this.createNotification('error', 'กรอกข้อมูลให้ครบ', '')
+      }
     }
-    this.dataEmployees = this.employees;
-    this.cancleData()
   }
 
   cancleData(): void {
     this.isVisible = false;
-    this.clearForm();
-  }
-
-  clearForm(): void {
     this.firstName = '';
     this.lastName = '';
     this.birthday = undefined;
@@ -288,24 +344,32 @@ export class HomePageComponent implements OnInit {
   /**
    * Notification
    */
-  createNotification(type: string, command: string): void {
+  createNotification(type: string, command: string, detail : any): void {
+    let time = 3000;
     if (command == 'บันทึก') {
       this.notification.create(
         type,
         'บันทึกพนักงานเสร็จสิ้น',
-        ''
+        detail
       );
-    } else if (command = 'แก้ไข') {
+    } else if (command == 'แก้ไข') {
       this.notification.create(
         type,
         'แก้ไขพนักงานเสร็จสิ้น',
-        ''
+        'Id: ' + detail
       );
+    } else if (command == 'กรอกข้อมูลให้ครบ') {
+      this.notification.create(
+        type,
+        'กรอกข้อมูลให้ครบ',
+        detail
+      );
+      time = 4000;
     }
 
     setTimeout(() => {
       this.notification.remove();
-    }, 3000);
+    }, time);
 
   }
 

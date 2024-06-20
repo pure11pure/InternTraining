@@ -1,7 +1,6 @@
 <nz-layout>
   <nz-header>
-    <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-      (click)="isCollapsed = !isCollapsed"></span>
+    <div> PCC </div>
   </nz-header>
   <nz-content>
     <!-- nz-collapse = 'หัวข้อผู้ใช้งาน' -->
@@ -13,7 +12,7 @@
           <!-- button show filter -->
           <div nz-col nzSpan="3" style="text-align: right;">
             <button (click)="isVisibleFilter = !isVisibleFilter" class="btn-filter btn">
-              <span>ค้นหาเพิ่มเติม</span>
+              <span> > ค้นหาเพิ่มเติม </span>
               <span nz-icon nzType="filter" nzTheme="outline" class="filterIcon"></span>
             </button>
           </div>
@@ -25,8 +24,9 @@
                 <p style="margin-right: 10px;">รหัสผู้ใช้งาน</p>
               </div>
               <div nz-col nzSpan="5" class="inputModal">
-                <input nz-input placeholder="Basic usage" [(ngModel)]="idUsers_filter" type="text" class="form-control"
-                  placeholder="" aria-describedby="basic-addon1" />
+                <!-- <input nz-input placeholder="Basic usage" [(ngModel)]="idUsers_filter" type="number" class="form-control"
+                  placeholder="" aria-describedby="basic-addon1" /> -->
+                  <nz-input-number [(ngModel)]="idUsers_filter" class="form-control" style="margin-inline: 20px;" [nzMin]="1" [nzStep]="1"></nz-input-number>
               </div>
               <!-- ชื่อ-นามสกุล -->
               <div nz-col nzSpan="3" class="headerModal">
@@ -34,15 +34,16 @@
               </div>
               <div nz-col nzSpan="5" class="inputModal">
                 <input nz-input placeholder="Basic usage" [(ngModel)]="fullname_filter" type="text" class="form-control"
-                  placeholder="" aria-describedby="basic-addon1" />
+                  placeholder="" aria-describedby="basic-addon1"  />
               </div>
               <!-- อายุ -->
               <div nz-col nzSpan="3" class="headerModal">
                 <p style="margin-right: 10px;">อายุ</p>
               </div>
               <div nz-col nzSpan="5" class="inputModal">
-                <input nz-input placeholder="Basic usage" [(ngModel)]="age_filter" type="number" class="form-control"
-                  placeholder="" aria-describedby="basic-addon1" />
+                <!-- <input nz-input placeholder="Basic usage" [(ngModel)]="age_filter" type="number" class="form-control"
+                  placeholder="" aria-describedby="basic-addon1" /> -->
+                  <nz-input-number [(ngModel)]="age_filter" class="form-control" style="margin-inline: 20px;" [nzMin]="0" [nzStep]="1"></nz-input-number>
               </div>
               <!-- วันเกิด -->
               <div nz-col nzSpan="3" class="headerModal">
@@ -85,7 +86,7 @@
             </div> <!-- row 1 -->
             <div nz-row style="margin-inline: 10vh; margin: 20px; display: flex; justify-content: center;"
               *ngIf="isVisibleFilter">
-              <button class="btn btn-filter-child" (click)="searchEmployees('')">ค้นหา</button>
+              <button class="btn btn-filter-child" (click)="searchFilter()">ค้นหา</button>
               <button class="btn btn-filter-child" (click)="clearFormFilter()">ล้าง</button>
             </div> <!-- row 3 -->
           </div>
@@ -136,7 +137,7 @@
     </nz-collapse>
   </nz-content>
 </nz-layout>
-<nz-footer>PUrangotanE</nz-footer>
+<nz-footer>PURangotanE</nz-footer>
 
 
 <!-- Modal -->
@@ -151,7 +152,7 @@
       </div>
       <div nz-col nzSpan="9" class="inputModal">
         <input nz-input placeholder="Basic usage" [(ngModel)]="firstName" type="text" class="form-control"
-          placeholder="" aria-describedby="basic-addon1" />
+          placeholder="" aria-describedby="basic-addon1"  pattern="[A-Za-z]+" (ngModelChange)="capitalize(firstName, 'firstName')"/>
       </div>
       <!-- นามสกุล -->
       <div nz-col nzSpan="3" class="headerModal">
@@ -159,16 +160,13 @@
       </div>
       <div nz-col nzSpan="9" class="inputModal">
         <input nz-input placeholder="Basic usage" [(ngModel)]="lastName" type="text" class="form-control" placeholder=""
-          aria-describedby="basic-addon1" />
+          aria-describedby="basic-addon1" (ngModelChange)="capitalize(lastName, 'lastName')" />
       </div>
       <!-- วันเกิด -->
       <div nz-col nzSpan="3" class="headerModal">
         <p style="margin-right: 10px;">วันเกิด</p>
       </div>
       <div nz-col nzSpan="9" class="inputModal">
-        <!-- <nz-date-picker [(ngModel)]="birthday" nzFormat="dd-MM-yyyy" nzSize="large"
-          style="margin-inline: 20px; width: 100%;" nzPlaceHolder="dd/mm/yyyy"
-          (ngModelChange)="calculateAge(birthday)"></nz-date-picker> -->
         <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
           style="margin-inline: 20px; width: 100%;" [(ngModel)]="birthday" (ngModelChange)="calculateAge(birthday)"
           PlaceHolder="dd/mm/yyyy">
