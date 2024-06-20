@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import employeesData from '../employees.json'
-import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { listLocales } from 'ngx-bootstrap/chronos';
-import { defineLocale } from 'ngx-bootstrap/chronos';
-import { thBeLocale } from 'ngx-bootstrap/locale';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'; //calendar[bootstrap]
+import { listLocales } from 'ngx-bootstrap/chronos'; //calendar[bootstrap]
+import { defineLocale } from 'ngx-bootstrap/chronos'; //calendar[bootstrap]
+import { thBeLocale } from 'ngx-bootstrap/locale'; //calendar[bootstrap]
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { HttpClient } from '@angular/common/http';
-import { formatDate } from '@angular/common';
-defineLocale('th-be', thBeLocale);
+defineLocale('th-be', thBeLocale); //calendar[bootstrap]
+//calendar[npm install ngx-bootstrap@7.1.2 --save]
 
 interface Employee {
-  // id: number,
   idUsers: number,
   firstName: string,
   lastName: string,
@@ -35,20 +33,29 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private modal: NzModalService,
-    private localeService: BsLocaleService,
+    private localeService: BsLocaleService, //calendar[bootstrap]
     private notification: NzNotificationService,
     private http: HttpClient
   ) {
-    this.localeService.use(this.locale);
+    this.localeService.use(this.locale); //calendar[bootstrap]
   }
 
-  locale = 'th-be';
-  locales = listLocales();
+  locale = 'th-be'; //calendar[bootstrap]
+  locales = listLocales();  //calendar[bootstrap]
 
+  isCollapsed = false; //trigger menu (optional)
+  
   user: string = 'pure';
-  isCollapsed = false; //trigger menu
   employees: Employee[] = [];
-  isVisibleFilter = false;  //btn 'ค้นหาเพิ่มเติม'
+
+  // Form
+  firstName?: string;
+  lastName?: string;
+  birthday?: Date;
+  age?: number;
+  gender?: string;
+  message_age_error?: string;
+
 
   headData = [
     {
@@ -66,15 +73,15 @@ export class HomePageComponent implements OnInit {
       'http://localhost:8778/pure-controller/jpa-selectAll', {}).toPromise().then((response) => {
         this.employees = response;
         console.log("getAll: ", this.employees);
-        this.dataShowFirst()
+        this.getEmployees()
       })
   }
 
   deleleApi(idUsers: any) {
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-delete', idUsers).toPromise().then((response) => {
-        console.log("deleleApi: ", idUsers)
-        this.getAll()
+        console.log("deleleApi: ", idUsers);
+        this.searchEmployees('delete');
       })
   }
 
@@ -83,7 +90,7 @@ export class HomePageComponent implements OnInit {
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-add', data).toPromise().then((response) => {
         console.log("response post [jpa-add]");
-        this.getAll()
+        this.searchEmployees('add');
       })
   }
 
@@ -92,7 +99,7 @@ export class HomePageComponent implements OnInit {
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-edit', data).toPromise().then((response) => {
         console.log("response post [jpa-edit]");
-        this.getAll()
+        this.searchEmployees('edit');
       })
   }
 
@@ -105,14 +112,10 @@ export class HomePageComponent implements OnInit {
         this.PaginationEmployees();
       })
   }
-
-
-
   // ------------
 
-
   /**
-   * Panel
+   *   panel (optional)
    */
   expandSet = new Set<number>();
   onExpandChange(id: number, checked: boolean): void {
@@ -126,22 +129,22 @@ export class HomePageComponent implements OnInit {
   }
 
   /**
- * filter Search
- */
-  filteredEmployees: Employee[] = [];
+   * Search & getEmployees
+   */
   dataEmployees: Employee[] = [];  // filter / no_filter
   dataShowEmployees: Employee[] = []; // show 5 rows
   pageSize: number = 5;
   PageIndex: number = 1;
   TotalSize: number = 0;
 
-  dataShowFirst(): void {
-    console.log("employees dataShowFirst", this.employees)
+  getEmployees(): void {
+    console.log("employees getEmployees", this.employees)
     this.dataEmployees = this.employees;
     this.PaginationEmployees();
   }
 
   PaginationEmployees(): void {
+    // จัดหน้า แสดงข้อมูลแบบจำกัด  row
     let start = (this.PageIndex - 1) * this.pageSize;
     let end = this.PageIndex * this.pageSize;
     this.dataShowEmployees = this.dataEmployees.slice(start, end);
@@ -150,13 +153,13 @@ export class HomePageComponent implements OnInit {
   }
 
   handlePageIndexChange(pageIndex: number): void {
+    // เลื่อนหน้า
     this.PageIndex = pageIndex;
     this.PaginationEmployees()
   }
 
-  /**
-   * filter
-   */
+  // search
+  isVisibleFilter = false;  //btn 'ค้นหาเพิ่มเติม'
   fullname_filter?: string;
   idUsers_filter?: number;
   age_filter?: number;
@@ -165,7 +168,7 @@ export class HomePageComponent implements OnInit {
   createBy_filter?: string;
   birthday_filter?: string;
 
-  filterEmployees(command: string) {
+  searchEmployees(command: string) {
     const nameParts: string[] = this.fullname_filter ? this.fullname_filter.split(" ") : [];
     let [first_name = "", last_name = ""] = nameParts;
 
@@ -177,18 +180,11 @@ export class HomePageComponent implements OnInit {
       age: this.age_filter ? this.age_filter : 0,
       gender: this.gender_filter ? this.gender_filter : '',
       createDate: this.formatDateChange(this.createDate_filter + ''),
-      createBy: this.createBy_filter ? this.createBy_filter :''
+      createBy: this.createBy_filter ? this.createBy_filter : ''
     };
 
     this.searchApi(formData)
-    console.log("command", command)
-
-    if (!(command == 'delete')) {
-      this.pageSize = 5;
-      this.PageIndex = 1;
-    }
-    this.dataEmployees = this.filteredEmployees;
-    this.PaginationEmployees();
+    console.log("command[searchEmployees]: ", command)
   }
 
   clearFormFilter() {
@@ -225,11 +221,11 @@ export class HomePageComponent implements OnInit {
       this.age = this.calculateAge(this.birthday)
       this.gender = data.gender;
     }
-
     console.log(command, data)
     this.isVisible = true;
   }
 
+  // บันทึก : addApi, editApi
   saveData(): void {
     if (this.modeEdit) {
       const editData: Employee = {
@@ -279,7 +275,9 @@ export class HomePageComponent implements OnInit {
     this.gender = '';
   }
 
-  // Notification
+  /**
+   * Notification
+   */
   createNotification(type: string, command: string): void {
     if (command == 'บันทึก') {
       this.notification.create(
@@ -300,16 +298,13 @@ export class HomePageComponent implements OnInit {
     }, 3000);
 
   }
-  /**
-   * Form
-   */
-  firstName?: string;
-  lastName?: string;
-  birthday?: Date;
-  age?: number;
-  gender?: string;
-  message_age_error?: string;
 
+
+  /**
+   * format
+   */
+
+  // คำนวณอายุ
   calculateAge(birthday: any): any {
     if (birthday) {
       const today = new Date();
@@ -343,6 +338,7 @@ export class HomePageComponent implements OnInit {
     return this.formattedDate;
   }
 
+  // เปลี่ยนรูปแบบวันที่
   formatDateChange(dateToString: string) {
     console.log(dateToString)
     const date = new Date(dateToString);
