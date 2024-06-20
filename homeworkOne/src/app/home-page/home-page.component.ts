@@ -78,40 +78,51 @@ export class HomePageComponent implements OnInit {
   }
 
   deleleApi(idUsers: any) {
+    // console.log("deleleApi: ", idUsers)
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-delete', idUsers).toPromise().then((response) => {
-        console.log("deleleApi: ", idUsers);
+        console.log("response post[jpa-delete] " );
         this.searchEmployees('delete');
       })
   }
 
   addApi(data: any) {
-    console.log("addApi: ", data)
+    // console.log("addApi: ", data)
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-add', data).toPromise().then((response) => {
-        console.log("response post [jpa-add]");
+        console.log("response post [jpa-add] ");
         this.searchEmployees('add');
       })
   }
 
   editApi(data: any) {
-    console.log("editApi: ", data)
+    // console.log("editApi: ", data)
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-edit', data).toPromise().then((response) => {
-        console.log("response post [jpa-edit]");
+        console.log("response post [jpa-edit] ");
         this.searchEmployees('edit');
       })
   }
 
   searchApi(data: any) {
-    console.log("searchApi: ", data)
+    // console.log("searchApi: ", data)
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-search', data).toPromise().then((response) => {
-        console.log("response post [jpa-search]");
+        console.log("response post [jpa-search] ");
         this.dataEmployees = response;
         this.PaginationEmployees();
       })
   }
+
+  calculatorApi(data: any) {
+    // console.log("calculatorApi: ", data)
+    this.http.post<any>(
+      'http://localhost:8778/pure-controller/calculatorAge', data).toPromise().then((response) => {
+        console.log("response post [calculatorAge]");
+        this.age = response;
+      })
+  }
+
   // ------------
 
   /**
@@ -305,21 +316,7 @@ export class HomePageComponent implements OnInit {
 
   // คำนวณอายุ
   calculateAge(birthday: any): any {
-    if (birthday) {
-      const today = new Date();
-      const birthDate = new Date(birthday);
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDifference = today.getMonth() - birthDate.getMonth();
-      // condition 1 = ยังไม่ถึงเดือนเกิด
-      // condition 2 = ยังไม่ถึงวันเกิด แต่เดือนเดียวกัน
-      if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      this.age = age
-      return age;
-
-      // เวื่อนไข ถ้า age น้อยกว่า 0 
-    }
+    this.calculatorApi(birthday);
   }
 
   // เปลี่ยน คศ. เป็น พศ.
@@ -339,7 +336,7 @@ export class HomePageComponent implements OnInit {
 
   // เปลี่ยนรูปแบบวันที่
   formatDateChange(dateToString: string) {
-    console.log(dateToString)
+    // console.log(dateToString)
     const date = new Date(dateToString);
     if (isNaN(date.getTime())) {
       return "";
