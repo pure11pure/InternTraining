@@ -47,22 +47,13 @@ export class HomePageComponent implements OnInit {
   user: string = 'pure';
   employees: Employee[] = [];
 
-  // Form
-  firstName?: string;
-  lastName?: string;
-  birthday?: Date;
-  age?: number;
-  gender?: string;
-  message_age_error?: string;
-
-
   headData = [
     {
       id: 1,
       title: "ผู้ใช้งาน",
       active: true,
       disabled: false,
-      data: ["test"]
+      data: this.employees
     }
   ]
 
@@ -112,6 +103,7 @@ export class HomePageComponent implements OnInit {
         console.log("response post [jpa-search] ");
         this.dataEmployees = response;
         this.PaginationEmployees();
+        this.headData[0].data = response //no data
       })
   }
 
@@ -153,7 +145,7 @@ export class HomePageComponent implements OnInit {
     console.log("getEmployees(): ", this.employees)
     this.dataEmployees = this.employees;
     this.searchEmployees();
-    this.PaginationEmployees();
+    // this.PaginationEmployees();
   }
 
   PaginationEmployees(): void {
@@ -239,15 +231,31 @@ export class HomePageComponent implements OnInit {
   /**
    * Add & Edit Employee Modal
    */
+
+  // Form
+  firstName?: string;
+  lastName?: string;
+  birthday?: Date;
+  age?: number;
+  gender?: string;
   capitalize(data: any, command: any) {
-    const pattern = /^[A-Za-z]*$/; // ตรวจสอบเฉพาะตัวอักษร A-Z หรือ a-z เท่านั้น
     if (command == 'firstName') {
       this.firstName = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
-      // if (!pattern.test(data)) {
-      //   this.firstName = ''; // รีเซ็ตค่า firstName เป็นค่าว่าง
-      // } 
     } else if (command == 'lastName') {
       this.lastName = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
+    }
+  }
+
+  onInput(event: any ,command : any) {
+    let pattern: RegExp;
+    if(command == 'fullname'){
+    pattern = /^[^0-9๐-๙!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    } else {
+    pattern = /^[^0-9๐-๙!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]*$/;
+    }
+  
+    if (!pattern.test(event.target.value)) {
+      event.target.value = ''; // Reset input value if it doesn't match the pattern
     }
   }
 

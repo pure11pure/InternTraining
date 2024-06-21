@@ -34,7 +34,7 @@
               </div>
               <div nz-col nzSpan="5" class="inputModal">
                 <input nz-input placeholder="Basic usage" [(ngModel)]="fullname_filter" type="text" class="form-control"
-                  placeholder="" aria-describedby="basic-addon1"  />
+                  placeholder="" aria-describedby="basic-addon1" (input)="onInput($event, 'fullname')" />
               </div>
               <!-- อายุ -->
               <div nz-col nzSpan="3" class="headerModal">
@@ -81,7 +81,7 @@
               </div>
               <div nz-col nzSpan="5" class="inputModal">
                 <input nz-input placeholder="Basic usage" [(ngModel)]="createBy_filter" type="text" class="form-control"
-                  placeholder="" aria-describedby="basic-addon1" />
+                  placeholder="" aria-describedby="basic-addon1" (input)="onInput($event, '')"/>
               </div>
             </div> <!-- row 1 -->
             <div nz-row style="margin-inline: 10vh; margin: 20px; display: flex; justify-content: center;"
@@ -152,7 +152,7 @@
       </div>
       <div nz-col nzSpan="9" class="inputModal">
         <input nz-input placeholder="Basic usage" [(ngModel)]="firstName" type="text" class="form-control"
-          placeholder="" aria-describedby="basic-addon1"  pattern="[A-Za-z]+" (ngModelChange)="capitalize(firstName, 'firstName')"/>
+          placeholder="" aria-describedby="basic-addon1"  (ngModelChange)="capitalize($event, 'firstName')" (input)="onInput($event, '')"/>
       </div>
       <!-- นามสกุล -->
       <div nz-col nzSpan="3" class="headerModal">
@@ -160,7 +160,7 @@
       </div>
       <div nz-col nzSpan="9" class="inputModal">
         <input nz-input placeholder="Basic usage" [(ngModel)]="lastName" type="text" class="form-control" placeholder=""
-          aria-describedby="basic-addon1" (ngModelChange)="capitalize(lastName, 'lastName')" />
+          aria-describedby="basic-addon1" (ngModelChange)="capitalize(lastName, 'lastName')" (input)="onInput($event, '')"/>
       </div>
       <!-- วันเกิด -->
       <div nz-col nzSpan="3" class="headerModal">
