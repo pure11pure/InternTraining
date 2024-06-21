@@ -81,7 +81,7 @@ export class HomePageComponent implements OnInit {
     this.http.post<any>(
       'http://localhost:8778/pure-controller/jpa-delete', idUsers).toPromise().then((response) => {
         console.log("response post[jpa-delete] ");
-        this.searchEmployees('delete');
+        this.searchEmployees();
       })
   }
 
@@ -91,7 +91,7 @@ export class HomePageComponent implements OnInit {
       'http://localhost:8778/pure-controller/jpa-add', data).toPromise().then((response) => {
         console.log("response post [jpa-add] ");
         this.getAll();
-        this.searchEmployees('add');
+        this.searchEmployees();
       })
   }
 
@@ -101,7 +101,7 @@ export class HomePageComponent implements OnInit {
       'http://localhost:8778/pure-controller/jpa-edit', data).toPromise().then((response) => {
         console.log("response post [jpa-edit] ");
         this.getAll();
-        this.searchEmployees('edit');
+        this.searchEmployees();
       })
   }
 
@@ -150,9 +150,9 @@ export class HomePageComponent implements OnInit {
   TotalSize: number = 0;
 
   getEmployees(): void {
-    console.log("employees getEmployees", this.employees)
+    console.log("getEmployees(): ", this.employees)
     this.dataEmployees = this.employees;
-    this.searchEmployees('');
+    this.searchEmployees();
     this.PaginationEmployees();
   }
 
@@ -189,7 +189,7 @@ export class HomePageComponent implements OnInit {
   createBy_search?: string;
   birthday_search?: string;
 
-  searchFilter(){
+  searchFilter() {
     this.fullname_search = this.fullname_filter;
     this.idUsers_search = this.idUsers_filter;
     this.age_search = this.age_filter;
@@ -197,10 +197,10 @@ export class HomePageComponent implements OnInit {
     this.createDate_search = this.createDate_filter;
     this.createBy_search = this.createBy_filter;
     this.birthday_search = this.birthday_filter;
-    this.searchEmployees('');
+    this.searchEmployees();
   }
 
-  searchEmployees(command: string) {
+  searchEmployees() {
     const nameParts: string[] = this.fullname_search ? this.fullname_search.split(" ") : [];
     let [first_name = "", last_name = ""] = nameParts;
 
@@ -216,7 +216,6 @@ export class HomePageComponent implements OnInit {
     };
 
     this.searchApi(formData)
-    console.log("command[searchEmployees]: ", command)
   }
 
   clearFormFilter() {
@@ -240,7 +239,7 @@ export class HomePageComponent implements OnInit {
   /**
    * Add & Edit Employee Modal
    */
-  capitalize(data : any, command : any) {
+  capitalize(data: any, command: any) {
     const pattern = /^[A-Za-z]*$/; // ตรวจสอบเฉพาะตัวอักษร A-Z หรือ a-z เท่านั้น
     if (command == 'firstName') {
       this.firstName = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
@@ -342,9 +341,28 @@ export class HomePageComponent implements OnInit {
   }
 
   /**
-   * Notification
+   * Delete
    */
-  createNotification(type: string, command: string, detail : any): void {
+  deleteEmployee(user: any) {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this employee?',
+      nzContent: `<span>รหัสพนักงาน:  ${user.idUsers}</span><br>
+      <span>ชื่อ:  ${user.firstName} ${user.lastName}</span>`,
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.deleleApi(user.idUsers);
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+
+  /**
+  * Notification
+  */
+  createNotification(type: string, command: string, detail: any): void {
     let time = 3000;
     if (command == 'บันทึก') {
       this.notification.create(
@@ -373,10 +391,9 @@ export class HomePageComponent implements OnInit {
 
   }
 
-
   /**
-   * format
-   */
+ * format
+ */
 
   // คำนวณอายุ
   calculateAge(birthday: any): any {
@@ -408,27 +425,16 @@ export class HomePageComponent implements OnInit {
       // Sun Jan 01 2017 08:08:26 GMT+0700 > 2002-06-19T08:44:08.344Z
       const date = new Date(dateToString);
       const isoDate = date.toISOString(); // Convert to ISO 8601 format (UTC)
-      console.log("dateChange", isoDate)
+      // console.log("dateChange", isoDate)
       return isoDate;
     }
   }
 
-  /**
-   * Delete
-   */
-  deleteEmployee(user: any) {
-    this.modal.confirm({
-      nzTitle: 'Are you sure delete this employee?',
-      nzContent: `<span>รหัสพนักงาน:  ${user.idUsers}</span><br>
-      <span>ชื่อ:  ${user.firstName} ${user.lastName}</span>`,
-      nzOkText: 'Yes',
-      nzOkType: 'primary',
-      nzOkDanger: true,
-      nzOnOk: () => {
-        this.deleleApi(user.idUsers);
-      },
-      nzCancelText: 'No',
-      nzOnCancel: () => console.log('Cancel')
-    });
-  }
+
+
+
+
+
+
 }
+
