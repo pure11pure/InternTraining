@@ -1,0 +1,34 @@
+<nz-layout>
+    <div class="header">
+        <div nz-row>
+            <div style="margin: 16px;">
+                VDT0320 : ข้อมูลที่ต้องการค้นหา
+            </div>
+        </div>
+        <div nz-row>
+            <div nz-col nzSpan="5" class="header-text">
+                เลขที่ใบสรุป
+            </div>
+            <div nz-col nzSpan="5" class="header-text">
+                วันที่
+            </div>
+        </div>
+        <div nz-row>
+            <div nz-col nzSpan="5" class="inputModal" >
+                <input nz-input placeholder="เลขที่ใบสรุป" [(ngModel)]="input_vdtNo" type="text"
+                     class="form-control" />
+            </div>
+            <div nz-col nzSpan="5" class="inputModal">
+                <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
+                    style="width: 100%;">
+            </div>
+            <div nz-col nzSpan="5">
+                <button nz-button nzType="default">Default Button</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <nz-content>Content</nz-content>
+</nz-layout>
