@@ -1,0 +1,34 @@
+.header-text{
+    margin-top: 5%;
+}
+
+.list-course {
+    background-color: rgb(147, 176, 174); 
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.list-count-course{
+    background-color: rgb(196, 226, 224); 
+    margin: 5px;
+    border-radius: 5px;
+}
+.lesson-box {
+    background-color: rgb(201, 201, 201); 
+    height: 35px;
+    width: 30px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+.list-course:hover {
+    background-color: rgb(127, 154, 152); 
+}
+
+.list-course:active {
+    background-color: rgb(147, 176, 174); 
+}
+
+p{
+  text-align: center;  
+  margin: 5px;
+}

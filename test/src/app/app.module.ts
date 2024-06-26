@@ -15,12 +15,20 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { LoginComponent } from './login/login.component';
 
+// add
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { HomeComponent } from './home/home.component';
+  
+
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +38,10 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     IconsProviderModule,
     NzLayoutModule,
-    NzMenuModule
+    NzMenuModule,
+    NzInputModule,
+    NzGridModule,
+    NzButtonModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

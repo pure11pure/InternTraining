@@ -1,1 +1,19 @@
-<p>login works!</p>
+<div nz-row nzJustify="center" [nzGutter]="16">
+    <div class="header-text">
+        <p>Login</p>
+    </div>
+</div>
+
+
+
+<div nz-row nzJustify="center" [nzGutter]="16">
+    <div nz-col nzSpan="6">
+        <input nz-input type="text" class="" placeholder="username" [(ngModel)]="username">
+    </div>
+    <div nz-col nzSpan="6">
+        <input nz-input type="password" class="" placeholder="password" [(ngModel)]="password">
+    </div>
+    <div nz-col nzSpan="3">
+        <button nz-button nzType="default"  (click)="login(username, password)">login</button>
+    </div>
+</div>

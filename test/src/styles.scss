@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+* {
+    font-family: "Kanit", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+body {
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5 !important;
+  }
+
+$primary-color : #1A4D2E;
+$second-color : #E8DFCA;
+$third-color : #F5EFE6;
+$light-green : #57645c;
+  
+// * {
+//     font-family: "Prompt", sans-serif;
+//     font-weight: 400;
+//     font-style: normal;
+//   }
+
