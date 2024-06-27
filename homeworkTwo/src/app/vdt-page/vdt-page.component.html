@@ -54,7 +54,7 @@
                         <input nz-input [(ngModel)]="input_noBook" type="text" />
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
-                        <input nz-input [(ngModel)]="input_noNumber" type="text" />
+                        <input nz-input [(ngModel)]="input_noNumber" type="text"/>
                     </div>
                 </div>
                 <!-- row 3 -->
@@ -72,7 +72,7 @@
                         <input nz-input [(ngModel)]="input_dateOfPreparation" type="text" />
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
-                        <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00" />
+                        <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00" (input)="formatInputMoney($event)"  />
                     </div>
                 </div>
                 <!-- row 5 -->
@@ -81,7 +81,7 @@
                         เลขประจำตัวผู้เสียภาษีอากร
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
-                        <input nz-input [(ngModel)]="input_taxId" type="text" />
+                        <input nz-input [(ngModel)]="input_taxId" type="text" (input)="onInputChange_taxId($event)" />
                     </div>
                 </div>
                 <!-- row 6 -->
@@ -90,7 +90,7 @@
                         สาขาที่
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
-                        <input nz-input [(ngModel)]="input_branch" type="text" />
+                        <input nz-input [(ngModel)]="input_branch" type="text" (input)="onInputChange_branch($event)" />
                     </div>
                 </div>
                 <!-- row 7  -->
