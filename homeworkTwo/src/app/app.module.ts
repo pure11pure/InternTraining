@@ -19,6 +19,8 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 registerLocaleData(en);
 
@@ -38,7 +40,9 @@ registerLocaleData(en);
     NzMenuModule,
     NzGridModule,
     NzInputModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    NzButtonModule,
+    NzTableModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

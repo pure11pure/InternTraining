@@ -1,7 +1,8 @@
 <nz-layout>
     <div class="header">
+        <!-- Text Header -->
         <div nz-row>
-            <div style="margin: 16px;">
+            <div style="margin: 8px;">
                 VDT0320 : ข้อมูลที่ต้องการค้นหา
             </div>
         </div>
@@ -14,21 +15,181 @@
             </div>
         </div>
         <div nz-row>
-            <div nz-col nzSpan="5" class="inputModal" >
-                <input nz-input placeholder="เลขที่ใบสรุป" [(ngModel)]="input_vdtNo" type="text"
-                     class="form-control" />
+            <div nz-col nzSpan="5" class="inputModal">
+                <input nz-input [(ngModel)]="input_vdtNo" type="text" />
             </div>
             <div nz-col nzSpan="5" class="inputModal">
-                <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
-                    style="width: 100%;">
+                <input nz-input bsDatepicker [(ngModel)]="input_date" style="width: 100%;" ype="text">
             </div>
             <div nz-col nzSpan="5">
-                <button nz-button nzType="default">Default Button</button>
+                <button nz-button class="searchBtn">ค้นหา</button>
             </div>
         </div>
     </div>
 
+    <div class="detail">
+        <!-- Text Header -->
+        <div nz-row>
+            <div style="margin: 8px;">
+                VDT0320 : ข้อมูลแบบ ภ.พ.10
+            </div>
+        </div>
 
+        <!-- content -->
+        <div nz-row>
+            <!-- Left -->
+            <div nz-col class="detail-box-input" style="margin-bottom: 20px;">
+                <!-- row 1 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" style="margin-left: 20px;">
+                        เล่มที่
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 20px;">
+                        เลขที่
+                    </div>
+                </div>
+                <!-- row 2 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_noBook" type="text" />
+                    </div>
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_noNumber" type="text" />
+                    </div>
+                </div>
+                <!-- row 3 -->
+                <div nz-row nzJustify="center" style="margin-top: 20px;">
+                    <div nz-col nzSpan="9" style="margin-left: 20px;">
+                        วันที่จัดทำ ภ.พ.10
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 20px;">
+                        ยอดซื้อ
+                    </div>
+                </div>
+                <!-- row 4 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_dateOfPreparation" type="text" />
+                    </div>
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00" />
+                    </div>
+                </div>
+                <!-- row 5 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;">
+                        เลขประจำตัวผู้เสียภาษีอากร
+                    </div>
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_taxId" type="text" />
+                    </div>
+                </div>
+                <!-- row 6 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;">
+                        สาขาที่
+                    </div>
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_branch" type="text" />
+                    </div>
+                </div>
+                <!-- row 7  -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;">
+                        ชื่อสถานประกอบการ
+                    </div>
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_companyName" type="text" />
+                    </div>
+                </div>
+            </div>
+            <!-- right -->
+            <div nz-col class="detail-box-vat">
+                <!-- row 1 -->
+                <div nz-row nzJustify="center" style="margin-top: 5px;">
+                    <div nz-col nzSpan="9" style="margin-right: 40px; text-align: right;">
+                        Vat 7%
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 40px;">
+                        0.00
+                    </div>
+                </div>
+                <!-- row 2 -->
+                <div nz-row nzJustify="center" style="margin-top: 5px;">
+                    <div nz-col nzSpan="9" style="margin-right: 40px; text-align: right;">
+                        ภาษีที่ได้รับคือ(กรมสรรพากร)
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 40px;">
+                        0.00
+                    </div>
+                </div>
+                <!-- row 3 -->
+                <div nz-row nzJustify="center" style="margin-top: 5px;">
+                    <div nz-col nzSpan="9" style="margin-right: 40px; text-align: right;">
+                        ภาษีที่ได้รับคืนจากตัวแทน
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 40px;">
+                        0.00
+                    </div>
+                </div>
+                <!-- row 4 -->
+                <div nz-row nzJustify="center" style="margin-top: 5px;">
+                    <div nz-col nzSpan="9" style="margin-right: 40px; text-align: right;">
+                        ค่าธรรมเนียมในการคืน
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 40px;">
+                        0.00
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div nz-row>
+            <button nz-button class="addtoTableBtn">เพิ่ม</button>
+        </div>
 
-    <nz-content>Content</nz-content>
+        <!-- Table -->
+        <nz-table #basicTable [nzData]="listOfData" [nzShowPagination]="false">
+            <thead>
+                <tr>
+                    <th nzWidth="6%">เล่มที่อ้างอิงการขาย</th>
+                    <th nzWidth="6%">เลขที่อ้างอิงการขาย</th>
+                    <th nzWidth="6%">วันที่จัดทำ ภ.พ.10</th>
+                    <th nzWidth="10%">ชื่อสถานประกอบการ</th>
+                    <th nzWidth="10%">ยอดซื้อ</th>
+                    <th nzWidth="6%">ภาษีมูลค่าเพิ่ม</th>
+                    <th nzWidth="6%">ภาษีที่ได้รับคืน (กรมสรรพากร)</th>
+                    <th nzWidth="6%">ภาษีที่ได้รับคืน (ตัวแทน)</th>
+                    <th nzWidth="6%">ค่าธรรมเนียมในการคืน</th>
+                    <th nzWidth="2%">X</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data">
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>/ X</td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <div nz-row style="margin-bottom: 20px; text-align: center;">
+            <div nz-col nzSpan="6"></div>
+            <div nz-col nzSpan="6">
+                <button nz-button class="addTableToDataBaseBtn">บันทึก</button>
+                <button nz-button class="printBtn">พิมพ์ใบสรุป</button>
+            </div>
+            <div nz-col nzSpan="6">
+                <button nz-button class="clearBtn">ล้างจอภาพ</button>
+            </div>
+            <div nz-col nzSpan="6"></div>
+        </div>
+    </div>
+
 </nz-layout>

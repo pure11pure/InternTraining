@@ -25,4 +25,33 @@ export class VdtPageComponent implements OnInit {
   }
 
   input_vdtNo: string = "";
+  input_date : string = "";
+  input_noBook : string = "";
+  input_noNumber : string = "";
+  input_dateOfPreparation : string = "";
+  input_purchaseAmount : string = "";
+  input_taxId : string = "";
+  input_branch : string = "";
+  input_companyName : string = "";
+
+  listOfData: any[] = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park'
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park'
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park'
+    }
+  ];
 }
