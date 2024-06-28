@@ -69,7 +69,8 @@
                 <!-- row 4 -->
                 <div nz-row nzJustify="center">
                     <div nz-col nzSpan="9" class="inputModal">
-                        <input nz-input [(ngModel)]="input_dateOfPreparation" type="text" />
+                        <!-- <input nz-input [(ngModel)]="input_dateOfPreparation" type="text" /> -->
+                        <input nz-input bsDatepicker [(ngModel)]="input_dateOfPreparation" style="width: 100%;" ype="text">
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
                         <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00"
@@ -149,7 +150,7 @@
         </div>
 
         <!-- Table -->
-        <nz-table #basicTable [nzData]="listOfData" [nzShowPagination]="false">
+        <nz-table #basicTable [nzData]="listdata" [nzShowPagination]="false">
             <thead>
                 <tr>
                     <th nzWidth="6%">เล่มที่อ้างอิงการขาย</th>
@@ -165,16 +166,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of basicTable.data">
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.name }}</td>
+                <tr *ngFor="let data of listdata">
+                    <td>{{ data.noBook }}</td>
+                    <td>{{ data.noNumber }}</td>
+                    <td>{{ data.dateOfPreparation }}</td>
+                    <td>{{ data.companyName }}</td>
+                    <td>{{ data.purchaseAmount }}</td>
+                    <td>{{ data.vat }}</td>
+                    <td>{{ data.taxRefundRevenue }}</td>
+                    <td>{{ data.taxRefundAgent }}</td>
+                    <td>{{ data.taxRefundFee }}</td>
                     <td>/ X</td>
                 </tr>
             </tbody>
