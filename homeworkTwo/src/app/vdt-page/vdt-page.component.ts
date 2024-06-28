@@ -4,6 +4,7 @@ import { listLocales } from 'ngx-bootstrap/chronos'; //calendar[bootstrap]
 import { defineLocale } from 'ngx-bootstrap/chronos'; //calendar[bootstrap]
 import { thBeLocale } from 'ngx-bootstrap/locale'; //calendar[bootstrap]
 defineLocale('th-be', thBeLocale); //calendar[bootstrap]
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-vdt-page',
@@ -14,6 +15,7 @@ export class VdtPageComponent implements OnInit {
 
   constructor(
     private localeService: BsLocaleService, //calendar[bootstrap]
+    private http: HttpClient,
   ) {
     this.localeService.use(this.locale); //calendar[bootstrap]
   }
@@ -24,8 +26,14 @@ export class VdtPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getCalPurchaseAmountApi(purchaseAmount: any){
+    const url = `http://localhost:8778/pure-controller/two-get-cal-purchase`
+    return this.http.post<any>(url, purchaseAmount).toPromise();
+  }
+
   input_vdtNo: string = "";
   input_date : string = "";
+
   input_noBook : string = "";
   input_noNumber : string = "";
   input_dateOfPreparation : string = "";
@@ -34,10 +42,14 @@ export class VdtPageComponent implements OnInit {
   input_branch : string = "";
   input_companyName : string = "";
 
+  cal_purchaseAmount_vat : string = "0.00";
+  cal_purchaseAmount_refund_revenue: string = "0.00";
+  cal_purchaseAmount_refund_agent: string = "0.00";
+  cal_purchaseAmount_refund_fee: string = "0.00";
 
-  
-  errorMessage: string = "";
-
+  /**
+   * pattern
+   */
   originalValue_taxId : string = ""; 
   onInputChange_taxId(event: any) {
     let value = event.target.value;
@@ -64,7 +76,6 @@ export class VdtPageComponent implements OnInit {
 
   formatInputMoney(event: any) {
       let value = event.target.value;
-      // ตัดทุกตัวอักษรที่ไม่ใช่ตัวเลขหรือจุดทศนิยมออก
       value = value.replace(/[^\d.]/g, ''); // 120.50
       
       let parts = value.split('.'); // ['120', '50']
@@ -79,9 +90,32 @@ export class VdtPageComponent implements OnInit {
         parts[1] = parts[1].slice(0, 2); //ทศนิยม 2 ตำแหน่ง
         value = parts.join('.'); // 120.50
       }
-
+      this.cal_purchaseAmount(value); //cal_purchaseAmount
       event.target.value = this.addCommas(value);  //add comma
   
+  }
+
+  async cal_purchaseAmount(value: any){
+    const purchaseAmount = parseFloat(value);
+    console.log(purchaseAmount)
+
+    if(purchaseAmount > 0)
+    try {
+      const response = await this.getCalPurchaseAmountApi(purchaseAmount);
+      console.log(response)
+      this.cal_purchaseAmount_vat = response.vat.toFixed(2);
+      this.cal_purchaseAmount_refund_revenue = response.refundRevenue.toFixed(2);
+      this.cal_purchaseAmount_refund_agent = response.refundAgent.toFixed(2);
+      this.cal_purchaseAmount_refund_fee = response.refundFee.toFixed(2);
+    }  catch (error) {
+      console.error('get course API Error:', error);
+    }
+    else {
+      this.cal_purchaseAmount_vat = "0.00";
+      this.cal_purchaseAmount_refund_revenue = "0.00";
+      this.cal_purchaseAmount_refund_agent = "0.00";
+      this.cal_purchaseAmount_refund_fee = "0.00";
+    }
   }
 
   addCommas(value: string): string {
@@ -94,6 +128,19 @@ export class VdtPageComponent implements OnInit {
     }
     return part0 + part2;
   }
+
+
+  /**
+   * add to table
+   */
+  listdata: any[] = [];
+  addtoTable() {
+    console.log('add')
+    
+
+  }
+
+
 
 
 
