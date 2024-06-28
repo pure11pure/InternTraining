@@ -26,18 +26,6 @@ export class HomeComponent implements OnInit {
 
   listCourse: any[] = [];
 
-
-  userCountLesson: any[] = [
-    {
-      course: '101',
-      lessons: ['Lesson01', 'Lesson03']
-    },
-    {
-      course: '102',
-      lessons: ['Lesson02']
-    }
-  ]
-
   ngOnInit() {
     const username = localStorage.getItem('username');
     const position = localStorage.getItem('position');
@@ -46,9 +34,7 @@ export class HomeComponent implements OnInit {
       this.user = username;
       this.position = position;
     }
-
     this.start()
-
   }
 
   getCoursesApi(position: string) {
@@ -66,7 +52,6 @@ export class HomeComponent implements OnInit {
     return this.http.get<any>(url).toPromise();
   }
 
-  // 
   async getCourse(position: string): Promise<void> {
     try {
       const response = await this.getCoursesApi(position);
@@ -99,7 +84,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // 
+  // ที่เรียนไปแล้ว
   async getStudyListLessons(username: string): Promise<void> {
     try {
       const response = await this.getCourseAndLessonApi(username);
@@ -115,6 +100,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // คอร์สทั้งหมด
   async getListAllLessons(position: string): Promise<void> {
     try {
       const response = await this.getCourseAndListLessonApi(position);
@@ -131,10 +117,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // เอาคอร์สทั้งหมด มาดูว่าแต่ละคอร์สเรียนบทไหนแล้วบ้าง
   async createCoursetoListLesson(courseAndLessonsToStudy: any[], courseFromPosition: any[]): Promise<void> {
     for (let i = 0; i < courseFromPosition.length; i++) {
-      let course = courseFromPosition[i].course;
-      courseFromPosition[i].lessons = [];
+      let course = courseFromPosition[i].course; // 'Lesson01'
+      courseFromPosition[i].lessons = []; // สร้างที่เก็บบทที่เรียนไปแล้ว
 
       for (let j = 0; j < courseAndLessonsToStudy.length; j++) {
         if (courseAndLessonsToStudy[j].course === course) {
@@ -146,6 +133,7 @@ export class HomeComponent implements OnInit {
     console.log('Updated courseFromPosition:', courseFromPosition);
   }
 
+  // ----------------
   linkToCourse(course: any) {
     console.log(course.url)
     const newWindow = window.open('', '_blank');
@@ -185,6 +173,10 @@ export class HomeComponent implements OnInit {
     }
   }
   
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/'])
+  }
 
 
 
