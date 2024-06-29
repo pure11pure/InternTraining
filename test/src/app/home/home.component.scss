@@ -3,13 +3,13 @@
 }
 
 .list-course {
-    background-color: rgb(147, 176, 174); 
+    background-color: #A0937D; 
     margin: 5px;
     border-radius: 5px;
     cursor: pointer;
 }
 .list-count-course{
-    background-color: rgb(196, 226, 224); 
+    background-color: rgba(196, 156, 99, 0); 
     margin: 5px;
     border-radius: 5px;
 }
@@ -17,15 +17,20 @@
     background-color: rgb(201, 201, 201); 
     height: 35px;
     width: 30px;
-    border: 1px solid #000;
+    border: 1px solid #b5b5b5;
     border-radius: 5px;
 }
 .list-course:hover {
-    background-color: rgb(127, 154, 152); 
+    background-color: #E7D4B5; 
 }
 
 .list-course:active {
-    background-color: rgb(147, 176, 174); 
+    background-color: #E7D4B5; 
+}
+.list-course-study{
+    background-color: #E7D4B5; 
+    margin: 5px;
+    border-radius: 5px;
 }
 
 p{

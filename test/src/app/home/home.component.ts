@@ -70,6 +70,8 @@ export class HomeComponent implements OnInit {
           const lessons = this.checkLessons(course.numberLesson, listLearnLesson.lessons);
           console.log("lessons: ", lessons)
 
+          // const listLearnLessonNoQuiz = listLearnLesson.lessons
+          console.log("listLearnLessonNoQuiz", listLearnLesson.lessons)
           let numStudy = listLearnLesson.lessons.length //จำนวนที่เรียนไป
           course['lessons'] = lessons;
           course['numStudy'] = numStudy;
