@@ -79,7 +79,7 @@
                 </div>
                 <!-- row 5 -->
                 <div nz-row nzJustify="center">
-                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;" nz-tooltip nzTooltipTitle="เลข 13 หลัก (ไม่ต้องเว้น)" nzTooltipPlacement="right">
                         เลขประจำตัวผู้เสียภาษีอากร
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
@@ -88,7 +88,7 @@
                 </div>
                 <!-- row 6 -->
                 <div nz-row nzJustify="center">
-                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;" nz-tooltip nzTooltipTitle="xx123" nzTooltipPlacement="right">
                         สาขาที่
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
@@ -146,37 +146,40 @@
             </div>
         </div>
         <div nz-row>
-            <button nz-button class="addtoTableBtn" (click)="addtoTable()">เพิ่ม</button>
+            <button nz-button class="addtoTableBtn" (click)="addtoTable()">{{ modeedit ? "บันทึก" : "เพิ่ม" }}</button>
         </div>
 
         <!-- Table -->
-        <nz-table #basicTable [nzData]="listdata" [nzShowPagination]="false">
+        <nz-table #basicTable nzBordered [nzData]="listdata" [nzShowPagination]="false">
             <thead>
                 <tr>
                     <th nzWidth="6%">เล่มที่อ้างอิงการขาย</th>
                     <th nzWidth="6%">เลขที่อ้างอิงการขาย</th>
                     <th nzWidth="6%">วันที่จัดทำ ภ.พ.10</th>
-                    <th nzWidth="10%">ชื่อสถานประกอบการ</th>
-                    <th nzWidth="10%">ยอดซื้อ</th>
+                    <th nzWidth="8%">ชื่อสถานประกอบการ</th>
+                    <th nzWidth="8%">ยอดซื้อ</th>
                     <th nzWidth="6%">ภาษีมูลค่าเพิ่ม</th>
                     <th nzWidth="6%">ภาษีที่ได้รับคืน (กรมสรรพากร)</th>
                     <th nzWidth="6%">ภาษีที่ได้รับคืน (ตัวแทน)</th>
                     <th nzWidth="6%">ค่าธรรมเนียมในการคืน</th>
-                    <th nzWidth="2%">X</th>
+                    <th nzWidth="6%">X</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of listdata">
+                <tr *ngFor="let data of listdata; ; let i = index;">
                     <td>{{ data.noBook }}</td>
                     <td>{{ data.noNumber }}</td>
-                    <td>{{ data.dateOfPreparation }}</td>
+                    <td>{{ convertToBuddhistEra(data.dateOfPreparation) }}</td>
                     <td>{{ data.companyName }}</td>
                     <td>{{ data.purchaseAmount }}</td>
                     <td>{{ data.vat }}</td>
                     <td>{{ data.taxRefundRevenue }}</td>
                     <td>{{ data.taxRefundAgent }}</td>
                     <td>{{ data.taxRefundFee }}</td>
-                    <td>/ X</td>
+                    <td class="group-icon">
+                        <span nz-icon (click)="editRow(i)" nzType="edit" nzTheme="outline" class="icon-edit" nz-tooltip nzTooltipTitle="edit" nzTooltipPlacement="top"></span>
+                        <span nz-icon (click)="deleteRow(i)" nzType="delete" nzTheme="outline" class="icon-delete" nz-tooltip nzTooltipTitle="delete" nzTooltipPlacement="top"></span>
+                    </td>
                 </tr>
             </tbody>
         </nz-table>
@@ -188,7 +191,7 @@
                 <button nz-button class="printBtn">พิมพ์ใบสรุป</button>
             </div>
             <div nz-col nzSpan="6">
-                <button nz-button class="clearBtn">ล้างจอภาพ</button>
+                <button nz-button (click)="clearAll()" class="clearBtn">ล้างจอภาพ</button>
             </div>
             <div nz-col nzSpan="6"></div>
         </div>

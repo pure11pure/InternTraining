@@ -65,6 +65,30 @@ button {
     color : $whiteColor;
     width: 150px;
 }
+.group-icon{
+    text-align: center; 
+    vertical-align: middle;
+    margin: auto;
+}
+.icon-edit,.icon-delete {
+    background-color: bisque;
+    font-size: medium;
+    padding: 2px;
+    border-radius: 5px;  
+    cursor: pointer;
+    margin: 0 3px;
+    
+}
+
+.icon-edit:hover,.icon-delete:hover {
+    font-size: medium;
+    background-color: #bababa;
+}
+
+.icon-edit:active,.icon-delete:active {
+    font-size: medium;
+    background-color:bisque;
+}
 
 .addTableToDataBaseBtn{
     background-color: $greenColor;
