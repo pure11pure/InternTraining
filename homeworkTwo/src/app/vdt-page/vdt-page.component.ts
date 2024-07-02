@@ -22,26 +22,53 @@ export class VdtPageComponent implements OnInit {
 
   locale = 'th-be'; //calendar[bootstrap]
   locales = listLocales();  //calendar[bootstrap]
+  user = "monkey"
 
   ngOnInit(): void {
   }
 
+  // API
   getCalPurchaseAmountApi(purchaseAmount: any) {
     const url = `http://localhost:8778/pure-controller/two-get-cal-purchase`
     return this.http.post<any>(url, purchaseAmount).toPromise();
   }
 
+  findByVdtNoApi(vdtNo: string) {
+    const url = `http://localhost:8778/pure-controller/two-find-by-vdtNo`
+    const body = { vdt_no: vdtNo };
+    return this.http.post<any[]>(url, body).toPromise();
+  }
+
+  addTableApi(create_by: string, data: any) {
+    const url = `http://localhost:8778/pure-controller/two-add-db`
+    const body = {
+      create_by: create_by,
+      listData: data
+    };
+    return this.http.post<any>(url, body, { responseType: 'text' as 'json' }).toPromise();
+  }
+
+  editOrDeleteTableApi(data: any) {
+    const url = `http://localhost:8778/pure-controller/two-editOrDelete-db`
+    const body = { listData: data };
+    return this.http.post<any>(url, body, { responseType: 'text' as 'json' }).toPromise();
+  }
+
+
+  // search
   input_vdtNo: string = "";
   input_date: string = "";
 
+  // form
   input_noBook: string = "";
   input_noNumber: string = "";
-  input_dateOfPreparation: string = "";
+  input_dateOfPreparation?: Date;
   input_purchaseAmount: string = "";
   input_taxId: string = "";
   input_branch: string = "";
   input_companyName: string = "";
 
+  // back-end Cal
   cal_purchaseAmount_vat: string = "0.00";
   cal_purchaseAmount_refund_revenue: string = "0.00";
   cal_purchaseAmount_refund_agent: string = "0.00";
@@ -131,65 +158,93 @@ export class VdtPageComponent implements OnInit {
 
 
   /**
+   * Search
+   */
+
+  async search() {
+    console.log("search")
+    if (this.input_vdtNo && this.input_date) {
+      console.log("ค้นหา 2 อย่าง")
+    } else if (this.input_date) {
+      console.log(this.input_date)
+      console.log(new Date(this.input_date))
+      console.log("รอก่อน ยังไม่ไได้ทำ")
+    } else if (this.input_vdtNo) {
+      console.log(this.input_vdtNo)
+      try {
+        const list = await this.findByVdtNoApi(this.input_vdtNo)
+        console.log(list)
+        this.listdata = list;
+      } catch (error) {
+        console.error('generateRandomString Error:', error);
+      }
+    } else {
+      console.log("ไม่กรอก แต่กด")
+      this.listdata = []
+    }
+    this.set = this.listdata
+    this.input_vdtNo = ""
+    this.input_date = ""
+
+
+  }
+
+  /**
    * add to table
    */
   listdata: any[] = [
-    {
-      noBook: "PO123",
-      noNumber: "321",
-      dateOfPreparation: "Tue Jun 11 2024 10:39:53 GMT+0700 (Indochina Time)",
-      purchaseAmount: "187,932",
-      taxId: "1101501167631",
-      branch: "KL832",
-      companyName: "company"
-    }
   ];
 
+  set: any[] = [];
+
   addtoTable() {
-    console.log('add')
+    console.log('add / save')
 
     let editItem = {};
     let newItem = {};
     if (this.modeedit) {
       editItem = {
+        id: this.listdata[this.indexEdit].id ,
         noBook: this.input_noBook, //เล่มที่
         noNumber: this.input_noNumber, //เลขที่
         dateOfPreparation: this.input_dateOfPreparation, //วันที่จัดทำ ก.พ. 
         companyName: this.input_companyName, //สถานประกอบการ
         purchaseAmount: this.input_purchaseAmount, //ยอดซื้อ
         vat: this.cal_purchaseAmount_vat, //ภาษีมูลค่าเพิ่ม
-        taxRefundRevenue: this.cal_purchaseAmount_refund_revenue, //ภาษีที่ได้รับคืน (กรมสรรพากร)
+        taxRefundRevenueDepartment: this.cal_purchaseAmount_refund_revenue, //ภาษีที่ได้รับคืน (กรมสรรพากร)
         taxRefundAgent: this.cal_purchaseAmount_refund_agent, //ภาษีที่ได้รับคืน (ตัวแทน)
         taxRefundFee: this.cal_purchaseAmount_refund_fee, //ค่าธรรมเนียมในการคืน
         taxId: this.input_taxId.substring(0, 13), //[เลขประจำตัวผู้เสียภาษีอากร]
         branch: this.input_branch.substring(0, 5), //[สาขาที่]
-        create_by: this.listdata[this.indexEdit].create_by, //รอบแรกครั้งเดียว
-        create_date: this.listdata[this.indexEdit].create_date, //รอบแรกครั้งเดียว
-        update_by: "pure",
-        update_date: new Date(),
-        vdt_no: 0
+        createBy: this.listdata[this.indexEdit].createBy, //รอบแรกครั้งเดียว
+        createDate: this.listdata[this.indexEdit].createDate, //รอบแรกครั้งเดียว
+        updateBy: this.user,
+        updateDate: new Date(),
+        vdtNo: this.listdata[this.indexEdit].vdtNo
       };
 
       newItem = {};
 
     } else {
+
       newItem = {
+        id : 0,
         noBook: this.input_noBook, //เล่มที่
         noNumber: this.input_noNumber, //เลขที่
         dateOfPreparation: this.input_dateOfPreparation, //วันที่จัดทำ ก.พ. 
         companyName: this.input_companyName, //สถานประกอบการ
-        purchaseAmount: this.input_purchaseAmount, //ยอดซื้อ
+        purchaseAmount: this.input_purchaseAmount.replace(",", ''), //ยอดซื้อ
         vat: this.cal_purchaseAmount_vat, //ภาษีมูลค่าเพิ่ม
-        taxRefundRevenue: this.cal_purchaseAmount_refund_revenue, //ภาษีที่ได้รับคืน (กรมสรรพากร)
+        taxRefundRevenueDepartment: this.cal_purchaseAmount_refund_revenue, //ภาษีที่ได้รับคืน (กรมสรรพากร)
         taxRefundAgent: this.cal_purchaseAmount_refund_agent, //ภาษีที่ได้รับคืน (ตัวแทน)
         taxRefundFee: this.cal_purchaseAmount_refund_fee, //ค่าธรรมเนียมในการคืน
         taxId: this.input_taxId.substring(0, 13), //[เลขประจำตัวผู้เสียภาษีอากร]
         branch: this.input_branch.substring(0, 5), //[สาขาที่]
-        create_by: "pure", //รอบแรกครั้งเดียว
-        create_date: new Date(), //รอบแรกครั้งเดียว
-        update_by: "pure",
-        update_date: new Date(),
-        vdt_no: 0
+        createBy: this.user, //รอบแรกครั้งเดียว
+        createDate: new Date(), //รอบแรกครั้งเดียว
+        updateBy: this.user,
+        updateDate: new Date(),
+        vdtNo: 0
       };
 
       editItem = {};
@@ -205,13 +260,16 @@ export class VdtPageComponent implements OnInit {
     if (this.input_taxId.substring(0, 13).length == 13 && this.input_branch.substring(0, 5).length == 5 && isComplete) {
       console.log("ครบ")
       if (this.modeedit) {
+        console.log("mode: " , this.modeedit)
         this.listdata[this.indexEdit] = editItem;
         this.modeedit = false;
         this.indexEdit = -1;
       } else {
+        console.log("mode: " , this.modeedit)
         this.listdata.push(newItem)
       }
-      this.clearAll();
+      this.set = this.listdata
+      this.clearSome();
     }
     else if (!isComplete) {
       alert("กรอกข้อมูลให้ครบ")
@@ -227,34 +285,60 @@ export class VdtPageComponent implements OnInit {
     }
 
   }
+
   deleteRow(index: number) {
     this.listdata.splice(index, 1);
+    this.modeedit = false;
+    this.indexEdit = -1;
   }
 
   modeedit: boolean = false;
   indexEdit: number = -1;
   editRow(index: number) {
-    console.log(index)
+    console.log(this.listdata[index])
     this.modeedit = true;
     this.indexEdit = index;
 
     this.input_noBook = this.listdata[index].noBook;
     this.input_noNumber = this.listdata[index].noNumber;
-    this.input_dateOfPreparation = this.listdata[index].dateOfPreparation;
-    this.input_purchaseAmount = this.listdata[index].purchaseAmount;
+    
+    this.input_dateOfPreparation = new Date(this.listdata[index].dateOfPreparation);
+    this.input_purchaseAmount = this.addCommas(this.listdata[index].purchaseAmount);
     this.input_taxId = this.listdata[index].taxId;
     this.input_branch = this.listdata[index].branch;
     this.input_companyName = this.listdata[index].companyName;
-    this.cal_purchaseAmount(this.listdata[index].purchaseAmount)
+    console.log(this.listdata[index].purchaseAmount.replace(",", ""))
+    this.cal_purchaseAmount(this.listdata[index].purchaseAmount.replace(",", ""))
+  }
+
+  /**
+   * Back-end
+   */
+  async addTable() {
+    console.log("add Table To DB")
+    try {
+      if (this.listdata[0].vdtNo) {
+        console.log("edit", this.listdata)
+        const message = await this.editOrDeleteTableApi(this.listdata)
+        console.log(message)
+      } else {
+        console.log("add",this.listdata)
+        const vdtNo = await this.addTableApi(this.user, this.listdata)
+        console.log(vdtNo);
+      }
+      this.clearAll()
+    } catch (error) {
+      console.error('generateRandomString Error:', error);
+    }
+
   }
 
 
 
-
-  clearAll() {
+  clearSome() {
     this.input_noBook = '';
     this.input_noNumber = '';
-    this.input_dateOfPreparation = '';
+    this.input_dateOfPreparation = undefined;
     this.input_purchaseAmount = '';
     this.input_taxId = '';
     this.input_branch = '';
@@ -264,6 +348,17 @@ export class VdtPageComponent implements OnInit {
     this.cal_purchaseAmount_refund_agent = "0.00";
     this.cal_purchaseAmount_refund_fee = "0.00";
   }
+
+  clearAll(){
+    this.clearSome()
+    this.modeedit = false;
+    this.indexEdit = -1;
+    this.listdata = [];
+    this.set = this.listdata;
+  }
+
+
+
   // convert
   convertToBuddhistEra(dateString: any) {
     const date = new Date(dateString);
@@ -272,5 +367,20 @@ export class VdtPageComponent implements OnInit {
     const year = date.getFullYear() + 543;
 
     return `${day}/${month}/${year}`;
+  }
+
+  // เปลี่ยนรูปแบบวันที่
+  formatDateChange(dateToString: string) {
+    // console.log(dateToString)
+    const date = new Date(dateToString);
+    if (isNaN(date.getTime())) {
+      return "";
+    } else {
+      // Sun Jan 01 2017 08:08:26 GMT+0700 > 2002-06-19T08:44:08.344Z
+      const date = new Date(dateToString);
+      const isoDate = date.toISOString(); // Convert to ISO 8601 format (UTC)
+      // console.log("dateChange", isoDate)
+      return isoDate;
+    }
   }
 }

@@ -22,7 +22,7 @@
                 <input nz-input bsDatepicker [(ngModel)]="input_date" style="width: 100%;" ype="text">
             </div>
             <div nz-col nzSpan="5">
-                <button nz-button class="searchBtn">ค้นหา</button>
+                <button nz-button class="searchBtn" (click)="search()">ค้นหา</button>
             </div>
         </div>
     </div>
@@ -150,7 +150,7 @@
         </div>
 
         <!-- Table -->
-        <nz-table #basicTable nzBordered [nzData]="listdata" [nzShowPagination]="false">
+        <nz-table #basicTable nzBordered [nzData]="set" [nzShowPagination]="false">
             <thead>
                 <tr>
                     <th nzWidth="6%">เล่มที่อ้างอิงการขาย</th>
@@ -166,14 +166,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of listdata; ; let i = index;">
+                <tr *ngFor="let data of listdata; let i = index;">
                     <td>{{ data.noBook }}</td>
                     <td>{{ data.noNumber }}</td>
                     <td>{{ convertToBuddhistEra(data.dateOfPreparation) }}</td>
                     <td>{{ data.companyName }}</td>
-                    <td>{{ data.purchaseAmount }}</td>
+                    <td>{{ addCommas(data.purchaseAmount) }}</td>
                     <td>{{ data.vat }}</td>
-                    <td>{{ data.taxRefundRevenue }}</td>
+                    <td>{{ data.taxRefundRevenueDepartment }}</td>
                     <td>{{ data.taxRefundAgent }}</td>
                     <td>{{ data.taxRefundFee }}</td>
                     <td class="group-icon">
@@ -187,7 +187,7 @@
         <div nz-row style="margin-bottom: 20px; text-align: center;">
             <div nz-col nzSpan="6"></div>
             <div nz-col nzSpan="6">
-                <button nz-button class="addTableToDataBaseBtn">บันทึก</button>
+                <button nz-button class="addTableToDataBaseBtn" (click)="addTable()">บันทึก</button>
                 <button nz-button class="printBtn">พิมพ์ใบสรุป</button>
             </div>
             <div nz-col nzSpan="6">
