@@ -24,6 +24,16 @@
             <div nz-col nzSpan="5">
                 <button nz-button class="searchBtn" (click)="search()">ค้นหา</button>
             </div>
+            <nz-modal [(nzVisible)]="visibleSearchDate" nzTitle="เลือกเลขที่ใบสรุป"
+                (nzOnCancel)="visibleSearchDate = !visibleSearchDate " [nzFooter]="null" class="modalSelectVdt">
+                <ng-container *ngIf="listVdtNo.length > 0">
+                    <div *ngFor="let vdt of listVdtNo;" class="listVdt" (click)="selectVdtNo(vdt.vdt_no)">{{vdt.vdt_no}}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="listVdtNo.length == 0">
+                    <div class="modalSelectVdt"> ไม่มีข้อมูล</div>
+                </ng-container>
+            </nz-modal>
         </div>
     </div>
 
@@ -70,7 +80,8 @@
                 <div nz-row nzJustify="center">
                     <div nz-col nzSpan="9" class="inputModal">
                         <!-- <input nz-input [(ngModel)]="input_dateOfPreparation" type="text" /> -->
-                        <input nz-input bsDatepicker [(ngModel)]="input_dateOfPreparation" style="width: 100%;" ype="text">
+                        <input nz-input bsDatepicker [(ngModel)]="input_dateOfPreparation" style="width: 100%;"
+                            ype="text">
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
                         <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00"
@@ -79,7 +90,8 @@
                 </div>
                 <!-- row 5 -->
                 <div nz-row nzJustify="center">
-                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;" nz-tooltip nzTooltipTitle="เลข 13 หลัก (ไม่ต้องเว้น)" nzTooltipPlacement="right">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;" nz-tooltip
+                        nzTooltipTitle="เลข 13 หลัก (ไม่ต้องเว้น)" nzTooltipPlacement="right">
                         เลขประจำตัวผู้เสียภาษีอากร
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
@@ -88,7 +100,8 @@
                 </div>
                 <!-- row 6 -->
                 <div nz-row nzJustify="center">
-                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;" nz-tooltip nzTooltipTitle="xx123" nzTooltipPlacement="right">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;" nz-tooltip
+                        nzTooltipTitle="xx123" nzTooltipPlacement="right">
                         สาขาที่
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
@@ -131,7 +144,7 @@
                         ภาษีที่ได้รับคืนจากตัวแทน
                     </div>
                     <div nz-col nzSpan="9" style="margin-left: 40px;">
-                       {{cal_purchaseAmount_refund_agent}}
+                        {{cal_purchaseAmount_refund_agent}}
                     </div>
                 </div>
                 <!-- row 4 -->
@@ -177,13 +190,18 @@
                     <td>{{ data.taxRefundAgent }}</td>
                     <td>{{ data.taxRefundFee }}</td>
                     <td class="group-icon">
-                        <span nz-icon (click)="editRow(i)" nzType="edit" nzTheme="outline" class="icon-edit" nz-tooltip nzTooltipTitle="edit" nzTooltipPlacement="top"></span>
-                        <span nz-icon (click)="deleteRow(i)" nzType="delete" nzTheme="outline" class="icon-delete" nz-tooltip nzTooltipTitle="delete" nzTooltipPlacement="top"></span>
+                        <span nz-icon (click)="editRow(i)" nzType="edit" nzTheme="outline" class="icon-edit" nz-tooltip
+                            nzTooltipTitle="edit" nzTooltipPlacement="top"></span>
+                        <span nz-icon  nzType="delete" nzTheme="outline" class="icon-delete"
+                            nz-tooltip nzTooltipTitle="delete" nzTooltipPlacement="top" nz-popconfirm
+                            nzPopconfirmTitle="Are you sure delete this row?" nzPopconfirmPlacement="bottom"
+                            (nzOnConfirm)="confirm(i)" (nzOnCancel)="cancel()"></span>
                     </td>
                 </tr>
             </tbody>
         </nz-table>
 
+        <!-- Button -->
         <div nz-row style="margin-bottom: 20px; text-align: center;">
             <div nz-col nzSpan="6"></div>
             <div nz-col nzSpan="6">
