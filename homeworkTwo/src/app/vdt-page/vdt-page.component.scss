@@ -1,6 +1,6 @@
 @import '../../styles.scss';
 
-.header,    
+.header,
 .detail {
     background-color: rgb(255, 255, 255);
     border-radius: 6px;
@@ -12,16 +12,17 @@
     margin-left: 24px;
 }
 
-.listVdt{
+.listVdt {
     cursor: pointer;
 }
 
-.listVdt:hover{
+.listVdt:hover {
     background-color: antiquewhite;
 }
 
 
-.detail-box-input, .detail-box-vat{
+.detail-box-input,
+.detail-box-vat {
     position: relative;
     width: 48vw;
     background-color: rgb(255, 255, 255);
@@ -31,12 +32,13 @@
     border: 1px solid #bababa;
     margin-top: 0px;
 }
+
 .detail-box-input::before {
     content: "ภ.พ.10";
-  position: absolute;
-  top: -10px;
-  background-color: white;
-  font-size:small;
+    position: absolute;
+    top: -10px;
+    background-color: white;
+    font-size: small;
 }
 
 .detail-box-vat::before {
@@ -44,7 +46,7 @@
     position: absolute;
     top: -10px;
     background-color: white;
-    font-size:small;
+    font-size: small;
 }
 
 .inputModal {
@@ -52,7 +54,7 @@
     align-items: center;
     margin-bottom: 12px;
     margin-left: 24px;
-    
+
 }
 
 // button
@@ -64,75 +66,97 @@ button {
 
 .searchBtn {
     background-color: $greenColor;
-    color : $whiteColor;
+    color: $whiteColor;
     margin-left: 20px;
 }
 
-.addtoTableBtn{
+.addtoTableBtn {
     background-color: $greenColor;
-    color : $whiteColor;
+    color: $whiteColor;
     width: 150px;
 }
-.group-icon{
-    text-align: center; 
+
+.group-icon {
+    text-align: center;
     vertical-align: middle;
     margin: auto;
 }
-.icon-edit,.icon-delete {
+
+.icon-edit,
+.icon-delete {
     background-color: bisque;
     font-size: medium;
     padding: 2px;
-    border-radius: 5px;  
+    border-radius: 5px;
     cursor: pointer;
     margin: 0 3px;
-    
+
 }
 
-.icon-edit:hover,.icon-delete:hover {
+.icon-edit:hover,
+.icon-delete:hover {
     font-size: medium;
     background-color: #bababa;
 }
 
-.icon-edit:active,.icon-delete:active {
+.icon-edit:active,
+.icon-delete:active {
     font-size: medium;
-    background-color:bisque;
+    background-color: bisque;
 }
 
-.addTableToDataBaseBtn{
+.addTableToDataBaseBtn {
     background-color: $greenColor;
-    color : $whiteColor;
+    color: $whiteColor;
     width: 100px;
 }
 
-.printBtn{
+.printBtn {
     background-color: $yellowColor;
-    color : $whiteColor;
+    color: $whiteColor;
     width: 120px;
     margin-left: 10px;
 }
 
-.clearBtn{
+.clearBtn {
     background-color: $orangeColor;
-    color : $whiteColor;
+    color: $whiteColor;
     width: 120px;
 }
 
 // table
-::ng-deep .ant-table-thead > tr > th {
+::ng-deep .ant-table-thead>tr>th {
     text-align: center !important;
 }
-::ng-deep .ant-table-thead > tr {
+
+::ng-deep .ant-table-thead>tr {
     border-radius: 5px !important;
-  }
+}
 
 
-nz-table{
+nz-table {
     width: 97vw;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 5px;
+    // border: 1px solid #bababa;
+}
+
+::ng-deep .ant-table.ant-table-bordered > .ant-table-container {
+    border-radius: 5px !important;
     border: 1px solid #bababa;
 }
 
-
+::ng-deep .ant-table-container table > thead > tr:first-child th:first-child {
+    border-top-left-radius: 5px;
+}
+::ng-deep .ant-table-container table > thead > tr:first-child th:last-child {
+    border-top-right-radius: 5px;
+}
+::ng-deep .ant-table-container table > tbody > tr:last-child td:first-child {
+    border-bottom-left-radius: 5px;
+}
+::ng-deep .ant-table-container table > tbody > tr:last-child td:last-child {
+    border-bottom-right-radius: 5px;
+}
