@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   //API
   loginApi(username: string, password: string) {
-    const url = `http://localhost:8778/pure-controller/t-login?password=${password}&username=${username}`
+    const url = `http://localhost:8778/test-controller/t-login?password=${password}&username=${username}`
     return this.http.get<any>(url).toPromise();
   }
 

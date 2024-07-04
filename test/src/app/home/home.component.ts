@@ -38,17 +38,17 @@ export class HomeComponent implements OnInit {
   }
 
   getCoursesApi(position: string) {
-    const url = `http://localhost:8778/pure-controller/t-get-courses?position=${position}`
+    const url = `http://localhost:8778/test-controller/t-get-courses?position=${position}`
     return this.http.get<any>(url).toPromise();
   }
 
   getCourseAndLessonApi(username: string) {
-    const url = `http://localhost:8778/pure-controller/t-get-courses-to-learn-lesson-form-username?username=${username}`
+    const url = `http://localhost:8778/test-controller/t-get-courses-to-learn-lesson-form-username?username=${username}`
     return this.http.get<any>(url).toPromise();
   }
 
   getCourseAndListLessonApi(position: string) {
-    const url = `http://localhost:8778/pure-controller/t-get-courseAndListlessons-form-position?position=${position}`
+    const url = `http://localhost:8778/test-controller/t-get-courseAndListlessons-form-position?position=${position}`
     return this.http.get<any>(url).toPromise();
   }
 
@@ -140,7 +140,8 @@ export class HomeComponent implements OnInit {
     console.log(course.url)
     const newWindow = window.open('', '_blank');
     if (newWindow) {
-      const url = `${course.url}?username=${this.user}&position=${this.position}&course=${course.course}`; // ส่งค่าที่ต้องการเก็บผ่าน URL parameters
+      const url = `${course.url}?username=${this.user}&course=${course.course}`; // ส่งค่าที่ต้องการเก็บผ่าน URL parameters
+      // const url = `${course.url}?username=${this.user}&position=${this.position}&course=${course.course}`; // ส่งค่าที่ต้องการเก็บผ่าน URL parameters
       newWindow.location.href = url;
     }
   }
