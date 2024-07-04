@@ -12,13 +12,76 @@
     margin-left: 24px;
 }
 
+// modal
 .listVdt {
     cursor: pointer;
 }
 
 .listVdt:hover {
-    background-color: antiquewhite;
+    background-color: $greenLightColor;
+    border-radius: 2px;
 }
+
+// modal: radius
+::ng-deep .ant-modal-content {
+    border-radius: 5px;
+}
+
+::ng-deep .ant-modal-header {
+    background: $greenColor;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+// modal : text header
+::ng-deep .ant-modal-title {
+    color: $whiteColor;
+}
+
+// modal : x
+::ng-deep .ant-modal-close-icon:hover {
+    color: $whiteColor;
+    border-radius: 10px;
+    background-color: $greenLightColor;
+}
+
+// modal : x
+::ng-deep .ant-modal-close-icon {
+    color: $whiteColor;
+}
+
+// datepicker : header
+::ng-deep .theme-green .bs-datepicker-head {
+    background-color: $greenColor;
+}
+
+// datepicker : วันของเดือนปัจจุบัน
+::ng-deep .bs-datepicker-body table td:not(.disabled):not(.week) span:not(.disabled):not(.is-other-month) {
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+
+::ng-deep .bs-datepicker-body table td:not(.disabled):not(.week) span:not(.disabled):not(.is-other-month):hover {
+    background-color: $greenColor !important;
+    color: $whiteColor;
+}
+
+// datepicker : selected
+::ng-deep .bs-datepicker-body table td span.selected,
+.bs-datepicker-body table td.selected span {
+    color: $whiteColor;
+    background: $greenColor !important;
+}
+
+// datepicker : week
+::ng-deep .theme-green .bs-datepicker-body table td.week span {
+    color: $greenColor;
+}
+
+::ng-deep .bg-custom {
+    background-color: $yellowLightColor !important;
+    // color: $whiteColor;
+  }
 
 
 .detail-box-input,
@@ -90,13 +153,14 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin: 0 3px;
-
+    transition: background-color 0.5s ease;
 }
 
 .icon-edit:hover,
 .icon-delete:hover {
     font-size: medium;
     background-color: #bababa;
+
 }
 
 .icon-edit:active,
@@ -129,34 +193,27 @@ button {
     text-align: center !important;
 }
 
-::ng-deep .ant-table-thead>tr {
+::ng-deep .ant-table.ant-table-bordered>.ant-table-container {
     border-radius: 5px !important;
-}
-
-
-nz-table {
+    border: 1px solid whitesmoke;
     width: 97vw;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
-    border-radius: 5px;
-    // border: 1px solid #bababa;
 }
 
-::ng-deep .ant-table.ant-table-bordered > .ant-table-container {
-    border-radius: 5px !important;
-    border: 1px solid #bababa;
-}
-
-::ng-deep .ant-table-container table > thead > tr:first-child th:first-child {
+::ng-deep .ant-table-container table>thead>tr:first-child th:first-child {
     border-top-left-radius: 5px;
 }
-::ng-deep .ant-table-container table > thead > tr:first-child th:last-child {
+
+::ng-deep .ant-table-container table>thead>tr:first-child th:last-child {
     border-top-right-radius: 5px;
 }
-::ng-deep .ant-table-container table > tbody > tr:last-child td:first-child {
+
+::ng-deep .ant-table-container table>tbody>tr:last-child td:first-child {
     border-bottom-left-radius: 5px;
 }
-::ng-deep .ant-table-container table > tbody > tr:last-child td:last-child {
+
+::ng-deep .ant-table-container table>tbody>tr:last-child td:last-child {
     border-bottom-right-radius: 5px;
 }

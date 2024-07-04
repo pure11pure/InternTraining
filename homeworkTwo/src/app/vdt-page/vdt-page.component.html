@@ -19,20 +19,24 @@
                 <input nz-input [(ngModel)]="input_vdtNo" type="text" />
             </div>
             <div nz-col nzSpan="5" class="inputModal">
-                <input nz-input bsDatepicker [(ngModel)]="input_date" style="width: 100%;" ype="text">
+                <input nz-input bsDatepicker [(ngModel)]="input_date" style="width: 100%;" type="text"
+                    [bsConfig]="{ isAnimated: true }" [dateCustomClasses]="dateCustomClasses">
             </div>
             <div nz-col nzSpan="5">
                 <button nz-button class="searchBtn" (click)="search()">ค้นหา</button>
             </div>
             <nz-modal [(nzVisible)]="visibleSearchDate" nzTitle="เลือกเลขที่ใบสรุป"
                 (nzOnCancel)="visibleSearchDate = !visibleSearchDate " [nzFooter]="null" class="modalSelectVdt">
-                <ng-container *ngIf="listVdtNo.length > 0">
-                    <div *ngFor="let vdt of listVdtNo;" class="listVdt" (click)="selectVdtNo(vdt.vdt_no)">{{vdt.vdt_no}}
+                <ng-template nzModalContent>
+                    <div *ngIf="listVdtNo.length > 0 && visibleSearchDate == true">
+                        <div *ngFor="let vdt of listVdtNo;" class="listVdt" (click)="selectVdtNo(vdt.vdt_no)">
+                            {{vdt.vdt_no}}
+                        </div>
                     </div>
-                </ng-container>
-                <ng-container *ngIf="listVdtNo.length == 0">
-                    <div class="modalSelectVdt"> ไม่มีข้อมูล</div>
-                </ng-container>
+                    <div *ngIf="listVdtNo.length == 0 && visibleSearchDate == true">
+                        <div class="modalSelectVdt"> ไม่มีข้อมูล</div>
+                    </div>
+                </ng-template>
             </nz-modal>
         </div>
     </div>
@@ -81,7 +85,8 @@
                     <div nz-col nzSpan="9" class="inputModal">
                         <!-- <input nz-input [(ngModel)]="input_dateOfPreparation" type="text" /> -->
                         <input nz-input bsDatepicker [(ngModel)]="input_dateOfPreparation" style="width: 100%;"
-                            ype="text">
+                            type="text" [bsConfig]="{ isAnimated: true }" [outsideClick]="false"
+                            [dateCustomClasses]="dateCustomClasses">
                     </div>
                     <div nz-col nzSpan="9" class="inputModal">
                         <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00"
@@ -158,18 +163,19 @@
                 </div>
             </div>
         </div>
+        <!-- Button [add to table] -->
         <div nz-row>
             <button nz-button class="addtoTableBtn" (click)="addtoTable()">{{ modeedit ? "บันทึก" : "เพิ่ม" }}</button>
         </div>
 
         <!-- Table -->
-        <nz-table #basicTable nzBordered [nzData]="set" [nzShowPagination]="false" >
+        <nz-table #basicTable nzBordered [nzData]="set" [nzShowPagination]="false">
             <thead>
                 <tr>
                     <th nzWidth="6%">เล่มที่อ้างอิงการขาย</th>
                     <th nzWidth="6%">เลขที่อ้างอิงการขาย</th>
                     <th nzWidth="6%">วันที่จัดทำ ภ.พ.10</th>
-                    <th nzWidth="8%">ชื่อสถานประกอบการ</th>
+                    <th nzWidth="10%">ชื่อสถานประกอบการ</th>
                     <th nzWidth="8%">ยอดซื้อ</th>
                     <th nzWidth="6%">ภาษีมูลค่าเพิ่ม</th>
                     <th nzWidth="6%">ภาษีที่ได้รับคืน (กรมสรรพากร)</th>
@@ -192,8 +198,8 @@
                     <td class="group-icon">
                         <span nz-icon (click)="editRow(i)" nzType="edit" nzTheme="outline" class="icon-edit" nz-tooltip
                             nzTooltipTitle="edit" nzTooltipPlacement="top"></span>
-                        <span nz-icon  nzType="delete" nzTheme="outline" class="icon-delete"
-                            nz-tooltip nzTooltipTitle="delete" nzTooltipPlacement="top" nz-popconfirm
+                        <span nz-icon nzType="delete" nzTheme="outline" class="icon-delete" nz-tooltip
+                            nzTooltipTitle="delete" nzTooltipPlacement="top" nz-popconfirm
                             nzPopconfirmTitle="Are you sure delete this row?" nzPopconfirmPlacement="bottom"
                             (nzOnConfirm)="confirm(i)" (nzOnCancel)="cancel()"></span>
                     </td>
@@ -201,7 +207,7 @@
             </tbody>
         </nz-table>
 
-        <!-- Button -->
+        <!-- Button [add to DB, print, clearAll] -->
         <div nz-row style="margin-bottom: 20px; text-align: center;">
             <div nz-col nzSpan="6"></div>
             <div nz-col nzSpan="6">

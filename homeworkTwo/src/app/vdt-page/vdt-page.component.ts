@@ -7,6 +7,7 @@ defineLocale('th-be', thBeLocale); //calendar[bootstrap]
 import { HttpClient } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { DatepickerDateCustomClasses } from 'ngx-bootstrap/datepicker'; //calendar[option]
 
 
 @Component({
@@ -15,6 +16,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   styleUrls: ['./vdt-page.component.scss']
 })
 export class VdtPageComponent implements OnInit {
+  dateCustomClasses?: DatepickerDateCustomClasses[];
 
   constructor(
     private localeService: BsLocaleService, //calendar[bootstrap]
@@ -23,11 +25,19 @@ export class VdtPageComponent implements OnInit {
     private notification: NzNotificationService
   ) {
     this.localeService.use(this.locale); //calendar[bootstrap]
+    const now = new Date(); //calendar[option]
+
+    this.dateCustomClasses = [
+      {
+        date: now,
+        classes: ['bg-custom'],
+      } //calendar[option]
+    ];
   }
 
   locale = 'th-be'; //calendar[bootstrap]
   locales = listLocales();  //calendar[bootstrap]
-  user = "monkey"
+  user = "pure"
 
   ngOnInit(): void {
   }
@@ -120,7 +130,6 @@ export class VdtPageComponent implements OnInit {
   formatInputMoney(event: any) {
     let value = event.target.value; //input
     value = value.replace(/[^\d.]/g, ''); // เอาตัวเลข กับ จุด => 120.50
-
     let parts = value.split('.'); // แบ่งเป็น จำนวนเต็ม กับ ทศนิยม => ['120', '50']
 
     // ตรวจสอบว่ามีจุดทศนิยมมากกว่า 1 ตัวหรือไม่
@@ -135,7 +144,6 @@ export class VdtPageComponent implements OnInit {
     }
     this.cal_purchaseAmount(value); //cal_purchaseAmount
     event.target.value = this.addCommas(value);  //add comma
-
   }
   // Cal 
   async cal_purchaseAmount(value: any) {
@@ -178,29 +186,28 @@ export class VdtPageComponent implements OnInit {
   listVdtNo: any[] = [];
 
   async search() {
-    console.log("search")
     if (this.input_vdtNo && this.input_date) {
+      this.createNotification("info", "กรุณากรอกอย่างใดอย่างหนึ่ง", "")
       console.log("ค้นหา 2 อย่าง")
-
     } else if (this.input_date) {
       this.visibleSearchDate = true;
       // Sun Jan 01 2017 08:08:26 GMT+0700 > 2002-06-19T08:44:08.344Z
       const dataString = this.formatDateChange(this.input_date.toString());
       const list = await this.findByDateApi(dataString)
       this.listVdtNo = list;
-
     } else if (this.input_vdtNo) {
       try {
         const list = await this.findByVdtNoApi(this.input_vdtNo)
-        console.log(list)
-        this.listdata = list;
+        if (list.length == 0) {
+          this.createNotification("warning", "ไม่พบข้อมูล", "")
+        } else {
+          this.listdata = list;
+        }
       } catch (error) {
         console.error('generateRandomString Error:', error);
       }
-
     } else {
-      console.log("ไม่กรอก แต่กด")
-      alert("กรุณากรอกข้อมูล")
+      this.createNotification("warning", "กรุณากรอกข้อมูล", "")
       this.listdata = []
     }
     this.set = this.listdata // [nzData]="set" > true
@@ -223,8 +230,7 @@ export class VdtPageComponent implements OnInit {
 
   // addRow
   addtoTable() {
-    console.log('add / save')
-
+    // console.log('add / save')
     let editItem = {};
     let newItem = {};
     if (this.modeedit) {
@@ -234,7 +240,7 @@ export class VdtPageComponent implements OnInit {
         noNumber: this.input_noNumber, //เลขที่
         dateOfPreparation: this.input_dateOfPreparation, //วันที่จัดทำ ก.พ. 
         companyName: this.input_companyName, //สถานประกอบการ
-        purchaseAmount: this.input_purchaseAmount, //ยอดซื้อ
+        purchaseAmount: this.input_purchaseAmount.replace(/[^\d.]/g, ''), //ยอดซื้อ
         vat: this.cal_purchaseAmount_vat, //ภาษีมูลค่าเพิ่ม
         taxRefundRevenueDepartment: this.cal_purchaseAmount_refund_revenue, //ภาษีที่ได้รับคืน (กรมสรรพากร)
         taxRefundAgent: this.cal_purchaseAmount_refund_agent, //ภาษีที่ได้รับคืน (ตัวแทน)
@@ -251,14 +257,13 @@ export class VdtPageComponent implements OnInit {
       // newItem = {};
 
     } else {
-
       newItem = {
         id: 0,
         noBook: this.input_noBook, //เล่มที่
         noNumber: this.input_noNumber, //เลขที่
         dateOfPreparation: this.input_dateOfPreparation, //วันที่จัดทำ ก.พ. 
         companyName: this.input_companyName, //สถานประกอบการ
-        purchaseAmount: this.input_purchaseAmount.replace(",", ''), //ยอดซื้อ
+        purchaseAmount: this.input_purchaseAmount.replace(/[^\d.]/g, ''), //ยอดซื้อ
         vat: this.cal_purchaseAmount_vat, //ภาษีมูลค่าเพิ่ม
         taxRefundRevenueDepartment: this.cal_purchaseAmount_refund_revenue, //ภาษีที่ได้รับคืน (กรมสรรพากร)
         taxRefundAgent: this.cal_purchaseAmount_refund_agent, //ภาษีที่ได้รับคืน (ตัวแทน)
@@ -308,7 +313,7 @@ export class VdtPageComponent implements OnInit {
       this.createNotification("warning", "โปรดกรอกสาขาให้ครบ", "")
     }
     else {
-      console.log(newItem)
+      this.createNotification("error", "กรณีพิเศษ", "addtoTable")
     }
   }
 
@@ -342,7 +347,7 @@ export class VdtPageComponent implements OnInit {
   modeedit: boolean = false;
   indexEdit: number = -1;
   editRow(index: number) {
-    console.log(this.listdata[index])
+    // console.log(this.listdata[index])
     this.modeedit = true;
     this.indexEdit = index;
 
@@ -354,7 +359,6 @@ export class VdtPageComponent implements OnInit {
     this.input_taxId = this.listdata[index].taxId;
     this.input_branch = this.listdata[index].branch;
     this.input_companyName = this.listdata[index].companyName;
-    console.log(this.listdata[index].purchaseAmount.replace(",", ""))
     this.cal_purchaseAmount(this.listdata[index].purchaseAmount.replace(",", ""))
   }
 
@@ -363,14 +367,18 @@ export class VdtPageComponent implements OnInit {
    */
   async addTable() {
     try {
-      if (this.listdata[0].vdtNo) {
-        // console.log("edit", this.listdata)
+      if (this.listdata.length == 0) {
+        this.createNotification("error", "กรุณาเพิ่ม/กรอกข้อมูล", "")
+      } else if (this.listdata[0].vdtNo) {
+        console.log("edit", this.listdata)
         const message = await this.editOrDeleteTableApi(this.listdata)
         this.createNotification("success", "แก้ไขใบสรุปเรียบร้อยแล้ว", "")
-      } else {
-        // console.log("add", this.listdata)
+      } else if (this.listdata.length > 0) {
+        console.log("add", this.listdata)
         const vdtNo = await this.addTableApi(this.user, this.listdata)
         this.createNotification("success", "เพิ่มใบสรุปเรียบร้อยแล้ว", vdtNo)
+      } else {
+        this.createNotification("error", "กรณีพิเศษ", "addTable")
       }
       this.clearAll()
     } catch (error) {
@@ -399,6 +407,8 @@ export class VdtPageComponent implements OnInit {
     this.indexEdit = -1;
     this.listdata = [];
     this.set = [];
+    this.createNotification("success", "ล้างจอภาพ", "")
+
   }
 
 
@@ -414,7 +424,6 @@ export class VdtPageComponent implements OnInit {
 
   // เปลี่ยนรูปแบบวันที่
   formatDateChange(dateToString: string) {
-    // console.log(dateToString)
     const date = new Date(dateToString);
     if (isNaN(date.getTime())) {
       return "";
@@ -422,7 +431,6 @@ export class VdtPageComponent implements OnInit {
       // Sun Jan 01 2017 08:08:26 GMT+0700 > 2002-06-19T08:44:08.344Z
       const date = new Date(dateToString);
       const isoDate = date.toISOString(); // Convert to ISO 8601 format (UTC)
-      // console.log("dateChange", isoDate)
       return isoDate;
     }
   }
