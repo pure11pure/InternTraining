@@ -101,6 +101,7 @@ export class VdtPageComponent implements OnInit {
    */
   originalValue_taxId: string = "";
 
+  checkDigit: boolean = true;
   // [taxId] ต้องมี 13 ตัวเท่านั้น!
   onInputChange_taxId(event: any) {
     let value = event.target.value; //input
@@ -110,6 +111,22 @@ export class VdtPageComponent implements OnInit {
       this.originalValue_taxId = this.input_taxId; // เซฟค่าที่ถูกต้องไว้ในกรณีที่ผู้ใช้เปลี่ยนแปลง
     } else {
       event.target.value = this.originalValue_taxId; // คืนค่าให้เป็นค่าเดิมถ้าไม่ตรงเงื่อนไข
+    }
+
+    // https://memo8.com/check-digit-thai-citizen-id-validator/
+    if (value.length == 13) {
+      let total: number = 0;
+      for (let i = 0; i < 12; i++) {
+        // console.log(value[i] * (13 - i))
+        total += value[i] * (13 - i)
+      }
+      let digitTest = (11 - (total % 11)).toString().padStart(2, '0')[1]
+      if (value[12] != digitTest) {
+        this.createNotification("error", "เลขประจำตัวผู้เสียภาษีอากรไม่ถูกต้อง", "")
+        this.checkDigit = false;
+      } else {
+        this.checkDigit = true;
+      }
     }
   }
 
@@ -145,6 +162,7 @@ export class VdtPageComponent implements OnInit {
     this.cal_purchaseAmount(value); //cal_purchaseAmount
     event.target.value = this.addCommas(value);  //add comma
   }
+
   // Cal 
   async cal_purchaseAmount(value: any) {
     const purchaseAmount = parseFloat(value);
@@ -230,17 +248,19 @@ export class VdtPageComponent implements OnInit {
 
   // addRow
   addtoTable() {
+
     // console.log('add / save')
     let editItem = {};
     let newItem = {};
     if (this.modeedit) {
+
       editItem = {
         id: this.listdata[this.indexEdit].id,
         noBook: this.input_noBook, //เล่มที่
         noNumber: this.input_noNumber, //เลขที่
         dateOfPreparation: this.input_dateOfPreparation, //วันที่จัดทำ ก.พ. 
         companyName: this.input_companyName, //สถานประกอบการ
-        purchaseAmount: this.input_purchaseAmount.replace(/[^\d.]/g, ''), //ยอดซื้อ
+        purchaseAmount: parseFloat(this.input_purchaseAmount.replace(/[^\d.]/g, '')).toFixed(2).toString(), //ยอดซื้อ
         vat: this.cal_purchaseAmount_vat, //ภาษีมูลค่าเพิ่ม
         taxRefundRevenueDepartment: this.cal_purchaseAmount_refund_revenue, //ภาษีที่ได้รับคืน (กรมสรรพากร)
         taxRefundAgent: this.cal_purchaseAmount_refund_agent, //ภาษีที่ได้รับคืน (ตัวแทน)
@@ -263,7 +283,7 @@ export class VdtPageComponent implements OnInit {
         noNumber: this.input_noNumber, //เลขที่
         dateOfPreparation: this.input_dateOfPreparation, //วันที่จัดทำ ก.พ. 
         companyName: this.input_companyName, //สถานประกอบการ
-        purchaseAmount: this.input_purchaseAmount.replace(/[^\d.]/g, ''), //ยอดซื้อ
+        purchaseAmount: parseFloat(this.input_purchaseAmount.replace(/[^\d.]/g, '')).toFixed(2).toString(), //ยอดซื้อ
         vat: this.cal_purchaseAmount_vat, //ภาษีมูลค่าเพิ่ม
         taxRefundRevenueDepartment: this.cal_purchaseAmount_refund_revenue, //ภาษีที่ได้รับคืน (กรมสรรพากร)
         taxRefundAgent: this.cal_purchaseAmount_refund_agent, //ภาษีที่ได้รับคืน (ตัวแทน)
@@ -288,20 +308,26 @@ export class VdtPageComponent implements OnInit {
       isComplete = Object.values(editItem).every(value => value !== null && value !== undefined && value !== "");
     }
 
+    console.log(this.checkDigit)
     // check tax_id & branch & กรอกครบทุกตัว
     if (this.input_taxId.substring(0, 13).length == 13 && this.input_branch.substring(0, 5).length == 5 && isComplete) {
-      // console.log("ครบ")
-      if (this.modeedit) {
-        // console.log("mode: ", this.modeedit)
-        this.listdata[this.indexEdit] = editItem;
-        this.modeedit = false;
-        this.indexEdit = -1;
-      } else {
-        // console.log("mode: ", this.modeedit)
-        this.listdata.push(newItem)
+      // เลข ปชช. ตรง
+      if (this.checkDigit) {
+        if (this.modeedit) {
+          this.listdata[this.indexEdit] = editItem;
+          this.modeedit = false;
+          this.indexEdit = -1;
+        } else {
+          this.listdata.push(newItem)
+        }
+        this.set = this.listdata
+        this.clearSome();
       }
-      this.set = this.listdata
-      this.clearSome();
+      // เลขปชช. ไม่ตรง
+      else {
+        this.createNotification("warning", "เลขประจำตัวผู้เสียภาษีอากรไม่ถูกต้อง", "")
+      }
+
     }
     else if (!isComplete) {
       this.createNotification("warning", "โปรดกรอกข้อมูลให้ครบ", "")
@@ -407,7 +433,7 @@ export class VdtPageComponent implements OnInit {
     this.indexEdit = -1;
     this.listdata = [];
     this.set = [];
-    this.createNotification("success", "ล้างจอภาพ", "")
+    // this.createNotification("success", "ล้างจอภาพ", "")
 
   }
 
