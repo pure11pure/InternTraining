@@ -2,7 +2,7 @@
 
 .header,
 .detail {
-    background-color: rgb(255, 255, 255);
+    background-color: $whiteColor;
     border-radius: 6px;
     margin: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -18,7 +18,7 @@
 }
 
 .listVdt:hover {
-    background-color: $greenLightColor;
+    background-color: rgba($oneColor, 20%);
     border-radius: 2px;
 }
 
@@ -28,7 +28,7 @@
 }
 
 ::ng-deep .ant-modal-header {
-    background: $greenColor;
+    background: $oneColor;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
@@ -42,7 +42,7 @@
 ::ng-deep .ant-modal-close-icon:hover {
     color: $whiteColor;
     border-radius: 10px;
-    background-color: $greenLightColor;
+    background-color: $oneColor;
 }
 
 // modal : x
@@ -52,17 +52,17 @@
 
 // datepicker : header
 ::ng-deep .theme-green .bs-datepicker-head {
-    background-color: $greenColor;
+    background-color: $oneColor;
 }
 
 // datepicker : วันของเดือนปัจจุบัน
 ::ng-deep .bs-datepicker-body table td:not(.disabled):not(.week) span:not(.disabled):not(.is-other-month) {
     cursor: pointer;
-    background-color: whitesmoke;
+    background-color: lighten($twoColor, 37%);
 }
 
 ::ng-deep .bs-datepicker-body table td:not(.disabled):not(.week) span:not(.disabled):not(.is-other-month):hover {
-    background-color: $greenColor !important;
+    background-color: $oneColor !important;
     color: $whiteColor;
 }
 
@@ -70,16 +70,16 @@
 ::ng-deep .bs-datepicker-body table td span.selected,
 .bs-datepicker-body table td.selected span {
     color: $whiteColor;
-    background: $greenColor !important;
+    background: $oneColor !important;
 }
 
 // datepicker : week
 ::ng-deep .theme-green .bs-datepicker-body table td.week span {
-    color: $greenColor;
+    color: $oneColor;
 }
 
 ::ng-deep .bg-custom {
-    background-color: #8a8a8a !important;
+    background-color: $twoColor !important;
     color: $whiteColor;
   }
 
@@ -88,11 +88,11 @@
 .detail-box-vat {
     position: relative;
     width: 48vw;
-    background-color: rgb(255, 255, 255);
+    background-color: $whiteColor;
     border-radius: 6px;
     margin: auto;
     padding: 10px;
-    border: 1px solid #bababa;
+    border: 1px solid rgba(desaturate($oneColor, 20%), 0.3);
     margin-top: 0px;
 }
 
@@ -100,7 +100,7 @@
     content: "ภ.พ.10";
     position: absolute;
     top: -10px;
-    background-color: white;
+    background-color: $whiteColor;
     font-size: small;
 }
 
@@ -108,7 +108,7 @@
     content: "Vat ภาษี และ ค่าธรรมเนียม";
     position: absolute;
     top: -10px;
-    background-color: white;
+    background-color: $whiteColor;
     font-size: small;
 }
 
@@ -128,13 +128,13 @@ button {
 }
 
 .searchBtn {
-    background-color: $greenColor;
+    background-color: $oneColor;
     color: $whiteColor;
     margin-left: 20px;
 }
 
 .addtoTableBtn {
-    background-color: $greenColor;
+    background-color: $oneColor;
     color: $whiteColor;
     width: 150px;
 }
@@ -147,43 +147,44 @@ button {
 
 .icon-edit,
 .icon-delete {
-    background-color: bisque;
+    background-color: $fourColor;
     font-size: medium;
     padding: 2px;
     border-radius: 5px;
     cursor: pointer;
     margin: 0 3px;
     transition: background-color 0.5s ease;
+    color: $whiteColor;
 }
 
 .icon-edit:hover,
 .icon-delete:hover {
     font-size: medium;
-    background-color: #bababa;
+    background-color: $grayColor;
 
 }
 
 .icon-edit:active,
 .icon-delete:active {
     font-size: medium;
-    background-color: bisque;
+    background-color: rgba($fourColor, 20%);
 }
 
 .addTableToDataBaseBtn {
-    background-color: $greenColor;
+    background-color: $oneColor;
     color: $whiteColor;
     width: 100px;
 }
 
 .printBtn {
-    background-color: $yellowColor;
+    background-color: $twoColor;
     color: $whiteColor;
     width: 120px;
     margin-left: 10px;
 }
 
 .clearBtn {
-    background-color: $orangeColor;
+    background-color: $threeColor;
     color: $whiteColor;
     width: 120px;
 }

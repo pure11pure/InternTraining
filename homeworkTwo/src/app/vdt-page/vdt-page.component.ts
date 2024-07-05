@@ -58,6 +58,7 @@ export class VdtPageComponent implements OnInit {
   findByDateApi(date: string) {
     const url = `http://localhost:8778/pure-controller/two-find-by-date`
     const body = { date: date };
+    console.log(body)
     return this.http.post<any[]>(url, body).toPromise();
   }
   // > Add Table [response : vdt_no]
@@ -71,7 +72,7 @@ export class VdtPageComponent implements OnInit {
   }
   // > Edit / Delete [response : "pass"]
   editOrDeleteTableApi(data: any) {
-    const url = `http://localhost:8778/pure-controller/two-editOrDelete-db`
+    const url = `http://localhost:8778/pure-controller/two-JPA-editOrDelete-db`
     const body = { listData: data };
     return this.http.post<any>(url, body, { responseType: 'text' as 'json' }).toPromise();
   }
