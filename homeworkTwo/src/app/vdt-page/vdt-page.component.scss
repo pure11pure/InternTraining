@@ -218,3 +218,21 @@ button {
 ::ng-deep .ant-table-container table>tbody>tr:last-child td:last-child {
     border-bottom-right-radius: 5px;
 }
+
+
+
+// ดูโครงสร้าง
+// nz-table {
+//     background-color: green;
+// }
+// ::ng-deep .ant-table-cell{
+//     background-color: blue;
+// }
+
+// ::ng-deep .ant-table{
+//     background-color: yellow;
+// }
+
+// ::ng-deep .ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > thead > tr > th {
+//     background-color: orange;
+// }

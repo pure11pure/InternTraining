@@ -10,6 +10,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { DatepickerDateCustomClasses } from 'ngx-bootstrap/datepicker'; //calendar[option]
 
 
+
 @Component({
   selector: 'app-vdt-page',
   templateUrl: './vdt-page.component.html',
@@ -22,7 +23,7 @@ export class VdtPageComponent implements OnInit {
     private localeService: BsLocaleService, //calendar[bootstrap]
     private http: HttpClient,
     private nzMessageService: NzMessageService,
-    private notification: NzNotificationService
+    private notification: NzNotificationService,
   ) {
     this.localeService.use(this.locale); //calendar[bootstrap]
     const now = new Date(); //calendar[option]
@@ -63,7 +64,8 @@ export class VdtPageComponent implements OnInit {
   }
   // > Add Table [response : vdt_no]
   addTableApi(create_by: string, data: any) {
-    const url = `http://localhost:8778/pure-controller/two-add-db`
+    const url = `http://localhost:8778/pure-controller/two-JPA-add-db`
+    // const url = `http://localhost:8778/pure-controller/two-add-db`
     const body = {
       create_by: create_by,
       listData: data
@@ -73,7 +75,9 @@ export class VdtPageComponent implements OnInit {
   // > Edit / Delete [response : "pass"]
   editOrDeleteTableApi(data: any) {
     const url = `http://localhost:8778/pure-controller/two-JPA-editOrDelete-db`
-    const body = { listData: data };
+    const body = { listData: data,
+      vdt_no : this.editVdtNo
+     };
     return this.http.post<any>(url, body, { responseType: 'text' as 'json' }).toPromise();
   }
 
@@ -203,6 +207,8 @@ export class VdtPageComponent implements OnInit {
    */
   visibleSearchDate: boolean = false;
   listVdtNo: any[] = [];
+  editVdtNo: String = "";
+  foundHeader: boolean = false;
 
   async search() {
     if (this.input_vdtNo && this.input_date) {
@@ -217,10 +223,17 @@ export class VdtPageComponent implements OnInit {
     } else if (this.input_vdtNo) {
       try {
         const list = await this.findByVdtNoApi(this.input_vdtNo)
-        if (list.length == 0) {
+        console.log(list.length)
+        if (list.length == 0 && !this.foundHeader) {
           this.createNotification("warning", "ไม่พบข้อมูล", "")
         } else {
+          if(list.length == 0){
+            this.createNotification("warning", "เลขใบสรุปนี้ไม่มีข้อมูล", "")
+          }
           this.listdata = list;
+          this.editVdtNo = this.input_vdtNo;
+          this.foundHeader = false;
+          console.log(this.editVdtNo)
         }
       } catch (error) {
         console.error('generateRandomString Error:', error);
@@ -231,12 +244,14 @@ export class VdtPageComponent implements OnInit {
     }
     this.set = this.listdata // [nzData]="set" > true
     this.input_vdtNo = ""
-    this.input_date = undefined
+    // this.input_date = undefined
   }
   // choose vdt from date
   selectVdtNo(vdt: any) {
     this.visibleSearchDate = false;
     this.input_vdtNo = vdt;
+    this.foundHeader = true;
+    this.input_date = undefined
     this.search()
   }
 
@@ -316,12 +331,14 @@ export class VdtPageComponent implements OnInit {
       if (this.checkDigit) {
         if (this.modeedit) {
           this.listdata[this.indexEdit] = editItem;
+          this.listdata = [...this.listdata]
           this.modeedit = false;
           this.indexEdit = -1;
         } else {
-          this.listdata.push(newItem)
+          // this.listdata.push(newItem)
+          this.listdata = [...this.listdata, newItem];
         }
-        this.set = this.listdata
+        console.log(this.listdata)
         this.clearSome();
       }
       // เลขปชช. ไม่ตรง
@@ -357,16 +374,17 @@ export class VdtPageComponent implements OnInit {
   // deleteRow
   deleteRow(index: number) {
     this.listdata.splice(index, 1);
+    this.listdata = [...this.listdata]
     this.modeedit = false;
     this.indexEdit = -1;
   }
 
   cancel(): void {
-    this.nzMessageService.info('click cancel');
+    this.nzMessageService.info('ยกเลิก');
   }
 
   confirm(i: any): void {
-    this.nzMessageService.info('click confirm');
+    this.nzMessageService.info('ลบแล้ว');
     this.deleteRow(i);
   }
 
@@ -394,9 +412,10 @@ export class VdtPageComponent implements OnInit {
    */
   async addTable() {
     try {
-      if (this.listdata.length == 0) {
+      if (this.listdata.length == 0 && !this.editVdtNo) {
         this.createNotification("error", "กรุณาเพิ่ม/กรอกข้อมูล", "")
-      } else if (this.listdata[0].vdtNo) {
+      } else if (this.editVdtNo) {
+      // } else if (this.listdata[0].vdtNo) {
         console.log("edit", this.listdata)
         const message = await this.editOrDeleteTableApi(this.listdata)
         this.createNotification("success", "แก้ไขใบสรุปเรียบร้อยแล้ว", "")
@@ -434,6 +453,7 @@ export class VdtPageComponent implements OnInit {
     this.indexEdit = -1;
     this.listdata = [];
     this.set = [];
+    this.editVdtNo = ""; //clear Search
     // this.createNotification("success", "ล้างจอภาพ", "")
 
   }

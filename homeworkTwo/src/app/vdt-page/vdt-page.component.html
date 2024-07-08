@@ -169,7 +169,7 @@
         </div>
 
         <!-- Table -->
-        <nz-table #basicTable nzBordered [nzData]="set" [nzShowPagination]="false">
+        <nz-table #basicTable nzBordered [nzData]="listdata" [nzShowPagination]="false">
             <thead>
                 <tr>
                     <th nzWidth="6%">เล่มที่อ้างอิงการขาย</th>
@@ -185,7 +185,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of listdata; let i = index;">
+                <tr *ngFor="let data of basicTable.data; let i = index;">
                     <td>{{ data.noBook }}</td>
                     <td>{{ data.noNumber }}</td>
                     <td>{{ convertToBuddhistEra(data.dateOfPreparation) }}</td>
@@ -200,8 +200,9 @@
                             nzTooltipTitle="edit" nzTooltipPlacement="top"></span>
                         <span nz-icon nzType="delete" nzTheme="outline" class="icon-delete" nz-tooltip
                             nzTooltipTitle="delete" nzTooltipPlacement="top" nz-popconfirm
-                            nzPopconfirmTitle="Are you sure delete this row?" nzPopconfirmPlacement="bottom"
-                            (nzOnConfirm)="confirm(i)" (nzOnCancel)="cancel()"></span>
+                            nzPopconfirmTitle="คุณต้องการลบใช่หรือไม่?" nzPopconfirmPlacement="bottom"
+                            (nzOnConfirm)="confirm(i)" (nzOnCancel)="cancel()" nzOkText="ตกลง"
+                            nzCancelText="ยกเลิก"></span>
                     </td>
                 </tr>
             </tbody>
