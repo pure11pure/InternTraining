@@ -76,8 +76,21 @@ export class VdtPageComponent implements OnInit {
   editOrDeleteTableApi(data: any) {
     const url = `http://localhost:8778/pure-controller/two-JPA-editOrDelete-db`
     const body = { listData: data,
-      vdt_no : this.editVdtNo
+      vdt_no : this.presentVdtNo.vdt_no
      };
+    return this.http.post<any>(url, body, { responseType: 'text' as 'json' }).toPromise();
+  }
+
+  // > GetPDF
+  getPDFBase64Api(listdata: any, presentVdtNo: any) {
+    console.log(listdata, presentVdtNo)
+    const url = `  http://localhost:8778/pure-controller/two-PDF-Base64`
+    const body = { 
+      listData: listdata,
+      vdt_no: presentVdtNo.vdt_no,
+      vdt_date: presentVdtNo.vdt_date,
+     };
+     console.log(body)
     return this.http.post<any>(url, body, { responseType: 'text' as 'json' }).toPromise();
   }
 
@@ -207,8 +220,8 @@ export class VdtPageComponent implements OnInit {
    */
   visibleSearchDate: boolean = false;
   listVdtNo: any[] = [];
-  editVdtNo: String = "";
   foundHeader: boolean = false;
+  presentVdtNo: { vdt_no: string, vdt_date: string, create_date: string, create_by: string} = {vdt_no: "", vdt_date: "", create_date: "", create_by: ""};
 
   async search() {
     if (this.input_vdtNo && this.input_date) {
@@ -231,9 +244,7 @@ export class VdtPageComponent implements OnInit {
             this.createNotification("warning", "เลขใบสรุปนี้ไม่มีข้อมูล", "")
           }
           this.listdata = list;
-          this.editVdtNo = this.input_vdtNo;
           this.foundHeader = false;
-          console.log(this.editVdtNo)
         }
       } catch (error) {
         console.error('generateRandomString Error:', error);
@@ -247,12 +258,14 @@ export class VdtPageComponent implements OnInit {
     // this.input_date = undefined
   }
   // choose vdt from date
-  selectVdtNo(vdt: any) {
+  selectVdtNo(vdt: any, i: any) {
     this.visibleSearchDate = false;
     this.input_vdtNo = vdt;
+    this.presentVdtNo = this.listVdtNo[i];
     this.foundHeader = true;
     this.input_date = undefined
     this.search()
+    console.log(this.presentVdtNo)
   }
 
   /**
@@ -412,9 +425,9 @@ export class VdtPageComponent implements OnInit {
    */
   async addTable() {
     try {
-      if (this.listdata.length == 0 && !this.editVdtNo) {
+      if (this.listdata.length == 0 && !this.presentVdtNo.vdt_no) {
         this.createNotification("error", "กรุณาเพิ่ม/กรอกข้อมูล", "")
-      } else if (this.editVdtNo) {
+      } else if (this.presentVdtNo.vdt_no) {
       // } else if (this.listdata[0].vdtNo) {
         console.log("edit", this.listdata)
         const message = await this.editOrDeleteTableApi(this.listdata)
@@ -431,6 +444,43 @@ export class VdtPageComponent implements OnInit {
       console.error('generateRandomString Error:', error);
     }
 
+  }
+
+  base64: string = '';
+
+  async printPDF() {
+    console.log(this.presentVdtNo)
+    if(this.presentVdtNo.vdt_no != ""){
+      console.log("pdf", this.listdata, this.presentVdtNo);
+      this.base64 = await this.getPDFBase64Api(this.listdata, this.presentVdtNo);
+      console.log(this.base64)
+      this.openPdfInNewTab(this.base64, this.presentVdtNo.vdt_no)
+  
+    } else {
+      this.createNotification("warning", "ไม่มีข้อมูลที่จะพิมพ์", "")
+    }
+  }
+
+  openPdfInNewTab(base64Data: string, fileName: string) {
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+    // Create object URL for the blob
+    const url = URL.createObjectURL(blob);
+
+    // // Open PDF in a new tab
+    // window.open(url, '_blank');
+
+    const link = document.createElement('a');
+  link.href = url;
+  link.target = '_blank';
+  link.download = "เลขใบสรุปที่ "+fileName; // Set the file name here
+  link.click();
   }
 
   clearSome() {
@@ -453,11 +503,10 @@ export class VdtPageComponent implements OnInit {
     this.indexEdit = -1;
     this.listdata = [];
     this.set = [];
-    this.editVdtNo = ""; //clear Search
+    this.presentVdtNo = {vdt_no: "", vdt_date: "", create_date: "", create_by: ""};
     // this.createNotification("success", "ล้างจอภาพ", "")
 
   }
-
 
 
   // convert

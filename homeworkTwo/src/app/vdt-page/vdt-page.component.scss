@@ -219,6 +219,17 @@ button {
     border-bottom-right-radius: 5px;
 }
 
+::ng-deep .ant-table-pagination.ant-pagination {
+    margin-right: 20px;
+}
+
+::ng-deep .anticon-right {
+    margin-top: -2px;
+}
+
+::ng-deep .anticon svg {
+    padding: inherit;
+}
 
 
 // ดูโครงสร้าง

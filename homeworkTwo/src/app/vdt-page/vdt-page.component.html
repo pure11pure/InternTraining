@@ -29,7 +29,8 @@
                 (nzOnCancel)="visibleSearchDate = !visibleSearchDate " [nzFooter]="null" class="modalSelectVdt">
                 <ng-template nzModalContent>
                     <div *ngIf="listVdtNo.length > 0 && visibleSearchDate == true">
-                        <div *ngFor="let vdt of listVdtNo;" class="listVdt" (click)="selectVdtNo(vdt.vdt_no)">
+                        <div *ngFor="let vdt of listVdtNo; let i = index;" class="listVdt"
+                            (click)="selectVdtNo(vdt.vdt_no, i)">
                             {{vdt.vdt_no}}
                         </div>
                     </div>
@@ -169,7 +170,8 @@
         </div>
 
         <!-- Table -->
-        <nz-table #basicTable nzBordered [nzData]="listdata" [nzShowPagination]="false">
+        <nz-table #basicTable nzBordered [nzData]="listdata" [nzPaginationType]="'small'" [nzPageSize]="5"
+            [nzTableLayout]="'fixed'" [nzPaginationPosition]="'top'" nzClassName="custom-pagination">
             <thead>
                 <tr>
                     <th nzWidth="6%">เล่มที่อ้างอิงการขาย</th>
@@ -213,7 +215,7 @@
             <div nz-col nzSpan="6"></div>
             <div nz-col nzSpan="6">
                 <button nz-button class="addTableToDataBaseBtn" (click)="addTable()">บันทึก</button>
-                <button nz-button class="printBtn">พิมพ์ใบสรุป</button>
+                <button nz-button class="printBtn" (click)="printPDF()">พิมพ์ใบสรุป</button>
             </div>
             <div nz-col nzSpan="6">
                 <button nz-button (click)="clearAll()" class="clearBtn">ล้างจอภาพ</button>
