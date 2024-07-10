@@ -75,9 +75,10 @@ export class VdtPageComponent implements OnInit {
   // > Edit / Delete [response : "pass"]
   editOrDeleteTableApi(data: any) {
     const url = `http://localhost:8778/pure-controller/two-JPA-editOrDelete-db`
-    const body = { listData: data,
-      vdt_no : this.presentVdtNo.vdt_no
-     };
+    const body = {
+      listData: data,
+      vdt_no: this.presentVdtNo.vdt_no
+    };
     return this.http.post<any>(url, body, { responseType: 'text' as 'json' }).toPromise();
   }
 
@@ -85,13 +86,21 @@ export class VdtPageComponent implements OnInit {
   getPDFBase64Api(listdata: any, presentVdtNo: any) {
     console.log(listdata, presentVdtNo)
     const url = `  http://localhost:8778/pure-controller/two-PDF-Base64`
-    const body = { 
+    const body = {
       listData: listdata,
       vdt_no: presentVdtNo.vdt_no,
       vdt_date: presentVdtNo.vdt_date,
-     };
-     console.log(body)
+    };
     return this.http.post<any>(url, body, { responseType: 'text' as 'json' }).toPromise();
+  }
+
+  getHeaderBtVdtNoApi(vdtNo: any) {
+    console.log("vdtNo", vdtNo)
+    const url = `http://localhost:8778/pure-controller/two-JPA-getHeaderByVdtNo`
+    const body = {
+      vdt_no: vdtNo
+    };
+    return this.http.post<any>(url, body).toPromise();
   }
 
   // -------[Model]------------------------------------
@@ -221,7 +230,7 @@ export class VdtPageComponent implements OnInit {
   visibleSearchDate: boolean = false;
   listVdtNo: any[] = [];
   foundHeader: boolean = false;
-  presentVdtNo: { vdt_no: string, vdt_date: string, create_date: string, create_by: string} = {vdt_no: "", vdt_date: "", create_date: "", create_by: ""};
+  presentVdtNo: { vdt_no: string, vdt_date: string, create_date: string, create_by: string } = { vdt_no: "", vdt_date: "", create_date: "", create_by: "" };
 
   async search() {
     if (this.input_vdtNo && this.input_date) {
@@ -236,11 +245,15 @@ export class VdtPageComponent implements OnInit {
     } else if (this.input_vdtNo) {
       try {
         const list = await this.findByVdtNoApi(this.input_vdtNo)
-        console.log(list.length)
+        const headerVdtNo = await this.getHeaderBtVdtNoApi(this.input_vdtNo)
+        this.presentVdtNo.vdt_no = headerVdtNo.vdtNo
+        this.presentVdtNo.vdt_date = headerVdtNo.vdtDate
+        this.presentVdtNo.create_by = headerVdtNo.createBy
+        this.presentVdtNo.create_date = headerVdtNo.createDate
         if (list.length == 0 && !this.foundHeader) {
           this.createNotification("warning", "ไม่พบข้อมูล", "")
         } else {
-          if(list.length == 0){
+          if (list.length == 0) {
             this.createNotification("warning", "เลขใบสรุปนี้ไม่มีข้อมูล", "")
           }
           this.listdata = list;
@@ -265,7 +278,7 @@ export class VdtPageComponent implements OnInit {
     this.foundHeader = true;
     this.input_date = undefined
     this.search()
-    console.log(this.presentVdtNo)
+    // console.log(this.presentVdtNo)
   }
 
   /**
@@ -428,7 +441,7 @@ export class VdtPageComponent implements OnInit {
       if (this.listdata.length == 0 && !this.presentVdtNo.vdt_no) {
         this.createNotification("error", "กรุณาเพิ่ม/กรอกข้อมูล", "")
       } else if (this.presentVdtNo.vdt_no) {
-      // } else if (this.listdata[0].vdtNo) {
+        // } else if (this.listdata[0].vdtNo) {
         console.log("edit", this.listdata)
         const message = await this.editOrDeleteTableApi(this.listdata)
         this.createNotification("success", "แก้ไขใบสรุปเรียบร้อยแล้ว", "")
@@ -449,13 +462,12 @@ export class VdtPageComponent implements OnInit {
   base64: string = '';
 
   async printPDF() {
-    console.log(this.presentVdtNo)
-    if(this.presentVdtNo.vdt_no != ""){
-      console.log("pdf", this.listdata, this.presentVdtNo);
+    // console.log(this.presentVdtNo)
+    if (this.presentVdtNo.vdt_no != "") {
+      // console.log("pdf", this.listdata, this.presentVdtNo);
       this.base64 = await this.getPDFBase64Api(this.listdata, this.presentVdtNo);
-      console.log(this.base64)
       this.openPdfInNewTab(this.base64, this.presentVdtNo.vdt_no)
-  
+
     } else {
       this.createNotification("warning", "ไม่มีข้อมูลที่จะพิมพ์", "")
     }
@@ -477,10 +489,10 @@ export class VdtPageComponent implements OnInit {
     // window.open(url, '_blank');
 
     const link = document.createElement('a');
-  link.href = url;
-  link.target = '_blank';
-  link.download = "เลขใบสรุปที่ "+fileName; // Set the file name here
-  link.click();
+    link.href = url;
+    link.target = '_blank';
+    link.download = "เลขใบสรุปที่ " + fileName; // Set the file name here
+    link.click();
   }
 
   clearSome() {
@@ -503,7 +515,7 @@ export class VdtPageComponent implements OnInit {
     this.indexEdit = -1;
     this.listdata = [];
     this.set = [];
-    this.presentVdtNo = {vdt_no: "", vdt_date: "", create_date: "", create_by: ""};
+    this.presentVdtNo = { vdt_no: "", vdt_date: "", create_date: "", create_by: "" };
     // this.createNotification("success", "ล้างจอภาพ", "")
 
   }
