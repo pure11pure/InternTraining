@@ -91,6 +91,7 @@ export class VdtPageComponent implements OnInit {
       vdt_no: presentVdtNo.vdt_no,
       vdt_date: presentVdtNo.vdt_date,
     };
+    console.log(body)
     return this.http.post<any>(url, body, { responseType: 'text' as 'json' }).toPromise();
   }
 
@@ -170,7 +171,7 @@ export class VdtPageComponent implements OnInit {
     }
   }
 
-  // [purchase] 
+  // [purchase] > ยุ่งยากเกิน ไม่ใช้
   formatInputMoney(event: any) {
     let value = event.target.value; //input
     value = value.replace(/[^\d.]/g, ''); // เอาตัวเลข กับ จุด => 120.50
@@ -188,6 +189,19 @@ export class VdtPageComponent implements OnInit {
     }
     this.cal_purchaseAmount(value); //cal_purchaseAmount
     event.target.value = this.addCommas(value);  //add comma
+  }
+  // [purchase] > ใช้อันนี้
+  formatInputMoneyClone(event: any){
+     let value = event.target.value;
+     value = value.replace(/,/g, ''); //ลบ comma
+     let parsedValue = parseFloat(value);
+
+     if (!isNaN(parsedValue)) {
+         this.input_purchaseAmount = parsedValue.toLocaleString();
+     } else {
+         this.input_purchaseAmount = "";
+     }
+     this.cal_purchaseAmount(value); 
   }
 
   // Cal 
@@ -406,11 +420,13 @@ export class VdtPageComponent implements OnInit {
   }
 
   cancel(): void {
-    this.nzMessageService.info('ยกเลิก');
+    this.nzMessageService.info('ยกเลิก', { nzDuration: 1000000 });
+    // this.createNotification("info", "ยกเลิกการลบ", "")
   }
 
   confirm(i: any): void {
-    this.nzMessageService.info('ลบแล้ว');
+    // this.nzMessageService.info('ลบแล้ว');
+    this.createNotification("success", "ลบแล้ว", "")
     this.deleteRow(i);
   }
 

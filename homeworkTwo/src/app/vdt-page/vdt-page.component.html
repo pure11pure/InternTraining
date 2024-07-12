@@ -89,9 +89,13 @@
                             type="text" [bsConfig]="{ isAnimated: true }" [outsideClick]="false"
                             [dateCustomClasses]="dateCustomClasses">
                     </div>
-                    <div nz-col nzSpan="9" class="inputModal">
+                    <!-- <div nz-col nzSpan="9" class="inputModal">
                         <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00"
                             (input)="formatInputMoney($event)" />
+                    </div> -->
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00"
+                            (input)="formatInputMoneyClone($event)" />
                     </div>
                 </div>
                 <!-- row 5 -->
@@ -132,7 +136,7 @@
                         Vat 7%
                     </div>
                     <div nz-col nzSpan="9" style="margin-left: 40px;">
-                        {{cal_purchaseAmount_vat}}
+                        {{cal_purchaseAmount_vat | number: '.2'}}
                     </div>
                 </div>
                 <!-- row 2 -->
@@ -141,7 +145,7 @@
                         ภาษีที่ได้รับคือ(กรมสรรพากร)
                     </div>
                     <div nz-col nzSpan="9" style="margin-left: 40px;">
-                        {{cal_purchaseAmount_refund_revenue}}
+                        {{cal_purchaseAmount_refund_revenue | number: '.2'}}
                     </div>
                 </div>
                 <!-- row 3 -->
@@ -150,7 +154,7 @@
                         ภาษีที่ได้รับคืนจากตัวแทน
                     </div>
                     <div nz-col nzSpan="9" style="margin-left: 40px;">
-                        {{cal_purchaseAmount_refund_agent}}
+                        {{cal_purchaseAmount_refund_agent | number: '.2'}}
                     </div>
                 </div>
                 <!-- row 4 -->
@@ -159,7 +163,7 @@
                         ค่าธรรมเนียมในการคืน
                     </div>
                     <div nz-col nzSpan="9" style="margin-left: 40px;">
-                        {{cal_purchaseAmount_refund_fee}}
+                        {{cal_purchaseAmount_refund_fee | number: '.2'}}
                     </div>
                 </div>
             </div>
@@ -183,20 +187,20 @@
                     <th nzWidth="6%">ภาษีที่ได้รับคืน (กรมสรรพากร)</th>
                     <th nzWidth="6%">ภาษีที่ได้รับคืน (ตัวแทน)</th>
                     <th nzWidth="6%">ค่าธรรมเนียมในการคืน</th>
-                    <th nzWidth="6%">X</th>
+                    <th nzWidth="6%"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data; let i = index;">
                     <td>{{ data.noBook }}</td>
                     <td>{{ data.noNumber }}</td>
-                    <td>{{ convertToBuddhistEra(data.dateOfPreparation) }}</td>
-                    <td>{{ data.companyName }}</td>
-                    <td>{{ addCommas(data.purchaseAmount) }}</td>
-                    <td>{{ data.vat }}</td>
-                    <td>{{ data.taxRefundRevenueDepartment }}</td>
-                    <td>{{ data.taxRefundAgent }}</td>
-                    <td>{{ data.taxRefundFee }}</td>
+                    <td style="text-align: center;">{{ convertToBuddhistEra(data.dateOfPreparation) }}</td>
+                    <td >{{ data.companyName }}</td>
+                    <td style="text-align: right;">{{ addCommas(data.purchaseAmount) }}</td>
+                    <td style="text-align: right;">{{ data.vat }}</td>
+                    <td style="text-align: right;">{{ data.taxRefundRevenueDepartment }}</td>
+                    <td style="text-align: right;">{{ data.taxRefundAgent }}</td>
+                    <td style="text-align: right;">{{ data.taxRefundFee }}</td>
                     <td class="group-icon">
                         <span nz-icon (click)="editRow(i)" nzType="edit" nzTheme="outline" class="icon-edit" nz-tooltip
                             nzTooltipTitle="edit" nzTooltipPlacement="top"></span>

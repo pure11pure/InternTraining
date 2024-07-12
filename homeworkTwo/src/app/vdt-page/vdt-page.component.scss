@@ -161,13 +161,22 @@ button {
 .icon-delete:hover {
     font-size: medium;
     background-color: $grayColor;
-
 }
 
 .icon-edit:active,
 .icon-delete:active {
     font-size: medium;
     background-color: rgba($fourColor, 20%);
+}
+
+::ng-deep .ant-message-notice-content {
+    width: 250px;
+    font-size:larger;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+::ng-deep.ng-tns-c89-19{
+    font-size:30px;
+    padding: auto;
 }
 
 .addTableToDataBaseBtn {
