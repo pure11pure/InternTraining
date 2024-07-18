@@ -24,3 +24,10 @@ $oneColor: #0A6847;
 $twoColor: #7ABA78;
 $threeColor: #F3CA52;
 $fourColor : #E88D67;
+
+$textHeader : 18px;
+$textContent : 16px;
+
+* {
+  font-size: $textContent; /* ปรับขนาดตามที่ต้องการ */
+}

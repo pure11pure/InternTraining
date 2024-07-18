@@ -1,11 +1,24 @@
 @import '../../styles.scss';
 
+.ant-layout {
+    background: linear-gradient(
+        to bottom right, 
+        rgba($twoColor, 0.3), 
+        rgba($threeColor, 0.3), 
+        rgba($fourColor, 0.3)
+    );
+}
+
 .header,
 .detail {
     background-color: $whiteColor;
     border-radius: 6px;
-    margin: 6px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 15px;
+    box-shadow: 0 8px 8px rgba($grayColor, 0.3);
+}
+
+.detail{
+    margin-top: 0px;
 }
 
 .header-text {
@@ -15,11 +28,29 @@
 // modal
 .listVdt {
     cursor: pointer;
+    font-size: $textContent;
+    position: relative;
+}
+
+.listVdt::before {
+    content: "> "; /* เพิ่มข้อความที่ต้องการแสดง */
+    position: absolute;
+    left: -5%; /* ปรับตำแหน่งตามต้องการ */
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+
+}
+
+.listVdt:hover::before {
+    opacity: 1; /* แสดงข้อความเมื่อชี้ */
 }
 
 .listVdt:hover {
     background-color: rgba($oneColor, 20%);
     border-radius: 2px;
+    font-size: $textHeader;
+    margin-left: 10px;
 }
 
 // modal: radius
@@ -87,7 +118,7 @@
 .detail-box-input,
 .detail-box-vat {
     position: relative;
-    width: 48vw;
+    width: 45vw;
     background-color: $whiteColor;
     border-radius: 6px;
     margin: auto;
@@ -101,7 +132,7 @@
     position: absolute;
     top: -10px;
     background-color: $whiteColor;
-    font-size: small;
+    font-size: $textContent;
 }
 
 .detail-box-vat::before {
@@ -109,7 +140,7 @@
     position: absolute;
     top: -10px;
     background-color: $whiteColor;
-    font-size: small;
+    font-size: $textContent;
 }
 
 .inputModal {
@@ -198,6 +229,8 @@ button {
     width: 120px;
 }
 
+
+
 // table
 ::ng-deep .ant-table-thead>tr>th {
     text-align: center !important;
@@ -206,7 +239,7 @@ button {
 ::ng-deep .ant-table.ant-table-bordered>.ant-table-container {
     border-radius: 5px !important;
     border: 1px solid whitesmoke;
-    width: 97vw;
+    width: 95vw;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;

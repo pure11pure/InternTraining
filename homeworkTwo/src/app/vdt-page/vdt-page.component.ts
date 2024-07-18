@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { DatepickerDateCustomClasses } from 'ngx-bootstrap/datepicker'; //calendar[option]
+import { formatDate } from '@angular/common';
 
 
 
@@ -207,6 +208,7 @@ export class VdtPageComponent implements OnInit {
   // Cal 
   async cal_purchaseAmount(value: any) {
     const purchaseAmount = parseFloat(value);
+    console.log("purchaseAmount", purchaseAmount)
     if (purchaseAmount > 0)
       try {
         const response = await this.getCalPurchaseAmountApi(purchaseAmount);
@@ -430,11 +432,19 @@ export class VdtPageComponent implements OnInit {
     this.deleteRow(i);
   }
 
+
+  currentPageIndex = 1;
+  onPageIndexChange(pageIndex: number): void {
+    this.currentPageIndex = pageIndex;
+    // console.log('Current Page Index:', this.currentPageIndex);
+  }
+
   // editRow
   modeedit: boolean = false;
   indexEdit: number = -1;
+  pageSize: number = 5;
   editRow(index: number) {
-    // console.log(this.listdata[index])
+    // console.log("total: ", index)
     this.modeedit = true;
     this.indexEdit = index;
 
@@ -478,18 +488,25 @@ export class VdtPageComponent implements OnInit {
   base64: string = '';
 
   async printPDF() {
-    // console.log(this.presentVdtNo)
-    if (this.presentVdtNo.vdt_no != "") {
-      // console.log("pdf", this.listdata, this.presentVdtNo);
-      this.base64 = await this.getPDFBase64Api(this.listdata, this.presentVdtNo);
-      this.openPdfInNewTab(this.base64, this.presentVdtNo.vdt_no)
+    // // console.log(this.presentVdtNo)
+    // if (this.presentVdtNo.vdt_no != "") {
+    //   // console.log("pdf", this.listdata, this.presentVdtNo);
+    //   this.base64 = await this.getPDFBase64Api(this.listdata, this.presentVdtNo);
+    //   this.openPdfInNewTab(this.base64, this.presentVdtNo.vdt_no)
 
-    } else {
-      this.createNotification("warning", "ไม่มีข้อมูลที่จะพิมพ์", "")
-    }
+    // } else {
+    //   this.createNotification("warning", "ไม่มีข้อมูลที่จะพิมพ์", "")
+    // }
+    this.visiblePrint = true;
+
+    this.base64 = await this.getPDFBase64Api(this.listdata, this.presentVdtNo);
+    this.openPdfInNewTab(this.base64, this.presentVdtNo.vdt_no)
   }
 
+  visiblePrint: boolean = false;
+  urlPrint: String = "";
   openPdfInNewTab(base64Data: string, fileName: string) {
+
     const byteCharacters = atob(base64Data);
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
@@ -500,15 +517,21 @@ export class VdtPageComponent implements OnInit {
 
     // Create object URL for the blob
     const url = URL.createObjectURL(blob);
+    this.urlPrint = url;
+    console.log(url)
 
     // // Open PDF in a new tab
     // window.open(url, '_blank');
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.target = '_blank';
-    link.download = "เลขใบสรุปที่ " + fileName; // Set the file name here
-    link.click();
+
+    /*
+     * download
+    */
+    // const link = document.createElement('a');
+    // link.href = url;
+    // link.target = '_blank';
+    // link.download = "เลขใบสรุปที่ " + fileName; // Set the file name here
+    // link.click();
   }
 
   clearSome() {
@@ -535,7 +558,6 @@ export class VdtPageComponent implements OnInit {
     // this.createNotification("success", "ล้างจอภาพ", "")
 
   }
-
 
   // convert
   convertToBuddhistEra(dateString: any) {
