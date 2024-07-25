@@ -190,6 +190,15 @@ h5, h6,::ng-deep .ant-breadcrumb-link{
     border: 0px;
 }
 
+::ng-deep .ant-avatar{
+    color:#000000;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+}
+
+::ng-deep  .table-two  svg  {
+    font-size: 20px;
+}
 
 
 

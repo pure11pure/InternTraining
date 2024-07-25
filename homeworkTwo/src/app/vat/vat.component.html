@@ -124,8 +124,9 @@
                 <div nz-row>
                     <div nz-col nzSpan="6" class="column-left required">เดือน/ปีภาษี ที่ยื่นรวม</div>
                     <div nz-col nzSpan="6">
-                            <nz-input-number [(ngModel)]="input_date_month" [nzMin]="1" [nzMax]="12" [nzStep]="1"></nz-input-number>
-                            /
+                        <nz-input-number [(ngModel)]="input_date_month" [nzMin]="1" [nzMax]="12"
+                            [nzStep]="1"></nz-input-number>
+                        /
                         <input nz-input placeholder="ปี (พ.ศ.)" [(ngModel)]="input_date_year" nzSize="default"
                             style="width:  150px; margin-left: 5PX;" />
                     </div>
@@ -135,11 +136,10 @@
                             ที่ยื่นรวม</span>
                     </div>
                     <div nz-col nzSpan="6">
-                        <!-- <input nz-input [disabled]="varRequestChangeMonthAndYear" placeholder="" nzSize="default"
-                            style="width:  100px; margin-right: 5px;" /> -->
-                            <nz-input-number [nzDisabled]="varRequestChangeMonthAndYear" [nzMin]="1" [nzMax]="12" [nzStep]="1"></nz-input-number>
-                            /
-                        <input nz-input [disabled]="varRequestChangeMonthAndYear" placeholder="" nzSize="default"
+                        <nz-input-number [(ngModel)]="input_date_month_req"  [nzDisabled]="varRequestChangeMonthAndYear" [nzMin]="1" [nzMax]="12"
+                            [nzStep]="1"></nz-input-number>
+                        /
+                        <input nz-input [(ngModel)]="input_date_year_req"  [disabled]="varRequestChangeMonthAndYear" placeholder="" nzSize="default"
                             style="width:  150px; margin-left: 5PX;" />
                     </div>
                 </div>
@@ -158,11 +158,12 @@
                 <div nz-row>
                     <div nz-col nzSpan="4" class="column-left required">วันที่พิจารณา</div>
                     <div nz-col nzSpan="5">
-                        <nz-input-group nzSuffixIcon="calendar">
+                        <nz-input-group nzSuffixIcon="calendar" >
                             <input nz-input bsDatepicker [(ngModel)]="input_date" style="width: 100%;" type="text"
                                 [bsConfig]="{ isAnimated: true }" [dateCustomClasses]="dateCustomClasses"
                                 placement="top">
                         </nz-input-group>
+                        <!-- <nz-date-picker></nz-date-picker> -->
                     </div>
                 </div>
                 <div nz-row class="all-btn">
@@ -186,11 +187,11 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of tableTwo.data">
-                            <td style="text-align: center;"><nz-avatar [nzSize]="32" nzIcon="user"></nz-avatar></td>
+                            <td style="text-align: center;"><nz-avatar [nzSize]="32" nzIcon="user" class="iconPerson"></nz-avatar></td>
                             <td>{{ data.fullName }}</td>
                             <td>{{ data.process }}</td>
                             <td
-                                [ngStyle]="data.status == 'รอการบันทึกผล' ? {'color': '#D4AC0D'} : {'color': '#28B463'}">
+                                [ngStyle]="data.status == 'รอการบันทึกผล' ? {'color': '#D4AC0D'} : data.status == 'บันทึกผล' ? {'color': '#28B463'} : {'color': '#E74C3C'} ">
                                 {{ data.status }}</td>
                             <td>{{ formatDate(data.updateDate) }}</td>
                         </tr>

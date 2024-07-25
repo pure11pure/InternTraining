@@ -11,6 +11,8 @@ import { DatepickerDateCustomClasses } from 'ngx-bootstrap/datepicker'; //calend
 import { format } from 'date-fns';
 import { th } from 'date-fns/locale'; //วันที่
 
+
+
 @Component({
   selector: 'app-vat',
   templateUrl: './vat.component.html',
@@ -66,10 +68,20 @@ export class VatComponent implements OnInit {
     console.log(value);
   }
 
+  input_date_month_req = "";
+  input_date_year_req = "";
   // ข้อมูลการขออนุมัติยื่นแบบรายการรวมกัน > เดือน/ปีภาษี ที่ยื่นรวม
   varRequestChangeMonthAndYear: boolean = true;
   requestChangeMonthAndYear(checked: boolean) {
-    this.varRequestChangeMonthAndYear = !checked;
+    if (checked) {
+      this.varRequestChangeMonthAndYear = false;
+      this.input_date_month_req = (new Date().getMonth() + 1).toString();
+      this.input_date_year_req = (new Date().getFullYear() + 543).toString();
+    } else {
+      this.varRequestChangeMonthAndYear = true;
+      this.input_date_month_req = '';
+      this.input_date_year_req = '';
+    }
   }
 
   /**
@@ -81,8 +93,8 @@ export class VatComponent implements OnInit {
   radioProcess = 'A';
   //     |> วันที่พิจารณา
   input_date = new Date();
-  input_date_month = new Date().getMonth()+1
-  input_date_year = new Date().getFullYear()+543
+  input_date_month = new Date().getMonth() + 1
+  input_date_year = new Date().getFullYear() + 543
 
 
 
@@ -91,12 +103,6 @@ export class VatComponent implements OnInit {
    */
   listDocument: any[] = [];
   listHistory: any[] = [
-    {
-      fullName: "นางสาวปัณณพร จึงเปี่ยมสุข",
-      process: "เจ้าหน้าที่ลงทะเบียนรับแบบ",
-      status: "รอการบันทึกผล",
-      updateDate: "2024-07-25T10:21:35Z"
-    },
     {
       fullName: "นางสาวปัณณพร จึงเปี่ยมสุข",
       process: "เจ้าหน้าที่ลงทะเบียนรับแบบ",
@@ -173,6 +179,12 @@ export class VatComponent implements OnInit {
       fullName: "นางสาวปัณณพร จึงเปี่ยมสุข",
       process: "เจ้าหน้าที่ลงทะเบียนรับแบบ",
       status: "รอการบันทึกผล",
+      updateDate: "2024-07-25T10:21:35Z"
+    },
+    {
+      fullName: "นางสาวปัณณพร จึงเปี่ยมสุข",
+      process: "เจ้าหน้าที่ลงทะเบียนรับแบบ",
+      status: "ยกเลิก",
       updateDate: "2024-07-25T10:21:35Z"
     },
     {
