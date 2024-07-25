@@ -1,8 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+// * {
+//   font-family: "Kanit", sans-serif;
+//   font-weight: 400;
+//   font-style: normal;
+// }
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
 * {
-  font-family: "Kanit", sans-serif;
-  font-weight: 400;
+  font-family: "Sarabun", sans-serif;
+  font-weight: 500;
   font-style: normal;
+}
+
+body {
+  background-color: #d5ecf4 !important;
+  height: 100vh;
 }
 
 /* Importing Bootstrap SCSS file. */
@@ -11,23 +25,21 @@
 /* Importing Datepicker SCSS file. */
 @import "~ngx-bootstrap/datepicker/bs-datepicker";
 
-
-// https://colorhunt.co/palette/36ba98e9c46af4a261e76f51
-// $oneColor: #4793AF;
-// $twoColor: #DD5746;
-// $threeColor: #8B322C;
-
-
 $whiteColor : #ffffff;
 $grayColor: #bababa;
-$oneColor: #0A6847;
-$twoColor: #7ABA78;
+// $oneColor: #0A6847;
+// $twoColor: #7ABA78;
 $threeColor: #F3CA52;
 $fourColor : #E88D67;
 
+
+$oneColor: #1e4a77;
+$twoColor: #7eb6c9;
+
 $textHeader : 18px;
-$textContent : 16px;
+$textContent : 14px;
 
 * {
-  font-size: $textContent; /* ปรับขนาดตามที่ต้องการ */
+  font-size: $textContent;
+  /* ปรับขนาดตามที่ต้องการ */
 }
