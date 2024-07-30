@@ -34,9 +34,9 @@ export class Chart3Component implements OnInit {
 
   constructor() {
     this.chartOptions = {
-      series: [76, 67, 61, 90],
+      series: [76, 67, 61, 89],
       chart: {
-        height: 390,
+        height: 350,
         type: "radialBar"
       },
       plotOptions: {

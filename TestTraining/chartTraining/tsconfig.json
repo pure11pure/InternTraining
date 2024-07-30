@@ -21,6 +21,7 @@
       "dom"
     ],
     "skipLibCheck": true,
+    "resolveJsonModule": true,
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

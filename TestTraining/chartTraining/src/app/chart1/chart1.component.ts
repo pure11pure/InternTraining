@@ -45,17 +45,20 @@ export class Chart1Component implements OnInit {
           data: [11, 32, 45, 32, 34, 52, 41]
         }
       ],
+      // การตั้งค่าของกราฟ
       chart: {
         height: 350,
         type: "area"
       },
       dataLabels: {
-        enabled: false
+        enabled: false //ปิดการแสดง label ของข้อมูล
       },
+      // การตั้งค่าเส้นกราฟ
       stroke: {
         curve: "smooth"
       },
-      xaxis: {
+      // การตั้งค่าแกน x 
+      xaxis: { 
         type: "datetime",
         categories: [
           "2018-09-19T00:00:00.000Z",
@@ -75,20 +78,21 @@ export class Chart1Component implements OnInit {
     };
   }
 
-  public generateData(baseval:any, count:any, yrange:any) {
-    var i = 0;
-    var series = [];
-    while (i < count) {
-      var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;
-      var y =
-        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-      var z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
+  // public generateData(baseval:any, count:any, yrange:any) {
+  //   console.log(baseval, count, yrange)
+  //   var i = 0;
+  //   var series = [];
+  //   while (i < count) {
+  //     var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;
+  //     var y =
+  //       Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+  //     var z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
 
-      series.push([x, y, z]);
-      baseval += 86400000;
-      i++;
-    }
-    return series;
-  }
+  //     series.push([x, y, z]);
+  //     baseval += 86400000;
+  //     i++;
+  //   }
+  //   return series;
+  // }
 
 }
