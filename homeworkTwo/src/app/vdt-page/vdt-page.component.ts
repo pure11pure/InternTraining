@@ -517,11 +517,11 @@ export class VdtPageComponent implements OnInit {
 
     // Create object URL for the blob
     const url = URL.createObjectURL(blob);
-    this.urlPrint = url;
-    console.log(url)
+    // this.urlPrint = url;
+    // console.log(url)
 
-    // // Open PDF in a new tab
-    // window.open(url, '_blank');
+    // Open PDF in a new tab
+    window.open(url, '_blank');
 
 
     /*
