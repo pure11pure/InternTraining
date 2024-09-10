@@ -141,7 +141,6 @@ export class HomeComponent implements OnInit {
     const newWindow = window.open('', '_blank');
     if (newWindow) {
       const url = `${course.url}?username=${this.user}&course=${course.course}`; // ส่งค่าที่ต้องการเก็บผ่าน URL parameters
-      // const url = `${course.url}?username=${this.user}&position=${this.position}&course=${course.course}`; // ส่งค่าที่ต้องการเก็บผ่าน URL parameters
       newWindow.location.href = url;
     }
   }

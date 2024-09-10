@@ -20,6 +20,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { HomeComponent } from './home/home.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
   
 
 registerLocaleData(en);
@@ -28,7 +31,10 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    LoginPageComponent,
+    HomePageComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,8 @@ registerLocaleData(en);
     NzMenuModule,
     NzInputModule,
     NzGridModule,
-    NzButtonModule
+    NzButtonModule,
+    NzCollapseModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

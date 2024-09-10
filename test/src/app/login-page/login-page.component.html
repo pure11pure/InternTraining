@@ -1,0 +1,23 @@
+<div nz-row nzJustify="center" nzAlign="middle" style="height: 90vh;">
+
+    <div nz-col nzSpan="8" style="text-align: center;">
+
+        <div style="font-size: 2rem; margin-bottom: 3rem;">
+            <p style="font-weight: bold;">Login</p>
+        </div>
+
+        <div style="margin: 3rem auto;">
+            <div nz-row nzJustify="center" style="width: 100%; margin-bottom: 20px;">
+                <input nz-input type="text" placeholder="username" nzSize="large" [(ngModel)]="username">
+            </div>
+            <div nz-row nzJustify="center" style="width: 100%; margin-bottom: 20px;">
+                <input nz-input type="password" placeholder="password" nzSize="large" [(ngModel)]="password">
+            </div>
+            <div nz-row nzJustify="center" style="width: 100%; margin-bottom: 20px;">
+                <button nz-button nzType="default" (click)="login(username, password)">login</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
