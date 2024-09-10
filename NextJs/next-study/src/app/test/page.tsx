@@ -5,6 +5,7 @@
 // จัดการ useState , useEffect
 
 import { useState, useEffect } from 'react'
+import { submitForm } from './action'
 
 async function getBlogs() {
     const res = await fetch('http://localhost:8080/findallUserListByDeptActual?deptId=5')
@@ -33,8 +34,6 @@ export default function Page() {
         console.log('use effect')
     }, [])
 
-    console.log("emp > ", emp)
-
     return (
         <div>
             Hello Test Page2
@@ -55,6 +54,11 @@ export default function Page() {
             ) : (
                 <p>No data available</p>
             )} */}
+
+            <form action={submitForm}>
+                Email: <input name='email'/>
+                <button>submit</button>
+            </form>
         </div>
     )
 }
