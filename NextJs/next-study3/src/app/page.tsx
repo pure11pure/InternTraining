@@ -2,12 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Header from './component/Header'
-
-interface Data {
-  id: number,
-  title: string,
-  body: string
-}
+import { Data } from "./types";
+import PostList from "./component/PostList";
 
 export default function Home() {
 
@@ -47,14 +43,7 @@ export default function Home() {
     <div>
       <Header title="NEXTJS X TypeScript" />
       <p>{result}</p>
-      <ul>
-        {data.map((item) => (
-          <li key={item.id}>
-            <h3>title: {item.title}</h3>
-            <p>body: {item.body}</p>
-          </li>
-        ))}
-      </ul>
+      <PostList posts={data}/>
     </div>
   );
 }
