@@ -11,7 +11,7 @@ async function getEmpDetail(slug : number) {
 export default async function Page({params} : {params: { slug : number}}){
 
     const empDetail = (await getEmpDetail(params.slug)).responseData.result
-    console.log(empDetail)
+    // console.log(empDetail)
     return (
         <div>
            ID : {params.slug} 
