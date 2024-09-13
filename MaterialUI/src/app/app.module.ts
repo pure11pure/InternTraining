@@ -9,6 +9,7 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { MaterialModule } from '../Material.Module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { CardComponent } from './card/card.component';
+import { SliderComponent } from './slider/slider.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { CardComponent } from './card/card.component';
     InputComponent,
     AutocompleteComponent,
     ToolbarComponent,
-    CardComponent
+    CardComponent,
+    SliderComponent
   ],
   imports: [
     BrowserModule,

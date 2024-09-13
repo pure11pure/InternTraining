@@ -10,6 +10,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatCardModule} from '@angular/material/card';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 
@@ -26,8 +28,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatSidenavModule,
         MatListModule,
         MatAutocompleteModule,
-        ReactiveFormsModule
-
+        ReactiveFormsModule,
+        MatCardModule,
+        MatSliderModule,
     ]
 
 })

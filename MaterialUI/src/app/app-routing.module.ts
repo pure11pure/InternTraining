@@ -4,11 +4,13 @@ import { InputComponent } from './input/input.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { CardComponent } from './card/card.component';
+import { SliderComponent } from './slider/slider.component';
 
 const routes: Routes = [
   {path: 'input', component: InputComponent},
   {path: 'auto', component: AutocompleteComponent},
   {path: 'card', component: CardComponent},
+  {path: 'slider', component: SliderComponent},
   // {path: 'toolbar', component: ToolbarComponent},
 ];
 
