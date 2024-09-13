@@ -8,13 +8,15 @@ import { InputComponent } from './input/input.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { MaterialModule } from '../Material.Module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InputComponent,
     AutocompleteComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

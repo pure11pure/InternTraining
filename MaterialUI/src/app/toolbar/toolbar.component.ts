@@ -12,4 +12,10 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  notiIconVisible: boolean = false
+
+  badgeVisible() {
+    this.notiIconVisible = true
+  }
+
 }
