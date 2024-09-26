@@ -10,6 +10,7 @@ import { MaterialModule } from '../Material.Module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { CardComponent } from './card/card.component';
 import { SliderComponent } from './slider/slider.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SliderComponent } from './slider/slider.component';
     AutocompleteComponent,
     ToolbarComponent,
     CardComponent,
-    SliderComponent
+    SliderComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

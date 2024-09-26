@@ -12,8 +12,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatCardModule} from '@angular/material/card';
 import {MatSliderModule} from '@angular/material/slider';
-
-
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
     exports:[
@@ -31,6 +30,7 @@ import {MatSliderModule} from '@angular/material/slider';
         ReactiveFormsModule,
         MatCardModule,
         MatSliderModule,
+        MatTableModule
     ]
 
 })
