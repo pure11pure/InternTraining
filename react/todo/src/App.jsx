@@ -7,24 +7,6 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // // 1. ใช้ async ไม่ได้
-  // useEffect(() => {
-  //   async function fetchTodo() {
-  //     try {
-  //       const res = await axios.get(
-  //         "https://66f4d3fe77b5e889709a979c.mockapi.io/todo"
-  //       );
-  //       console.log(res.data);
-  //       setTodos(res.data);
-  //     } catch (error) {
-  //       console.error("error", error);
-  //     }
-  //   }
-
-  //   fetchTodo();
-  // }, []); // fetch ครั้งเดียว
-
-  // 2.
   useEffect(() => {
     const fetchData = async () => {
       await fetchTodo();
