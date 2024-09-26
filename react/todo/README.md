@@ -12,6 +12,5 @@
 #### axios
     npm i axios
 #### router[https://reactrouter.com/en/main/start/tutorial#tutorial]
-    
-    ```npm install react-router-dom ```
+```npm install react-router-dom ```
 
