@@ -20,19 +20,27 @@ function App() {
     },
   ];
 
+  /* Type 1 */
+  // return (
+  //   <>
+  //     <div>
+  //       {todoList.map((todo, index) => {
+  //         return (
+  //           <Checkbox key={index} text={todo.text} isChecked={todo.isChecked} />
+  //         );
+  //       })}
+  //     </div>
+  //   </>
+  // );
+
+  /* Type2 : เพราะ .map มันจะมีการ return อยู่แล้ว*/
   return (
     <>
-      {/* <Header />
-      <div>Hello</div>
-      <IconA />
-      <Image
-        imageUrl={
-          "https://fastly.picsum.photos/id/472/200/300.jpg?hmac=QWrw_-haGekq7e6hrwtMmL7cjpfQkkX946dg8swfWLE"
-        }
-      /> */}
-      <Checkbox text="coding react" isChecked={false} />
-      <Checkbox text="doing document" isChecked={true} />
-      <Checkbox text="test react" isChecked={false} />
+      <div>
+        {todoList.map((todo, index) => (
+          <Checkbox key={index} text={todo.text} isChecked={todo.isChecked} />
+        ))}
+      </div>
     </>
   );
 }
