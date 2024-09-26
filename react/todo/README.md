@@ -9,7 +9,7 @@
 - vite[https://vitejs.dev/guide/]
 - PropType[https://blog.logrocket.com/validate-react-props-proptypes/]
 
-    npm install prop-types --save
+    `npm install prop-types --save`
 - axios
 
     npm i axios
