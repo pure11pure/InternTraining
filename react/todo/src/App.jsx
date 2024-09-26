@@ -1,8 +1,8 @@
 import "./App.css";
-import Header from "./components/Header";
-import { IconA } from "./components/Icon";
-import Image from "./components/Image";
 import Checkbox from "./components/Checkbox";
+
+import { useState } from "react";
+import VideoPlayer from "./components/Video";
 
 function App() {
   const todoList = [
@@ -20,22 +20,30 @@ function App() {
     },
   ];
 
-  /* Type 1 */
-  // return (
-  //   <>
-  //     <div>
-  //       {todoList.map((todo, index) => {
-  //         return (
-  //           <Checkbox key={index} text={todo.text} isChecked={todo.isChecked} />
-  //         );
-  //       })}
-  //     </div>
-  //   </>
-  // );
+  const [counter, setCounter] = useState(0);
+  const [isPlaying, setIsplaying] = useState(false)
 
-  /* Type2 : เพราะ .map มันจะมีการ return อยู่แล้ว*/
+  function btnCounter() {
+    setCounter(counter + 1);
+  }
+
+  function triggerPlayer(){
+    setIsplaying(!isPlaying)
+  }
+
   return (
     <>
+      <div>
+        <VideoPlayer
+          src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+          isPlaying={isPlaying}
+        />
+       <button onClick={triggerPlayer}>{isPlaying ? "pause" : "play"}</button>
+      </div>
+      <diV>
+        New counter is {counter}
+        <button onClick={btnCounter}>Add Counter</button>
+      </diV>
       <div>
         {todoList.map((todo, index) => (
           <Checkbox key={index} text={todo.text} isChecked={todo.isChecked} />
