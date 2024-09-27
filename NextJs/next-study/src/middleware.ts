@@ -40,6 +40,7 @@ export async function middleware(request: NextRequest) {
 }
 
 // See "Matching Paths" below to learn more
+// path นี้ห้ามเข้า
 export const config = {
     // matcher: ['/content/:path*' ]
     matcher: ['/manage/blog/:path*']

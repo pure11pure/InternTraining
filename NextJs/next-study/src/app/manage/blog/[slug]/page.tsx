@@ -139,6 +139,7 @@ export default function Page({ params }: { params: { slug: number } }) {
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target)
         const { name, value } = event.target;
         setEmp((prevState) => ({
             ...prevState,
@@ -147,7 +148,7 @@ export default function Page({ params }: { params: { slug: number } }) {
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event?.preventDefault();
+        event?.preventDefault(); //
         console.log('Form Submit', emp);
         console.log('Form Submit', deptID);
         try {
