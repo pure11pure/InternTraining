@@ -23,13 +23,14 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { title, content } = await requet.json();
+    const { title, content, category } = await requet.json();
     const postId = Number(params.id);
     const post = await prisma.post.update({
       where: { id: postId },
       data: {
         title,
         content,
+        category,
       },
     });
     return Response.json(post);

@@ -17,3 +17,12 @@ start [https://mikelopster.dev/posts/next-prisma]
     - https://www.prisma.io/docs/orm/prisma-schema/overview
 
 4. extend Prisma
+
+
+## Other
+    npx prisma migrate dev --name <ชื่อ migrate>
+
+
+#### pic
+![alt text](image.png)
+![alt text](image-1.png)

@@ -9,6 +9,7 @@ const Edit = ({ params }: { params: { id: string } }) => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [category, setCategory] = useState('')
 
   const router = useRouter();
 
@@ -17,6 +18,7 @@ const Edit = ({ params }: { params: { id: string } }) => {
       const res = await axios.get(`/api/posts/${id}`);
       setTitle(res.data.title);
       setContent(res.data.content);
+      setCategory(res.data.category || '')
     } catch (error) {
       console.error(error);
       alert('something went wrong [GET]')
@@ -36,6 +38,7 @@ const Edit = ({ params }: { params: { id: string } }) => {
       await axios.put(`/api/posts/${id}`, {
         title,
         content,
+        category
       });
       router.push("/");
     } catch (error) {
@@ -48,6 +51,18 @@ const Edit = ({ params }: { params: { id: string } }) => {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-semibold mb-6">Edit Post {id}</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label>Category</label>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">Select a category</option>
+            <option value="text">text</option>
+            <option value="number">number</option>
+          </select>
+        </div>
+
         <div>
           <label
             htmlFor="title"

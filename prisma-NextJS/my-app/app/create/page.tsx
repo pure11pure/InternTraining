@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 const Create = () => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+    const [category, setCategory] = useState('')
 
     const router = useRouter()
 
@@ -14,11 +15,13 @@ const Create = () => {
         event.preventDefault()  //
         console.log('title: ', title)
         console.log('content: ', content)
+        console.log('category: ', category)
 
         try {
             await axios.post('/api/posts', {
                 title,
-                content
+                content,
+                category
             })
             router.push('/') //เปลี่ยนหน้า
         } catch (error) {
@@ -31,6 +34,17 @@ const Create = () => {
         <div className="max-w-4xl mx-auto px-4 py-8">
             <h1 className="text-2xl font-semibold mb-6">Create a New Post</h1>
             <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                    <label>Category</label>
+                    <select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                    >
+                        <option value="">Select a category</option>
+                        <option value="text">text</option>
+                        <option value="number">number</option>
+                    </select>
+                </div>
                 <div>
                     <label
                         htmlFor="title"
