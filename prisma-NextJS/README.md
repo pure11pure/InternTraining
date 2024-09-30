@@ -26,3 +26,9 @@ start [https://mikelopster.dev/posts/next-prisma]
 #### pic
 ![alt text](image.png)
 ![alt text](image-1.png)
+
+
+## !!! การจะสร้าง table 
+ในการจะสร้าง table จะต้องคิดให้ดี เพราะอาจเกิดปัญหาได้
+ในกรณีที่ เพิ่ม feild ที่หลัง > table ที่มี column เดิมที่เคยสร้างอยู่มีการเปลี่ยนแปลงบางอย่าง
+* หากมีการแก้ไข column เดิมใน table เดิม ต้องตัดสินใจลบ data หรือ หาวิธีในการเลี่ยง(มันมีอยู่)

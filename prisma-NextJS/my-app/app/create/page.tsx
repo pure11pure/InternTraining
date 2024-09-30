@@ -1,13 +1,29 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 const Create = () => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
-    const [category, setCategory] = useState('')
+    const [categoryId, setCategoryId] = useState('')
+
+    const [categories, setCategories] = useState([])
+    const fetchCategories = async () => {
+        try {
+            // const query = new URLSearchParams({ category, search, sort }).toString()
+            const res = await axios.get(`/api/categories`)
+            setCategories(res.data)
+        } catch (error) {
+            console.log(error)
+            setCategories([])
+        }
+    }
+
+    useEffect(() => {
+        fetchCategories()
+    }, [])
 
     const router = useRouter()
 
@@ -15,13 +31,13 @@ const Create = () => {
         event.preventDefault()  //
         console.log('title: ', title)
         console.log('content: ', content)
-        console.log('category: ', category)
+        console.log('category: ', categoryId)
 
         try {
             await axios.post('/api/posts', {
                 title,
                 content,
-                category
+                categoryId
             })
             router.push('/') //เปลี่ยนหน้า
         } catch (error) {
@@ -37,12 +53,13 @@ const Create = () => {
                 <div>
                     <label>Category</label>
                     <select
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
+                        value={categoryId}
+                        onChange={(e) => setCategoryId(e.target.value)}
                     >
                         <option value="">Select a category</option>
-                        <option value="text">text</option>
-                        <option value="number">number</option>
+                        {categories.map((cat: any) => (
+                            <option key={cat.id} value={cat.id}>{cat.name}</option>
+                        ))}
                     </select>
                 </div>
                 <div>

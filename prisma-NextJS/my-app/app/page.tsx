@@ -23,6 +23,19 @@ export default function Home() {
     }
   }
 
+  const [categories, setCategories] = useState([])
+  const fetchCategory = async () => {
+    try {
+      // const query = new URLSearchParams({ category, search, sort }).toString()
+      const res = await axios.get(`/api/categories`)
+      console.log(res.data)
+      setCategories(res.data)
+    } catch (error) {
+      console.log(error)
+      setCategories([])
+    }
+  }
+
   // btn search
   const handleApplyFilters = () => {
     fetchPosts()
@@ -30,6 +43,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchPosts()
+    fetchCategory()
   }, [])
 
   const deletePost = async (id: number) => {
@@ -62,8 +76,9 @@ export default function Home() {
             className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Select Category</option>
-            <option value="text">text</option>
-            <option value="number">number</option>
+            {categories.map((cat: any) => (
+              <option key={cat.id} value={cat.name}>{cat.name}</option>
+            ))}
           </select>
           <select
             value={sort}
@@ -116,7 +131,7 @@ export default function Home() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {post.category}
+                    {post.category.name}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

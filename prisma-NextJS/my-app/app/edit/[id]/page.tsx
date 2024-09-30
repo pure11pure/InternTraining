@@ -9,7 +9,7 @@ const Edit = ({ params }: { params: { id: string } }) => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState('')
+  const [categoryId, setCategoryId] = useState('') 
 
   const router = useRouter();
 
@@ -18,16 +18,29 @@ const Edit = ({ params }: { params: { id: string } }) => {
       const res = await axios.get(`/api/posts/${id}`);
       setTitle(res.data.title);
       setContent(res.data.content);
-      setCategory(res.data.category || '')
+      setCategoryId(res.data.categoryId || '')
     } catch (error) {
       console.error(error);
       alert('something went wrong [GET]')
     }
   };
 
+  const [categories, setCategories] = useState([])
+  const fetchCategories = async () => {
+      try {
+          // const query = new URLSearchParams({ category, search, sort }).toString()
+          const res = await axios.get(`/api/categories`)
+          setCategories(res.data)
+      } catch (error) {
+          console.log(error)
+          setCategories([])
+      }
+  }
+
   useEffect(() => {
     if (id) {
       fetchPost(parseInt(id));
+      fetchCategories()
     }
   }, [id]);
 
@@ -38,7 +51,7 @@ const Edit = ({ params }: { params: { id: string } }) => {
       await axios.put(`/api/posts/${id}`, {
         title,
         content,
-        category
+        categoryId
       });
       router.push("/");
     } catch (error) {
@@ -54,12 +67,13 @@ const Edit = ({ params }: { params: { id: string } }) => {
         <div>
           <label>Category</label>
           <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
           >
             <option value="">Select a category</option>
-            <option value="text">text</option>
-            <option value="number">number</option>
+            {categories.map((cat: any) => (
+              <option key={cat.id} value={cat.id}>{cat.name}</option>
+            ))}
           </select>
         </div>
 

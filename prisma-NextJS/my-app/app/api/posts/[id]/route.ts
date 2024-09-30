@@ -14,6 +14,9 @@ export async function GET(
     where: {
       id: postId,
     },
+    // include:{
+    //   category: true
+    // }
   });
   return Response.json(post);
 }
@@ -23,14 +26,14 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { title, content, category } = await requet.json();
+    const { title, content, categoryId } = await requet.json();
     const postId = Number(params.id);
     const post = await prisma.post.update({
       where: { id: postId },
       data: {
         title,
         content,
-        category,
+        categoryId: Number(categoryId),
       },
     });
     return Response.json(post);
