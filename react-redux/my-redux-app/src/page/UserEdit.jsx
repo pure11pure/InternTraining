@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser, createUser, editUser } from "../actions/userActions";
+// import { fetchUser, createUser, editUser } from "../actions/userActions";
+import { fetchUser, createUser, editUser } from "../reducers/userSlice";
 import { useParams } from "react-router-dom";
 
 const UserEdit = () => {
@@ -32,10 +33,7 @@ const UserEdit = () => {
   }, [currentUser]);
 
   const handleSave = async () => {
-    console.log("|handleSave()| ");
-    console.log("|> userDate : ", userData);
-    console.log("|> id : ", id);
-
+    console.log("BTN :|handleSave()| ");
     if (id) {
       const res = await dispatch(editUser(userData));
       if (res.success) {

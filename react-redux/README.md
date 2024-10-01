@@ -20,8 +20,12 @@
     npm install -D tailwindcss postcss autoprefixer
     <!-- npx tailwindcss init -->
     npx tailwindcss init -p
-
+#### 10. 
+    <!-- จะมีความใช้ง่ายกว่า ต้องใช้ action+reducer -->
+    npm install @reduxjs/toolkit
 
 
 ## "pic"
 ![alt text](image.png)
+
+

@@ -1,8 +1,7 @@
-//
-
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUsers, deleteUser } from "../actions/userActions";
+// import { fetchUsers, deleteUser } from "../actions/userActions";
+import { fetchUsers, deleteUser } from "../reducers/userSlice";
 import { Link } from "react-router-dom";
 
 const UserList = () => {
@@ -23,7 +22,7 @@ const UserList = () => {
           className="flex items-center justify-between border-b py-2"
         >
           <div>
-            <p>Name: {user.name}</p>
+            <p>Name: {user.name} </p>
             <p>Email: {user.email}</p>
             <p>Phone: {user.phoneNumber}</p>
           </div>
