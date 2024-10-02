@@ -11,4 +11,24 @@ npm run dev
 
     npx storybook@latest init
 
+    npm run storybook
+
 - [https://storybook.js.org/docs/get-started/frameworks/react-vite?renderer=react]
+
+#### 3.
+
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+
+    /** @type {import('tailwindcss').Config} */
+    export default {
+        content: [
+            "./index.html",
+            "./src/**/*.{js,ts,jsx,tsx}",
+            ],
+            theme: {
+                extend: {},
+                },
+                plugins: [],
+                }
+`* สไตล์ของ tailwind ไม่กระจายไปที่ storyook`
