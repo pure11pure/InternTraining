@@ -31,4 +31,30 @@ npm run dev
                 },
                 plugins: [],
                 }
-`* สไตล์ของ tailwind ไม่กระจายไปที่ storyook`
+
+`* สไตล์ของ tailwind ไม่กระจายไปที่ storybook`
+
+#### 4.
+
+```
+npx storybook@latest add @storybook/addon-styling-webpack
+```
+
+```
+    /** @type { import('@storybook/react').Preview } */
+    import "../src/tailwind.css";
+    const preview = {
+    parameters: {
+        actions: { argTypesRegex: "^on[A-Z].\*" },
+        controls: {
+        matchers: {
+        color: /(background|color)$/i,
+                date: /Date$/i,
+                },
+            },
+        },
+    };
+    export default preview;
+```
+
+- [https://storybook.js.org/recipes/tailwindcss]
