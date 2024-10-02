@@ -1,6 +1,6 @@
 import Register from "./Register";
 import { within, userEvent, expect } from "@storybook/test";
-// import { rest } from "msw";
+import { rest } from "msw";
 
 export default {
   title: "RegisterForm",
