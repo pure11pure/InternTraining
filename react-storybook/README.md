@@ -2,16 +2,18 @@
 
 #### 1.
 
-```npm create vite@latest my-storybook-app -- --template react
+```
+npm create vite@latest my-storybook-app -- --template react
 npm install
 npm run dev
 ```
 
 #### 2.
 
+```
     npx storybook@latest init
-
     npm run storybook
+```
 
 - [https://storybook.js.org/docs/get-started/frameworks/react-vite?renderer=react]
 
@@ -32,7 +34,7 @@ npm run dev
                 plugins: [],
                 }
 
-`* สไตล์ของ tailwind ไม่กระจายไปที่ storybook`
+> !!สไตล์ของ tailwind ไม่กระจายไปที่ storybook!!
 
 #### 4.
 
@@ -58,3 +60,7 @@ npx storybook@latest add @storybook/addon-styling-webpack
 ```
 
 - [https://storybook.js.org/recipes/tailwindcss]
+
+
+### doc
+- การ queries [https://testing-library.com/docs/queries/byrole]
