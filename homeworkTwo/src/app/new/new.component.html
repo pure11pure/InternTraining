@@ -1,0 +1,158 @@
+<div style="background-color: white;">
+    <img nz-image nzSrc="assets/1721876500691.jpg" alt="" />
+</div>
+<div class="search">
+    <h4>เงื่อนไขการค้นหา</h4>
+    <div nz-row class="sub-search">
+        <div nz-col nzSpan="4" class="column-left required">วันที่นำส่ง</div>
+        <div nz-col nzSpan="5">
+            <nz-input-group nzSuffixIcon="calendar">
+                <input nz-input bsDatepicker [(ngModel)]="input_date" style="width: 100%;" type="text"
+                    [bsConfig]="{ isAnimated: true }">
+            </nz-input-group>
+        </div>
+    </div>
+</div>
+<nz-table #filterTable [nzData]="listOfData" nzTableLayout="fixed" class="tableOne" nzShowPagination="false">
+    <thead>
+        <tr>
+            <th *ngFor="let column of listOfColumns; trackBy: trackByName" [nzSortFn]="column.sortFn"
+                [nzFilters]="column.listOfFilter" [nzFilterFn]="column.filterFn" [ngStyle]="{ width: column.width || '150px' }">
+                {{ column.name }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of filterTable.data">
+            <td>{{ data.id }}</td>
+            <td>{{ data.date}}</td>
+            <td>{{ data.all }}
+                <a (click)="showModalall()"><span nz-icon nzType="eye" nzTheme="outline" class="icon"></span></a>
+            </td>
+            <td>{{ data.success }}
+                <a (click)="showModalSuccess()"><span nz-icon nzType="eye" nzTheme="outline" class="icon"></span></a>
+            </td>
+            <td>{{ data.unsuccess }}
+                <a (click)="showModalUnSuccess()"><span nz-icon nzType="eye" nzTheme="outline"
+                        class="icon"></span></a>
+            </td>
+            <td>{{ data.error }}
+                <a (click)="showModalError()"><span nz-icon nzType="eye" nzTheme="outline"
+                        class="icon"></span></a>
+            </td>
+            
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- ทั้งหมด -->
+<nz-modal [(nzVisible)]="isVisibleAll" nzClosable="false" [nzFooter]="modalFooter1">
+    <ng-container *nzModalContent>
+        <h5>จำนวนรายการ</h5>
+        <nz-table #allTable nzSize="middle" [nzData]="allData" class="tableTwo" nzShowPagination="false" nzBordered>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>invoive no</th>
+                    <th>type</th>
+                    <th>error desc</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of allTable.data">
+                    <td>{{ data.id }}</td>
+                    <td>{{ data.invoiveNo }}</td>
+                    <td>{{ data.type }}</td>
+                    <td>{{ data.errorDesc }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-container>
+    <ng-template #modalFooter1>
+        <button nz-button nzType="default" (click)="handleCancelAll()">close</button>
+    </ng-template>
+</nz-modal>
+<!-- นำส่งสำเร็จ -->
+<nz-modal [(nzVisible)]="isVisibleSuccess" nzClosable="false" [nzFooter]="modalFooter2">
+    <ng-container *nzModalContent>
+        <h5>นำส่งสำเร็จ</h5>
+        <nz-table #successTable nzSize="middle" [nzData]="successData" class="tableTwo" nzShowPagination="false" nzBordered>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>invoive no</th>
+                    <th>type</th>
+                    <th>error desc</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of successTable.data">
+                    <td>{{ data.id }}</td>
+                    <td>{{ data.invoiveNo }}</td>
+                    <td>{{ data.type }}</td>
+                    <td>{{ data.errorDesc }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-container>
+    <ng-template #modalFooter2>
+        <button nz-button nzType="default" (click)="handleCancelSuccess()">close</button>
+    </ng-template>
+</nz-modal>
+
+<!-- นำส่งไม่สำเร็จ -->
+<nz-modal [(nzVisible)]="isVisibleUnSuccess" nzClosable="false" [nzFooter]="modalFooter3">
+    <ng-container *nzModalContent>
+        <h5>นำส่งไม่สำเร็จ</h5>
+        <nz-table #middleTable nzSize="middle" [nzData]="unSuccessData" class="tableThree" nzShowPagination="false" nzBordered>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>invoive no</th>
+                    <th>type</th>
+                    <th>error desc</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of middleTable.data">
+                    <td>{{ data.id }}</td>
+                    <td>{{ data.invoiveNo }}</td>
+                    <td>{{ data.type }}</td>
+                    <td style="text-align: left;">{{ data.errorDesc }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-container>
+    <ng-template #modalFooter3>
+        <button nz-button nzType="default" (click)="handleCancelUnSuccess()">close</button>
+    </ng-template>
+</nz-modal>
+
+<!-- นำส่งไม่ได้ -->
+<nz-modal [(nzVisible)]="isVisibleError" nzClosable="false" [nzFooter]="modalFooter4">
+    <ng-container *nzModalContent>
+        <h5>นำส่งไม่ได้</h5>
+        <nz-table #middleTable nzSize="middle" [nzData]="errorData" class="tableThree" nzShowPagination="false" nzBordered>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>invoive no</th>
+                    <th>type</th>
+                    <th>error desc</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of middleTable.data">
+                    <td>{{ data.id }}</td>
+                    <td>{{ data.invoiveNo }}</td>
+                    <td>{{ data.type }}</td>
+                    <td style="text-align: left;">{{ data.errorDesc }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-container>
+    <ng-template #modalFooter4>
+        <button nz-button nzType="default" (click)="handleCancelError()">re-send</button>
+        <button nz-button nzType="default" (click)="handleCancelError()">close</button>
+    </ng-template>
+</nz-modal>

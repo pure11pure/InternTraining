@@ -1,0 +1,53 @@
+@import '/src/styles.scss';
+
+.header-text {
+    margin-top: 5%;
+}
+
+.list-course {
+    background-color: #A0937D;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.list-count-course {
+    background-color: rgba(196, 156, 99, 0);
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.lesson-box {
+    background-color: rgb(201, 201, 201);
+    height: 35px;
+    width: 30px;
+    border: 1px solid #b5b5b5;
+    border-radius: 5px;
+}
+
+.list-course:hover {
+    background-color: #E7D4B5;
+}
+
+.list-course:active {
+    background-color: #E7D4B5;
+}
+
+.list-course-study {
+    background-color: #E7D4B5;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+p {
+    text-align: center;
+    margin: 5px;
+}
+
+
+.lesson{
+    border-radius: 6px;
+    width: fit-content;
+    padding: 5px;
+    margin-left: 3px;
+}

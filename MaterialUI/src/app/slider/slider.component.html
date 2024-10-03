@@ -1,0 +1,33 @@
+<p>slider works!</p>
+<mat-slider
+  min="20"
+  step="5"
+  max="100"
+  color="accent"
+  style="width: 300px"
+  [(ngModel)]="selectedValue"
+>
+  <input matSliderThumb />
+</mat-slider>
+
+<br />
+<label> Selected slider value is {{ selectedValue }} </label>
+
+<br />
+<mat-slider
+  min="20"
+  step="5"
+  max="100"
+  color="accent"
+  style="width: 300px; margin-top: 5% "
+  [(ngModel)]="selectedValue"
+>
+</mat-slider>
+
+
+<br>
+<mat-slider min="200" max="500">
+    <input value="300" matSliderStartThumb>
+    <input value="400" matSliderEndThumb>
+  </mat-slider>
+  

@@ -1,0 +1,13 @@
+<!-- <p>autocomplete works!</p> -->
+<form class="example-form" style="padding: 5%;">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>test</mat-label>
+      <input type="text" matInput [matAutocomplete]="autoTest" [formControl]="formcontrol">
+      <mat-autocomplete #autoTest="matAutocomplete">
+        <mat-option *ngFor="let option of filterOptionList | async" [value]="option.name">
+            {{option.code}} | {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  

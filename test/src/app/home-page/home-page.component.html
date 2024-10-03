@@ -1,0 +1,33 @@
+<div style="height: 100vh;" nz-row nzJustify="center">
+
+    <div
+        style="background-color: #ececec; width: 60%; height: 80%; padding: 15px; border-radius: 1rem;  margin-top: 5%;">
+        <p style="font-size: 32px; font-weight: bold;">Course</p>
+        <div style="height: 70%; overflow-y: auto; margin-top: 20px;">
+            <nz-collapse nzAccordion *ngFor="let course of listAll; let i = index" >
+                <nz-collapse-panel [nzHeader]="course.course_name">
+                    <div (click)="linkToCourse(course)">
+                        <a class="inner-box">Link to course</a>
+                    </div>
+                    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }" style="padding: 10px;">
+                        <div nz-col *ngFor="let lesson of course.lessonAllByCourse"
+                            [ngStyle]="{ 'background-color': getLessonBackgroundColor(course, lesson) }" class="lesson">
+                            <div class="inner-box">{{lesson.lesson_name}}</div>
+                        </div>
+                    </div>
+                </nz-collapse-panel>
+            </nz-collapse>
+
+        </div>
+
+        <!-- Logout Button Section -->
+        <div nz-row nzJustify="center" [nzGutter]="16" style="padding: 20px; position: relative;">
+            <button nz-button nzType="default" (click)="logout()">Logout</button>
+        </div>
+    </div>
+
+
+
+
+
+</div>

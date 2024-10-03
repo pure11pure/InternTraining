@@ -1,0 +1,52 @@
+{
+    "user": {
+        "username": "punnaporn",
+        "position": "1",
+        "course": "101",
+        "_comment": ""
+    },
+    "button": {
+        "start": "SmartShape_1_begin",
+        "quiz": "Button_Quiz",
+        "continues": [
+            {
+                "name" : "Lesson01",
+                "variable": "SmartShape_1_button1_f"
+            },
+            {
+                "name" : "Lesson02",
+                "variable": "SmartShape_1_Quiz_14"
+            },
+            {
+                "name" : "Lesson03",
+                "variable": "SmartShape_1_Quiz_13"
+            },
+            {
+                "name" : "Quiz",
+                "variable": "SmartShape_1_Dashboard_Menu"
+            }
+        ]
+    },
+    "lessons": [
+        {
+            "lesson": "Lesson01",
+            "image": "Image_1",
+            "variable": "_Lesson01"
+        },
+        {
+            "lesson": "Lesson02",
+            "image": "Image_2",
+            "variable": "_Lesson02"
+        },
+        {
+            "lesson": "Lesson03",
+            "image": "Image_3",
+            "variable": "_Lesson03"
+        },
+        {
+            "lesson": "Quiz",
+            "image": "Image_4",
+            "variable": "_Quiz"
+        }
+    ]
+}

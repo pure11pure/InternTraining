@@ -1,0 +1,69 @@
+@import '../../styles.scss';
+
+h4{
+    // padding-top: 2vw;
+    font-family: "Prompt", sans-serif;
+    font-weight: 600;
+}
+
+.search{
+    margin: 2vw;
+}
+
+.sub-search{
+    background-color: white;
+    padding: 2vw;
+}
+
+.tableOne{
+    margin: 2vw;
+}
+
+::ng-deep .tableOne .ant-table-thead > tr > th , ::ng-deep .tableOne .ant-table-tbody > tr > td{
+    text-align: left;
+}
+
+::ng-deep .ant-table-thead > tr > th {
+    text-align: center;
+}
+
+::ng-deep .ant-table-tbody > tr > td {
+    text-align: center;
+}
+
+::ng-deep .tableTwo .ant-table table,
+::ng-deep .tableThree .ant-table table {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+::ng-deep .tableTwo .ant-table-thead > tr > th,::ng-deep .tableTwo .ant-table-tbody > tr > td, ::ng-deep .tableTwo .ant-table tfoot > tr > th,::ng-deep .tableTwo .ant-table tfoot > tr > td ,
+::ng-deep .tableThree .ant-table-thead > tr > th,::ng-deep .tableThree .ant-table-tbody > tr > td, ::ng-deep .tableThree .ant-table tfoot > tr > th,::ng-deep .tableThree .ant-table tfoot > tr > td {
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-top: 1px solid #000000;
+    background-color: white;
+}
+
+
+
+h5{
+    text-align: center;
+    margin-bottom: 1vw;
+}
+
+a{
+    margin-left: 10px;
+}
+
+.icon{
+    font-size: 30px;
+    background-color: rgb(184, 226, 228);
+    padding: 5px;
+    border-radius: 30px;
+}
+
+.icon:hover{
+    background-color: rgb(139, 215, 219);
+    color: white;
+}

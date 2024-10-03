@@ -1,0 +1,241 @@
+<nz-layout>
+    <div class="header">
+        <!-- Text Header -->
+        <div nz-row>
+            <div style="margin: 10px;">
+                VDT0320 : ข้อมูลที่ต้องการค้นหา
+            </div>
+        </div>
+        <div nz-row>
+            <div nz-col nzSpan="5" class="header-text">
+                เลขที่ใบสรุป
+            </div>
+            <div nz-col nzSpan="5" class="header-text">
+                วันที่
+            </div>
+        </div>
+        <div nz-row>
+            <div nz-col nzSpan="5" class="inputModal">
+                <input nz-input [(ngModel)]="input_vdtNo" type="text" />
+            </div>
+            <div nz-col nzSpan="5" class="inputModal">
+                <input nz-input bsDatepicker [(ngModel)]="input_date" style="width: 100%;" type="text"
+                    [bsConfig]="{ isAnimated: true }" [dateCustomClasses]="dateCustomClasses">
+            </div>
+            <div nz-col nzSpan="5">
+                <button nz-button class="searchBtn" (click)="search()">ค้นหา</button>
+            </div>
+            <nz-modal [(nzVisible)]="visibleSearchDate" nzTitle="เลือกเลขที่ใบสรุป"
+                (nzOnCancel)="visibleSearchDate = !visibleSearchDate " [nzFooter]="null" class="modalSelectVdt">
+                <ng-template nzModalContent>
+                    <div *ngIf="listVdtNo.length > 0 && visibleSearchDate == true">
+                        <div *ngFor="let vdt of listVdtNo; let i = index;" class="listVdt"
+                            (click)="selectVdtNo(vdt.vdt_no, i)" style="font-size: 16px;">
+                            {{vdt.vdt_no}}
+                        </div>
+                    </div>
+                    <div *ngIf="listVdtNo.length == 0 && visibleSearchDate == true">
+                        <div class="modalSelectVdt"> ไม่มีข้อมูล</div>
+                    </div>
+                </ng-template>
+            </nz-modal>
+        </div>
+    </div>
+
+    <div class="detail">
+        <!-- Text Header -->
+        <div nz-row>
+            <div style="margin: 10px;">
+                VDT0320 : ข้อมูลแบบ ภ.พ.10
+            </div>
+        </div>
+
+        <!-- content -->
+        <div nz-row>
+            <!-- Left -->
+            <div nz-col class="detail-box-input" style="margin-bottom: 20px;">
+                <!-- row 1 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" style="margin-left: 20px;">
+                        เล่มที่
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 20px;">
+                        เลขที่
+                    </div>
+                </div>
+                <!-- row 2 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_noBook" type="text" />
+                    </div>
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_noNumber" type="text" />
+                    </div>
+                </div>
+                <!-- row 3 -->
+                <div nz-row nzJustify="center" style="margin-top: 20px;">
+                    <div nz-col nzSpan="9" style="margin-left: 20px;">
+                        วันที่จัดทำ ภ.พ.10
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 20px;">
+                        ยอดซื้อ
+                    </div>
+                </div>
+                <!-- row 4 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <!-- <input nz-input [(ngModel)]="input_dateOfPreparation" type="text" /> -->
+                        <input nz-input bsDatepicker [(ngModel)]="input_dateOfPreparation" style="width: 100%;"
+                            type="text" [bsConfig]="{ isAnimated: true }" [outsideClick]="false"
+                            [dateCustomClasses]="dateCustomClasses">
+                    </div>
+                    <!-- <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00"
+                            (input)="formatInputMoney($event)" />
+                    </div> -->
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_purchaseAmount" type="text" placeholder="0.00"
+                            (input)="formatInputMoneyClone($event)" />
+                    </div>
+                </div>
+                <!-- row 5 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;" nz-tooltip
+                        nzTooltipTitle="เลข 13 หลัก (ไม่ต้องเว้น)" nzTooltipPlacement="right">
+                        เลขประจำตัวผู้เสียภาษีอากร
+                    </div>
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_taxId" type="text" (input)="onInputChange_taxId($event)" />
+                    </div>
+                </div>
+                <!-- row 6 -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;" nz-tooltip
+                        nzTooltipTitle="xx123" nzTooltipPlacement="right">
+                        สาขาที่
+                    </div>
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_branch" type="text" (input)="onInputChange_branch($event)" />
+                    </div>
+                </div>
+                <!-- row 7  -->
+                <div nz-row nzJustify="center">
+                    <div nz-col nzSpan="9" style="margin-left: 20px; text-align: right;">
+                        ชื่อสถานประกอบการ
+                    </div>
+                    <div nz-col nzSpan="9" class="inputModal">
+                        <input nz-input [(ngModel)]="input_companyName" type="text" />
+                    </div>
+                </div>
+            </div>
+            <!-- right -->
+            <div nz-col class="detail-box-vat">
+                <!-- row 1 -->
+                <div nz-row nzJustify="center" style="margin-top: 5px;">
+                    <div nz-col nzSpan="9" style="margin-right: 40px; text-align: right;">
+                        Vat 7%
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 40px;">
+                        {{cal_purchaseAmount_vat | number: '.2'}}
+                    </div>
+                </div>
+                <!-- row 2 -->
+                <div nz-row nzJustify="center" style="margin-top: 5px;">
+                    <div nz-col nzSpan="9" style="margin-right: 40px; text-align: right;">
+                        ภาษีที่ได้รับคือ(กรมสรรพากร)
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 40px;">
+                        {{cal_purchaseAmount_refund_revenue | number: '.2'}}
+                    </div>
+                </div>
+                <!-- row 3 -->
+                <div nz-row nzJustify="center" style="margin-top: 5px;">
+                    <div nz-col nzSpan="9" style="margin-right: 40px; text-align: right;">
+                        ภาษีที่ได้รับคืนจากตัวแทน
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 40px;">
+                        {{cal_purchaseAmount_refund_agent | number: '.2'}}
+                    </div>
+                </div>
+                <!-- row 4 -->
+                <div nz-row nzJustify="center" style="margin-top: 5px;">
+                    <div nz-col nzSpan="9" style="margin-right: 40px; text-align: right;">
+                        ค่าธรรมเนียมในการคืน
+                    </div>
+                    <div nz-col nzSpan="9" style="margin-left: 40px;">
+                        {{cal_purchaseAmount_refund_fee | number: '.2'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button [add to table] -->
+        <div nz-row>
+            <button nz-button class="addtoTableBtn" (click)="addtoTable()">{{ modeedit ? "บันทึก" : "เพิ่ม" }}</button>
+        </div>
+
+        <!-- Table -->
+        <nz-table #basicTable nzBordered [nzData]="listdata" [nzPaginationType]="'small'" [nzPageSize]="pageSize"
+            [nzTableLayout]="'fixed'" [nzPaginationPosition]="'bottom'" nzClassName="custom-pagination"
+            (nzPageIndexChange)="onPageIndexChange($event)">
+            <thead>
+                <tr>
+                    <th nzWidth="6%">เล่มที่อ้างอิงการขาย</th>
+                    <th nzWidth="6%">เลขที่อ้างอิงการขาย</th>
+                    <th nzWidth="6%">วันที่จัดทำ ภ.พ.10</th>
+                    <th nzWidth="10%">ชื่อสถานประกอบการ</th>
+                    <th nzWidth="8%">ยอดซื้อ</th>
+                    <th nzWidth="6%">ภาษีมูลค่าเพิ่ม</th>
+                    <th nzWidth="6%">ภาษีที่ได้รับคืน (กรมสรรพากร)</th>
+                    <th nzWidth="6%">ภาษีที่ได้รับคืน (ตัวแทน)</th>
+                    <th nzWidth="6%">ค่าธรรมเนียมในการคืน</th>
+                    <th nzWidth="6%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data; let i = index;">
+                    <td>{{ data.noBook }}</td>
+                    <td>{{ data.noNumber }}</td>
+                    <td style="text-align: center;">{{ convertToBuddhistEra(data.dateOfPreparation) }}</td>
+                    <td>{{ data.companyName }}</td>
+                    <td style="text-align: right;">{{ addCommas(data.purchaseAmount) }}</td>
+                    <td style="text-align: right;">{{ data.vat }}</td>
+                    <td style="text-align: right;">{{ data.taxRefundRevenueDepartment }}</td>
+                    <td style="text-align: right;">{{ data.taxRefundAgent }}</td>
+                    <td style="text-align: right;">{{ data.taxRefundFee }}</td>
+                    <td class="group-icon">
+                        <span nz-icon (click)="editRow((i+1)+((currentPageIndex-1)*pageSize)-1)" nzType="edit"
+                            nzTheme="outline" class="icon-edit" nz-tooltip nzTooltipTitle="edit"
+                            nzTooltipPlacement="top"></span>
+                        <span nz-icon nzType="delete" nzTheme="outline" class="icon-delete" nz-tooltip
+                            nzTooltipTitle="delete" nzTooltipPlacement="top" nz-popconfirm
+                            nzPopconfirmTitle="คุณต้องการลบใช่หรือไม่?" nzPopconfirmPlacement="bottom"
+                            (nzOnConfirm)="confirm((i+1)+((currentPageIndex-1)*pageSize)-1)" (nzOnCancel)="cancel()"
+                            nzOkText="ตกลง" nzCancelText="ยกเลิก"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <!-- Button [add to DB, print, clearAll] -->
+        <div nz-row style="margin-bottom: 20px; text-align: center;">
+            <div nz-col nzSpan="6"></div>
+            <div nz-col nzSpan="6">
+                <button nz-button class="addTableToDataBaseBtn" (click)="addTable()">บันทึก</button>
+                <button nz-button class="printBtn" (click)="printPDF()">พิมพ์ใบสรุป</button>
+            </div>
+            <div nz-col nzSpan="6">
+                <button nz-button (click)="clearAll()" class="clearBtn">ล้างจอภาพ</button>
+            </div>
+            <div nz-col nzSpan="6"></div>
+        </div>
+    </div>
+
+    <!-- <nz-modal [(nzVisible)]="visiblePrint" nzTitle="print" (nzOnCancel)="visiblePrint = !visiblePrint "
+        [nzFooter]="null">
+        <ng-template nzModalContent>
+            <iframe src="urlPrint" frameBorder="0"
+                scrolling="auto" height="100%" width="100%"></iframe>
+        </ng-template>
+    </nz-modal> -->
+
+</nz-layout>

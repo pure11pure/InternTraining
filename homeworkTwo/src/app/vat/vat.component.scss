@@ -1,0 +1,281 @@
+@import '../../styles.scss';
+
+.header {
+    padding: 2vw;
+}
+
+.header-text {
+    color: #1e4a77;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+::ng-deep .ant-breadcrumb-link {
+    color: #1e4a77;
+    font-weight: 600;
+}
+
+h5, h6,::ng-deep .ant-breadcrumb-link{
+    font-family: "Prompt", sans-serif;
+    font-style: normal; //?
+}
+
+
+
+/**
+    >> global <<
+*/
+// underline
+.underline {
+    border-bottom: 1px solid #cacaca;
+    width: 90vw;
+    margin: 10px auto;
+}
+
+// required
+.required:after {
+    content: "*";
+    color: red;
+    margin-left: 4px;
+}
+
+
+/**
+    >> main <<
+*/
+.main {
+    background-color: white;
+    margin-top: 2vw;
+    border-radius: 10px;
+}
+
+.main-text {
+    color: #1e4a77;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0.8vw;
+}
+
+.part-two>.main-text {
+    color: #000000;
+}
+
+.part-one,
+.part-two,
+.part-three,
+.part-four,
+.part-five {
+    padding-left: 2vw;
+    padding-right: 2vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+}
+
+.part-one {
+    padding-top: 2vw;
+}
+
+.part-one>.detail,
+.part-three>.detail,
+.part-four>.detail {
+    padding-left: 2vw;
+}
+
+.part-one>.detail>.column-right {
+    text-align: left;
+}
+
+.part-five {
+    border: 1px solid #d6d6d6;
+    margin-top: 2vw;
+    border-radius: 10px;
+}
+
+.column-left {
+    color: #6e6e6e;
+    margin-bottom: 10px;
+}
+
+
+// upload document
+
+::ng-deep .ant-upload.ant-upload-drag .ant-upload-btn {
+    background-color: #ffffff;
+}
+
+::ng-deep .ant-upload.ant-upload-drag {
+    border: 1px dashed #000000;
+    width: 88vw;
+    margin: auto;
+}
+
+// button choose file
+.btn-choose-file {
+    background-color: #d5d5d5;
+    color: #1e4a77;
+    font-weight: 700;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+
+::ng-deep .ant-input-number-handler-up-inner svg,::ng-deep .ant-input-number-handler-down-inner svg {
+    font-size: 8px;
+}
+
+
+/* 
+    Styling for table-one : เอกสารประกอบการพิจารณา
+*/
+
+.table-one {
+    padding-top: 0.5vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+::ng-deep .table-one .ant-table-thead>tr>th {
+    font-size: 16px;
+    text-align: center;
+    background-color: #d5ecf4;
+}
+
+::ng-deep .table-one .ant-table-tbody>tr>td {
+    background-color: #f9f9f9;
+}
+
+::ng-deep .table-one .ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th {
+    border: 2px solid #fff;
+}
+
+/* 
+    Styling for table-two : ประวัติการดำเนินการ
+*/
+
+.table-two {
+    padding-top: 1vw;
+}
+
+::ng-deep .table-two .ant-table-thead>tr>th {
+    font-size: 14px;
+    text-align: left;
+    border-top: 1px solid #cacaca;
+    border-bottom: 1px solid #cacaca;
+    background-color: #fff;
+    color: #000000;
+    font-weight: 900;
+}
+
+::ng-deep .table-two .ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th {
+    border: 1px solid #ccc;
+}
+
+// pagination
+::ng-deep .ant-pagination-item {
+    border-radius: 50%;
+    border: 0px;
+}
+::ng-deep .ant-pagination-item a{
+    color: #6e6e6e;
+}
+
+::ng-deep .ant-pagination-item-active {
+    border: 0px;
+    background-color: #d5ecf4;
+    border-radius: 50%;
+}
+
+::ng-deep .ant-pagination-prev .ant-pagination-item-link,::ng-deep .ant-pagination-next .ant-pagination-item-link{
+    border: 0px;
+}
+
+::ng-deep  .ant-select-arrow .anticon > svg {
+    font-size: 15px;
+}
+
+// avatar
+::ng-deep .ant-avatar{
+    color:#000000;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+}
+
+::ng-deep  .table-two  svg  {
+    font-size: 20px;
+}
+
+
+
+
+
+/**
+    >>  การพิจารณาและการตรวจสอบ  <<
+*/
+.part-four>.detail>.all-btn {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-save,
+.btn-cancel {
+    width: 100px;
+}
+
+.btn-save:hover {
+    color: $whiteColor;
+}
+
+.btn-save {
+    background-color: #0f3131;
+    color: $whiteColor;
+}
+
+.btn-cancel {
+    background-color: #e6e6e6;
+    color: #0f3131;
+}
+
+// การพิจารณาและการตรวจสอบ > การดำเนินการ
+[nz-radio] {
+    display: block;
+    height: 32px;
+    line-height: 32px;
+}
+
+// การพิจารณาและการตรวจสอบ > วันที่พิจารณา
+// datepicker : header
+::ng-deep .theme-green .bs-datepicker-head {
+    background-color: $oneColor;
+}
+
+// datepicker : วันของเดือนปัจจุบัน
+::ng-deep .bs-datepicker-body table td:not(.disabled):not(.week) span:not(.disabled):not(.is-other-month) {
+    cursor: pointer;
+    background-color: lighten($twoColor, 37%);
+}
+
+::ng-deep .bs-datepicker-body table td:not(.disabled):not(.week) span:not(.disabled):not(.is-other-month):hover {
+    background-color: $oneColor !important;
+    color: $whiteColor;
+}
+
+// datepicker : selected
+::ng-deep .bs-datepicker-body table td span.selected,
+.bs-datepicker-body table td.selected span {
+    color: $whiteColor;
+    background: $oneColor !important;
+}
+
+// datepicker : week
+::ng-deep .theme-green .bs-datepicker-body table td.week span {
+    color: $oneColor;
+}
+
+// บอกวันปัจจุบันในปฏิทิน
+::ng-deep .bg-custom {
+    background-color: $twoColor !important;
+    color: $whiteColor;
+}
