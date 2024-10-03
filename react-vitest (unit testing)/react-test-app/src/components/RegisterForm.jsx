@@ -36,12 +36,12 @@ export default function RegisterForm() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const newErrors = validate(formData);
+    event.preventDefault(); //
+    const newErrors = validate(formData); //
     if (Object.keys(newErrors).length === 0) {
       try {
         const response = await axios.post(
-          "https://65a25d5342ecd7d7f0a771bd.mockapi.io/users",
+          "https://66f4d3fe77b5e889709a979c.mockapi.io/users",
           formData
         );
         if (!response.data) throw new Error("Error in form submission");
