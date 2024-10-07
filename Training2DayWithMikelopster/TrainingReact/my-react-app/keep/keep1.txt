@@ -1,0 +1,105 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Post from "./components/postComponent";
+
+function App() {
+  const [search, setSearch] = useState("");
+  const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState(posts);
+  //TODO : PAGE
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 10;
+  // TODO : Loading
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts"
+        );
+        setPosts(response.data);
+        setFilteredPosts(response.data); //setting start
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    const timeout = setTimeout(() => {
+      const results = posts.filter((post) =>
+        post.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setFilteredPosts(results);
+      setCurrentPage(1);
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timeout); // เคลียร์ timeout เพื่อไม่ให้มัน run ต่อ
+  }, [search, posts]);
+
+  //TODO : PAGE
+  const indexOfLastPost = currentPage * postsPerPage; // key end page
+  const indexOfFirstPost = indexOfLastPost - postsPerPage; //key start page
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost); //choose 10 date of page
+
+  // Function to handle pagination (changing the page)
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Generate page numbers based on the number of filtered posts
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  return (
+    <>
+      <div>
+        <div className="text-center text-4xl font-bold my-2">Search</div>
+        <form>
+          <input
+            type="text"
+            value={search}
+            placeholder="กรอกข้อมูล"
+            onChange={(e) => setSearch(e.target.value)}
+            className="border-2 grid mx-auto p-2 w-[50%]"
+          />
+        </form>
+
+        {loading && <div className="text-center py-24">Loading...</div>}
+        {!loading && (
+          <div>
+            <div>
+              {currentPosts.map((post) => (
+                <Post key={post.id} title={post.title} content={post.body} />
+              ))}
+            </div>
+            <div>
+              {/* Pagination Controls */}
+              <div className="pagination">
+                {pageNumbers.map((number) => (
+                  <button
+                    key={number}
+                    onClick={() => paginate(number)}
+                    className={number === currentPage ? "active" : ""}
+                  >
+                    {number}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
+export default App;
