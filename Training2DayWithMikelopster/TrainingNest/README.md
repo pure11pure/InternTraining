@@ -1,35 +1,64 @@
-## Description
+### [https://docs.mikelopster.dev/c/web-workshop-pccth/day1-nestjs]
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# Nest.js
 
-## Project setup
+- [https://nestjs.com/]
 
-```bash
-$ npm install
+## Start
+
+- [https://docs.nestjs.com/first-steps]
+
+#### install project
+
+```
+npm i -g @nestjs/cli
+nest new <project-name>
 ```
 
-## Compile and run the project
+#### start/run project
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+npm run start:dev
 ```
 
-## Run tests
+#### crate folder
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
+# CLI สำหรับการสร้าง
+nest g module <ชื่อ module>
+nest g controller <ชื่อ controller>
+nest g service <ชื่อ service>
+```
+
+#### connect database (docker-compose.yml)
+
+```
+docker-compose up -d
+```
+
+#### TypeORM
+> TypeORM ใน NestJS คือเครื่องมือ (ORM: Object-Relational Mapping) ที่ช่วยให้การทำงานกับฐานข้อมูลในลักษณะเชิงวัตถุ (Object-Oriented) ง่ายขึ้น โดยที่ผู้พัฒนาไม่ต้องเขียนคำสั่ง SQL โดยตร [https://docs.nestjs.com/techniques/database]
+
+```
+npm install @nestjs/typeorm typeorm pg
+```
+
+##### PostgreSQL ด้วย TypeORM
+```
+npm install @nestjs/typeorm typeorm pg
+```
+
+#### Authentication
+- [https://docs.nestjs.com/security/authentication]
+
+```
+npm install @nestjs/jwt bcryptjs typeorm pg
+```
+
+
+
+## Doc
+
+- [https://docs.nestjs.com/modules]
+- [https://docs.nestjs.com/providers]
+- [https://docs.nestjs.com/controllers]
