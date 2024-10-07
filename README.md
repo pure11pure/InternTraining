@@ -78,4 +78,3 @@ Training 12
     
       locale = 'th-be'; //calendar[bootstrap]
       locales = listLocales();  //calendar[bootstrap]
-
