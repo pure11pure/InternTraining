@@ -1,0 +1,64 @@
+<mat-toolbar color="primary" class="mat-elevetion-z8">
+  <button (click)="drawer.toggle()" mat-button><mat-icon>menu</mat-icon></button>
+  <span>My App</span>
+  <span class="example-spacer"></span>
+  <button routerLink="" mat-button>Home</button>
+  <button routerLink="" mat-button>about</button>
+  <button [matMenuTriggerFor]="page" mat-button>page</button>
+  <mat-menu #page="matMenu">
+    <button mat-menu-item>page 1</button>
+    <button [matMenuTriggerFor]="page2" mat-menu-item>page 2</button>
+    <button mat-menu-item>page 3</button>
+    <button [matMenuTriggerFor]="page4" mat-menu-item>page 4</button>
+    <button mat-menu-item>page 5</button>
+  </mat-menu>
+  <mat-menu #page2="matMenu">
+    <button routerLink="auto" mat-menu-item>page 2.1 auto</button>
+    <button mat-menu-item disabled="true">page 2.2</button>
+    <button routerLink="input" mat-menu-item>page 2.3 input</button>
+  </mat-menu>
+  <mat-menu #page4="matMenu">
+    <button routerLink="card" mat-menu-item>page 4.1 card</button>
+    <button routerLink="slider" mat-menu-item>page 4.2 slider</button>
+    <button routerLink="table" mat-menu-item>page 4.3 table</button>
+    <button mat-menu-item disabled="true">page 4.4</button>
+    <button mat-menu-item>page 4.5</button>
+  </mat-menu>
+  <button routerLink="" mat-button>contact</button>
+  <button mat-raised-button color="accent">Accent</button>
+  <button mat-icon-button (click)="badgeVisible()">
+    <mat-icon
+      matBadge="8"
+      matBadgeColor="accent"
+      [matBadgeHidden]="notiIconVisible"
+      >notifications</mat-icon
+    >
+  </button>
+</mat-toolbar>
+
+<mat-drawer-container autosize>
+  <mat-drawer #drawer opened="false" mode="side" position="start">
+    <mat-nav-list>
+      <mat-list-item>
+        <button mat-button><mat-icon>dashboard</mat-icon>Dashboard</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button><mat-icon>home</mat-icon>Home</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button><mat-icon>settings</mat-icon>Settings</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button><mat-icon>help</mat-icon>Help</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button><mat-icon>analytics</mat-icon>analytics</button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="text-align: center; min-height: 600px">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

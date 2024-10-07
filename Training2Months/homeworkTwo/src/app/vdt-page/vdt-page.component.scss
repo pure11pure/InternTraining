@@ -1,0 +1,291 @@
+@import '../../styles.scss';
+
+.ant-layout {
+    background: linear-gradient(
+        to bottom right, 
+        rgba($twoColor, 0.3), 
+        rgba($threeColor, 0.3), 
+        rgba($fourColor, 0.3)
+    );
+}
+
+.header,
+.detail {
+    background-color: $whiteColor;
+    border-radius: 6px;
+    margin: 15px;
+    box-shadow: 0 8px 8px rgba($grayColor, 0.3);
+}
+
+.detail{
+    margin-top: 0px;
+}
+
+.header-text {
+    margin-left: 24px;
+}
+
+// modal
+.listVdt {
+    cursor: pointer;
+    font-size: $textContent;
+    position: relative;
+}
+
+.listVdt::before {
+    content: "> "; /* เพิ่มข้อความที่ต้องการแสดง */
+    position: absolute;
+    left: -5%; /* ปรับตำแหน่งตามต้องการ */
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+
+}
+
+.listVdt:hover::before {
+    opacity: 1; /* แสดงข้อความเมื่อชี้ */
+}
+
+.listVdt:hover {
+    background-color: rgba($oneColor, 20%);
+    border-radius: 2px;
+    font-size: $textHeader;
+    margin-left: 10px;
+}
+
+// modal: radius
+::ng-deep .ant-modal-content {
+    border-radius: 5px;
+}
+
+::ng-deep .ant-modal-header {
+    background: $oneColor;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+// modal : text header
+::ng-deep .ant-modal-title {
+    color: $whiteColor;
+}
+
+// modal : x
+::ng-deep .ant-modal-close-icon:hover {
+    color: $whiteColor;
+    border-radius: 10px;
+    background-color: $oneColor;
+}
+
+// modal : x
+::ng-deep .ant-modal-close-icon {
+    color: $whiteColor;
+}
+
+// datepicker : header
+::ng-deep .theme-green .bs-datepicker-head {
+    background-color: $oneColor;
+}
+
+// datepicker : วันของเดือนปัจจุบัน
+::ng-deep .bs-datepicker-body table td:not(.disabled):not(.week) span:not(.disabled):not(.is-other-month) {
+    cursor: pointer;
+    background-color: lighten($twoColor, 37%);
+}
+
+::ng-deep .bs-datepicker-body table td:not(.disabled):not(.week) span:not(.disabled):not(.is-other-month):hover {
+    background-color: $oneColor !important;
+    color: $whiteColor;
+}
+
+// datepicker : selected
+::ng-deep .bs-datepicker-body table td span.selected,
+.bs-datepicker-body table td.selected span {
+    color: $whiteColor;
+    background: $oneColor !important;
+}
+
+// datepicker : week
+::ng-deep .theme-green .bs-datepicker-body table td.week span {
+    color: $oneColor;
+}
+
+::ng-deep .bg-custom {
+    background-color: $twoColor !important;
+    color: $whiteColor;
+  }
+
+
+.detail-box-input,
+.detail-box-vat {
+    position: relative;
+    width: 45vw;
+    background-color: $whiteColor;
+    border-radius: 6px;
+    margin: auto;
+    padding: 10px;
+    border: 1px solid rgba(desaturate($oneColor, 20%), 0.3);
+    margin-top: 0px;
+}
+
+.detail-box-input::before {
+    content: "ภ.พ.10";
+    position: absolute;
+    top: -10px;
+    background-color: $whiteColor;
+    font-size: $textContent;
+}
+
+.detail-box-vat::before {
+    content: "Vat ภาษี และ ค่าธรรมเนียม";
+    position: absolute;
+    top: -10px;
+    background-color: $whiteColor;
+    font-size: $textContent;
+}
+
+.inputModal {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    margin-left: 24px;
+
+}
+
+// button
+button {
+    width: 100px;
+    border-radius: 5px;
+    margin: auto;
+}
+
+.searchBtn {
+    background-color: $oneColor;
+    color: $whiteColor;
+    margin-left: 20px;
+}
+
+.addtoTableBtn {
+    background-color: $oneColor;
+    color: $whiteColor;
+    width: 150px;
+}
+
+.group-icon {
+    text-align: center;
+    vertical-align: middle;
+    margin: auto;
+}
+
+.icon-edit,
+.icon-delete {
+    background-color: $fourColor;
+    font-size: medium;
+    padding: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 3px;
+    transition: background-color 0.5s ease;
+    color: $whiteColor;
+}
+
+.icon-edit:hover,
+.icon-delete:hover {
+    font-size: medium;
+    background-color: $grayColor;
+}
+
+.icon-edit:active,
+.icon-delete:active {
+    font-size: medium;
+    background-color: rgba($fourColor, 20%);
+}
+
+::ng-deep .ant-message-notice-content {
+    width: 250px;
+    font-size:larger;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+::ng-deep.ng-tns-c89-19{
+    font-size:30px;
+    padding: auto;
+}
+
+.addTableToDataBaseBtn {
+    background-color: $oneColor;
+    color: $whiteColor;
+    width: 100px;
+}
+
+.printBtn {
+    background-color: $twoColor;
+    color: $whiteColor;
+    width: 120px;
+    margin-left: 10px;
+}
+
+.clearBtn {
+    background-color: $threeColor;
+    color: $whiteColor;
+    width: 120px;
+}
+
+
+
+// table
+::ng-deep .ant-table-thead>tr>th {
+    text-align: center !important;
+}
+
+::ng-deep .ant-table.ant-table-bordered>.ant-table-container {
+    border-radius: 5px !important;
+    border: 1px solid whitesmoke;
+    width: 95vw;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+::ng-deep .ant-table-container table>thead>tr:first-child th:first-child {
+    border-top-left-radius: 5px;
+}
+
+::ng-deep .ant-table-container table>thead>tr:first-child th:last-child {
+    border-top-right-radius: 5px;
+}
+
+::ng-deep .ant-table-container table>tbody>tr:last-child td:first-child {
+    border-bottom-left-radius: 5px;
+}
+
+::ng-deep .ant-table-container table>tbody>tr:last-child td:last-child {
+    border-bottom-right-radius: 5px;
+}
+
+::ng-deep .ant-table-pagination.ant-pagination {
+    margin-right: 20px;
+}
+
+::ng-deep .anticon-right {
+    margin-top: -2px;
+}
+
+::ng-deep .anticon svg {
+    padding: inherit;
+}
+
+
+// ดูโครงสร้าง
+// nz-table {
+//     background-color: green;
+// }
+// ::ng-deep .ant-table-cell{
+//     background-color: blue;
+// }
+
+// ::ng-deep .ant-table{
+//     background-color: yellow;
+// }
+
+// ::ng-deep .ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > thead > tr > th {
+//     background-color: orange;
+// }

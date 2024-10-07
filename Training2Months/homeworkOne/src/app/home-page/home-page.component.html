@@ -1,0 +1,203 @@
+<nz-layout>
+  <nz-header>
+    <div> PCC </div>
+  </nz-header>
+  <nz-content>
+    <!-- nz-collapse = 'หัวข้อผู้ใช้งาน' -->
+    <nz-collapse [nzExpandIconPosition]="'right'">
+      <nz-collapse-panel *ngFor="let hData of headData; let i = index" [nzHeader]="hData.title"
+        [nzActive]="hData.active" [nzDisabled]="hData.disabled" (nzActiveChange)="onExpandChange(hData.id, $event)">
+        <!-- Search Filter -->
+        <div nz-row>
+          <!-- button show filter -->
+          <div nz-col nzSpan="3" style="text-align: right;">
+            <button (click)="isVisibleFilter = !isVisibleFilter" class="btn-filter btn">
+              <span> > ค้นหาเพิ่มเติม </span>
+              <span nz-icon nzType="filter" nzTheme="outline" class="filterIcon"></span>
+            </button>
+          </div>
+          <!-- input for filter -->
+          <div nz-col nzSpan="20" nzJustify="center">
+            <div nz-row style="margin-inline: 10vh; margin: 20px;" *ngIf="isVisibleFilter">
+              <!-- รหัสผู้ใช้งาน -->
+              <div nz-col nzSpan="3" class="headerModal">
+                <p style="margin-right: 10px;">รหัสผู้ใช้งาน</p>
+              </div>
+              <div nz-col nzSpan="5" class="inputModal">
+                <!-- <input nz-input placeholder="Basic usage" [(ngModel)]="idUsers_filter" type="number" class="form-control"
+                  placeholder="" aria-describedby="basic-addon1" /> -->
+                  <nz-input-number [(ngModel)]="idUsers_filter" class="form-control" style="margin-inline: 20px;" [nzMin]="1" [nzStep]="1"></nz-input-number>
+              </div>
+              <!-- ชื่อ-นามสกุล -->
+              <div nz-col nzSpan="3" class="headerModal">
+                <p style="margin-right: 10px;">ชื่อ-นามสกุล</p>
+              </div>
+              <div nz-col nzSpan="5" class="inputModal">
+                <input nz-input placeholder="Basic usage" [(ngModel)]="fullname_filter" type="text" class="form-control"
+                  placeholder="" aria-describedby="basic-addon1" (input)="onInput($event, 'fullname')" />
+              </div>
+              <!-- อายุ -->
+              <div nz-col nzSpan="3" class="headerModal">
+                <p style="margin-right: 10px;">อายุ</p>
+              </div>
+              <div nz-col nzSpan="5" class="inputModal">
+                <!-- <input nz-input placeholder="Basic usage" [(ngModel)]="age_filter" type="number" class="form-control"
+                  placeholder="" aria-describedby="basic-addon1" /> -->
+                  <nz-input-number [(ngModel)]="age_filter" class="form-control" style="margin-inline: 20px;" [nzMin]="0" [nzStep]="1"></nz-input-number>
+              </div>
+              <!-- วันเกิด -->
+              <div nz-col nzSpan="3" class="headerModal">
+                <p style="margin-right: 10px;">วันเกิด</p>
+              </div>
+              <div nz-col nzSpan="5" class="inputModal">
+                <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
+                  style="margin-inline: 20px; width: 100%;" [(ngModel)]="birthday_filter"
+                  (ngModelChange)="calculateAge(birthday)" PlaceHolder="dd/mm/yyyy">
+              </div>
+              <!-- เพศ -->
+              <div nz-col nzSpan="3" class="headerModal">
+                <p style="margin-right: 10px;">เพศ</p>
+              </div>
+              <div nz-col nzSpan="5" class="inputModal">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="กรุณาเลือกเพศ" [(ngModel)]="gender_filter"
+                  nzSize="large" style="margin-inline: 20px; width: 100%;">
+                  <nz-option nzLabel="ชาย" nzValue="male"></nz-option>
+                  <nz-option nzLabel="หญิง" nzValue="female"></nz-option>
+                  <nz-option nzLabel="ไม่ระบุ" nzValue="other"></nz-option>
+                </nz-select>
+              </div>
+              <!-- วันเกิด -->
+              <div nz-col nzSpan="3" class="headerModal">
+                <p style="margin-right: 10px;">วันที่บันทึก</p>
+              </div>
+              <div nz-col nzSpan="5" class="inputModal">
+                <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
+                  style="margin-inline: 20px; width: 100%;" [(ngModel)]="createDate_filter"
+                  (ngModelChange)="calculateAge(birthday)" PlaceHolder="dd/mm/yyyy">
+              </div>
+              <!-- บันทึกโดย -->
+              <div nz-col nzSpan="3" class="headerModal">
+                <p style="margin-right: 10px;">บันทึกโดย</p>
+              </div>
+              <div nz-col nzSpan="5" class="inputModal">
+                <input nz-input placeholder="Basic usage" [(ngModel)]="createBy_filter" type="text" class="form-control"
+                  placeholder="" aria-describedby="basic-addon1" (input)="onInput($event, '')"/>
+              </div>
+            </div> <!-- row 1 -->
+            <div nz-row style="margin-inline: 10vh; margin: 20px; display: flex; justify-content: center;"
+              *ngIf="isVisibleFilter">
+              <button class="btn btn-filter-child" (click)="searchFilter()">ค้นหา</button>
+              <button class="btn btn-filter-child" (click)="clearFormFilter()">ล้าง</button>
+            </div> <!-- row 3 -->
+          </div>
+
+        </div>
+
+        <!-- nz-table = 'ตารางข้อมูลพนักงาน' -->
+        <nz-table #fixedTable [nzData]="hData.data" [nzScroll]="{ x: '1000px'}"
+          (nzPageIndexChange)="handlePageIndexChange($event)" class="mx-3" nzBordered [nzTotal]="TotalSize"
+          [nzPageIndex]="PageIndex" [nzFrontPagination]="false">
+          <thead>
+            <tr class="header-row">
+              <th nzLeft nzWidth="6%">ลำดับ</th>
+              <th nzLeft nzWidth="10%">รหัสผู้ใช้งาน</th>
+              <th nzWidth="20%">ชื่อ-นามสกุล</th>
+              <th nzWidth="10%">วันเกิด</th>
+              <th>อายุ</th>
+              <th>เพศ</th>
+              <th nzWidth="10%">วันที่บันทึก</th>
+              <th>บันทึกโดย</th>
+              <!-- Add Employee -->
+              <th nzWidth="18%">
+                <span class="trigger plusCircle btn" nz-icon nz-button [nzType]="'plus-circle'" nzTheme="fill"
+                  (click)="modalAddAndEditEmployee('add', '')">
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr *ngFor="let user of hData.data; let index = index"> -->
+            <tr *ngFor="let user of dataShowEmployees; let index = index">
+              <td nzLeft>{{ (index+1) + (PageIndex-1)*pageSize}} </td>
+              <td nzLeft>{{ user.idUsers }}</td>
+              <td nzBreakWord>{{ user.firstName }} {{user.lastName}} </td>
+              <td nzBreakWord>{{ formatDateDDMMYYY(user.birthday) }}</td>
+              <td nzBreakWord>{{ user.age }}</td>
+              <td nzBreakWord>{{ user.gender === 'male' ? 'ชาย' : user.gender === 'female' ? 'หญิง' : 'ไม่ระบุ' }}</td>
+              <td nzBreakWord>{{ formatDateDDMMYYY(user.createDate)}}</td>
+              <td nzBreakWord>{{ user.createBy }}</td>
+              <td style="text-align: center;">
+                <button nz-button (click)="modalAddAndEditEmployee('edit', user)" class="btnEdit btn">edit</button>
+                <button nz-button (click)="deleteEmployee(user)" class="btnDelete btn">delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </nz-content>
+</nz-layout>
+<!-- <nz-footer>PURangotanE</nz-footer> -->
+
+
+<!-- Modal -->
+<nz-modal [nzStyle]="{ top: '20p', width: '70%', 'border-radius': '20px'}" [nzClosable]="true" [(nzVisible)]="isVisible"
+  (nzOnCancel)="cancleData()">
+  <div *nzModalTitle class="nz-modal-header">กรุณากรอกข้อมูลการใช้งาน {{modeEdit ? '&nbsp;&nbsp;(แก้ไข)' : ''}} </div>
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <!-- ชื่อ -->
+      <div nz-col nzSpan="3" class="headerModal">
+        <p style="margin-right: 10px;">ชื่อ</p>
+      </div>
+      <div nz-col nzSpan="9" class="inputModal">
+        <input nz-input placeholder="Basic usage" [(ngModel)]="firstName" type="text" class="form-control"
+          placeholder="" aria-describedby="basic-addon1"  (ngModelChange)="capitalize($event, 'firstName')" (input)="onInput($event, '')"/>
+      </div>
+      <!-- นามสกุล -->
+      <div nz-col nzSpan="3" class="headerModal">
+        <p style="margin-right: 10px;">นามสกุล</p>
+      </div>
+      <div nz-col nzSpan="9" class="inputModal">
+        <input nz-input placeholder="Basic usage" [(ngModel)]="lastName" type="text" class="form-control" placeholder=""
+          aria-describedby="basic-addon1" (ngModelChange)="capitalize(lastName, 'lastName')" (input)="onInput($event, '')"/>
+      </div>
+      <!-- วันเกิด -->
+      <div nz-col nzSpan="3" class="headerModal">
+        <p style="margin-right: 10px;">วันเกิด</p>
+      </div>
+      <div nz-col nzSpan="9" class="inputModal">
+        <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
+          style="margin-inline: 20px; width: 100%;" [(ngModel)]="birthday" (ngModelChange)="calculateAge(birthday)"
+          PlaceHolder="dd/mm/yyyy">
+      </div>
+
+      <!-- อายุ -->
+      <div nz-col nzSpan="3" class="headerModal">
+        <p style="margin-right: 10px;">อายุ</p>
+      </div>
+      <div nz-col nzSpan="9" class="inputModal">
+        <input nz-input placeholder="Basic usage" [(ngModel)]="age" type="text" class="form-control" placeholder=""
+          aria-describedby="basic-addon1" disabled="" />
+      </div>
+      <!-- เพศ -->
+      <div nz-col nzSpan="3" class="headerModal">
+        <p style="margin-right: 10px;">เพศ</p>
+      </div>
+      <div nz-col nzSpan="9" class="inputModal">
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="กรุณาเลือกเพศ" [(ngModel)]="gender" nzSize="large"
+          style="margin-inline: 20px; width: 100%;">
+          <nz-option nzLabel="ชาย" nzValue="male"></nz-option>
+          <nz-option nzLabel="หญิง" nzValue="female"></nz-option>
+          <nz-option nzLabel="ไม่ระบุ" nzValue="other"></nz-option>
+        </nz-select>
+      </div>
+
+    </div>
+
+  </ng-container>
+  <div *nzModalFooter class="nz-modal-footer">
+    <button nz-button nzType="default" (click)="saveData()" type="button" class="btn btn-primary">บันทึก</button>
+    <button nz-button nzType="primary" (click)="cancleData()" type="button" class="btn btn-danger">ยกเลิก</button>
+  </div>
+</nz-modal>

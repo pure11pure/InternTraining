@@ -1,0 +1,207 @@
+<div class="header">
+    <h5 class="header-text">ภ.พ.02-คำขอยื่นแบบแสดงรายการภาษีมูลค่าเพิ่มรวมกัน</h5>
+    <nz-breadcrumb>
+        <nz-breadcrumb-item class="breadcrumb-text">บันทึกแบบภาษีฯ</nz-breadcrumb-item>
+        <nz-breadcrumb-item class="breadcrumb-text">ภาษีมูลค่าเพิ่ม</nz-breadcrumb-item>
+        <nz-breadcrumb-item class="breadcrumb-text">งานแจ้งและเปลี่ยนแปลงข้อมูลผู้ประกอบการจดทะเบียน รวมทั้งกรณียื่นรวม
+            การเพิกถอน การขอถอน
+            การขีดชื่อ</nz-breadcrumb-item>
+        <nz-breadcrumb-item class="breadcrumb-text">งานแจ้งและเปลี่ยนแปลงข้อมูลผู้ประกอบการจดทะเบียนที่ยื่น ณ
+            สำนักงานสรรพากรพื้นที่/กองบริหารภาษีธุรกิจขนาดใหญ่</nz-breadcrumb-item>
+        <!-- <nz-breadcrumb-item class="breadcrumb-text">กองบริหารภาษีธุรกิจขนาดใหญ่</nz-breadcrumb-item> -->
+        <nz-breadcrumb-item
+            class="breadcrumb-text">ภ.พ.02-คำขอยื่นแบบแสดงรายการภาษีมูลค่าเพิ่มรวมกัน</nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <div class="main">
+        <div class="part-one">
+            <h6 class="main-text">ข้อมูลการรับแบบ</h6>
+            <div class="detail">
+                <!-- 1 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left">เลขคุมเอกสาร (42หลัก)</div>
+                    <div nz-col nzSpan="16" class="column-right">ภพ02-01005000-01005371-1-02-25670511-0-0-0016-02</div>
+                </div>
+                <!-- 2 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left">เลขระบุเอกสาร</div>
+                    <div nz-col nzSpan="16" class="column-right">01005000-25670511-1-02-001602</div>
+                </div>
+                <!-- 3 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left">วันที่รับแบบ</div>
+                    <div nz-col nzSpan="16" class="column-right">11 พฤษภาคม 2567</div>
+                </div>
+                <!-- 4 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left">ช่องทางการยื่นแบบ</div>
+                    <div nz-col nzSpan="16" class="column-right">ยื่นแบบทางสำนักงานสรรพากร</div>
+                </div>
+                <!-- 5 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left">ชื่อผู้ประกอบการ</div>
+                    <div nz-col nzSpan="16" class="column-right">ห้างหุ้นส่วนจำกัด โกลเด้นเฮ้าส์เฟอร์นิเจอร์</div>
+                </div>
+                <!-- 6 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left">เลขประจำตัวผู้เสียภาษีอากร</div>
+                    <div nz-col nzSpan="16" class="column-right">0-1035-16004-96-6</div>
+                </div>
+            </div>
+
+            <h6 class="main-text">ข้อมูลการรับแบบ</h6>
+            <div class="detail">
+                <!-- 1 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left">ชื่อสถานประกอบการ</div>
+                    <div nz-col nzSpan="16" class="column-right">ห้างหุ้นส่วนจำกัด โกลเด้นเฮ้าส์เฟอร์นิเจอร์ (ทดสอบ)
+                    </div>
+                </div>
+                <!-- 2 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left">ที่อยู่</div>
+                    <div nz-col nzSpan="16" class="column-right">อาคาร-ห้องเลขที่-ชั้นที่-เลขที่ 40/1 หมู่2 ถนนเพชรบุรี
+                        แขวงเพชรบุรี เขตราชเทวี กรุงเทพ 10400<br>โทรศัพท์ 02-2494576 อีเมลไม่ระบุ เว็บไซต์ไม่ระบุ</div>
+                </div>
+            </div>
+        </div>
+        <div class="underline"></div>
+        <!-- <nz-divider></nz-divider> -->
+        <div class="part-two">
+            <h6 class="main-text">เอกสารประกอบการพิจารณา</h6>
+            <div class="upload-one">
+                <nz-upload nzType="drag" [nzMultiple]="true" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    (nzChange)="uploadDocument($event)">
+                    <button class="btn btn-choose-file">เลือกไฟล์</button>
+                    <p class="ant-upload-text">อัปโหลดรูปเอกสารหลักฐาน หรือเอกสารประกอบการพิจารณา</p>
+                    <p class="ant-upload-hint">ขนาดไฟล์สูงสุดไม่เกิน 5MB, รองรับนามสกุล .pdf, .jpg, .jpeg, .png, .bmp
+                    </p>
+                </nz-upload>
+            </div>
+            <nz-table #basicTable nzBordered [nzData]="listDocument" class="table-one">
+                <thead>
+                    <tr>
+                        <th nzWidth="10%">ลำดับ</th>
+                        <th nzWidth="15%">วันที่อัปโหลด</th>
+                        <th nzWidth="30%">รายการเอกสาร</th>
+                        <th nzWidth="30%">ผู้อัปโหลดไฟล์เอกสาร</th>
+                        <th nzWidth="15%">ดำเนินการ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data">
+                        <td>{{ data.number }}</td>
+                        <td>{{ data.uploadDate }}</td>
+                        <td>{{ data.detail }}</td>
+                        <td>{{ data.uploadBy }}</td>
+                        <td>{{ data.process }}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+        <div class="part-three">
+            <h6 class="main-text">ข้อมูลการขออนุมัติยื่นแบบรายการรวมกัน</h6>
+            <div class="detail">
+                <!-- 1 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left">จำนวนสถานประกอบการทั้งหมด</div>
+                    <div nz-col nzSpan="8">3 แห่ง (รวมสำนักงานใหญ่ และยังประกอบกิจการอยู่)</div>
+                </div>
+                <!-- 2 -->
+                <div nz-row>
+                    <div nz-col nzSpan="8" class="column-left required">ขออนุมัติยื่นแบบฯ รวมกัน</div>
+                    <div nz-col nzSpan="16">
+                        <nz-checkbox-wrapper style="width: 100%; margin:0px;"
+                            (nzOnChange)="checkBoxRequestPermissionTotal($event)">
+                            <div nz-row>
+                                <div nz-col nzSpan="8"><span nz-checkbox nzValue="A">สำนักงานใหญ่</span></div>
+                                <div nz-col nzSpan="8"><span nz-checkbox nzValue="B">สาขาที่</span></div>
+                            </div>
+                        </nz-checkbox-wrapper>
+                    </div>
+                </div>
+                <!-- 3 -->
+                <div nz-row>
+                    <div nz-col nzSpan="6" class="column-left required">เดือน/ปีภาษี ที่ยื่นรวม</div>
+                    <div nz-col nzSpan="6">
+                        <nz-input-number [(ngModel)]="input_date_month" [nzMin]="1" [nzMax]="12"
+                            [nzStep]="1"></nz-input-number>
+                        /
+                        <input nz-input placeholder="ปี (พ.ศ.)" [(ngModel)]="input_date_year" nzSize="default"
+                            style="width:  150px; margin-left: 5PX;" />
+                    </div>
+                    <div nz-col nzSpan="6">
+                        <span nz-checkbox nzValue="A"
+                            (nzCheckedChange)="requestChangeMonthAndYear($event)">ขอเปลี่ยนแปลง เดือน/ปีภาษี
+                            ที่ยื่นรวม</span>
+                    </div>
+                    <div nz-col nzSpan="6">
+                        <nz-input-number [(ngModel)]="input_date_month_req"  [nzDisabled]="varRequestChangeMonthAndYear" [nzMin]="1" [nzMax]="12"
+                            [nzStep]="1"></nz-input-number>
+                        /
+                        <input nz-input [(ngModel)]="input_date_year_req"  [disabled]="varRequestChangeMonthAndYear" placeholder="" nzSize="default"
+                            style="width:  150px; margin-left: 5PX;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="underline"></div>
+        <!-- <nz-divider></nz-divider> -->
+        <div class="part-four">
+            <h6 class="main-text">การพิจารณาและการตรวจสอบ</h6>
+            <div class="detail">
+                <div class="column-left required">การดำเนินการ</div>
+                <nz-radio-group [(ngModel)]="radioProcess" class="ml-2">
+                    <label nz-radio nzValue="A" class="d-flex align-items-center">ลงความเห็น</label>
+                    <label nz-radio nzValue="B" class="d-flex align-items-center">ขอเอกสารเพิ่มเติม</label>
+                </nz-radio-group>
+                <div nz-row>
+                    <div nz-col nzSpan="4" class="column-left required">วันที่พิจารณา</div>
+                    <div nz-col nzSpan="5">
+                        <nz-input-group nzSuffixIcon="calendar" >
+                            <input nz-input bsDatepicker [(ngModel)]="input_date" style="width: 100%;" type="text"
+                                [bsConfig]="{ isAnimated: true }" [dateCustomClasses]="dateCustomClasses"
+                                placement="top">
+                        </nz-input-group>
+                        <!-- <nz-date-picker></nz-date-picker> -->
+                    </div>
+                </div>
+                <div nz-row class="all-btn">
+                    <button type="button" class="btn btn-save">บันทึก</button>
+                    <button type="button" class="btn btn-cancel">ยกเลิก</button>
+                </div>
+            </div>
+
+            <div class="part-five">
+                <h6 class="main-text">ประวัติการดำเนินการ</h6>
+                <nz-table #tableTwo [nzData]="listHistory" class="table-two" nzShowSizeChanger
+                    (nzPageSizeChange)="onPageSizeChange($event)" (nzPageIndexChange)="onPageChange($event)">
+                    <thead>
+                        <tr>
+                            <th nzWidth="10%"></th>
+                            <th>ผู้ดำเนินการ</th>
+                            <th>การดำเนินการ</th>
+                            <th>สถานะ</th>
+                            <th>วันและเวลาที่บันทึกข้อมูล</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of tableTwo.data">
+                            <td style="text-align: center;"><nz-avatar [nzSize]="32" nzIcon="user" class="iconPerson"></nz-avatar></td>
+                            <td>{{ data.fullName }}</td>
+                            <td>{{ data.process }}</td>
+                            <td
+                                [ngStyle]="data.status == 'รอการบันทึกผล' ? {'color': '#D4AC0D'} : data.status == 'บันทึกผล' ? {'color': '#28B463'} : {'color': '#E74C3C'} ">
+                                {{ data.status }}</td>
+                            <td>{{ formatDate(data.updateDate) }}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+                <div style="display: flex; margin-top: -40px;">
+                    แสดงรายการที่ {{(currentPage-1)*pageSize + 1}}-{{tableTwo.data.length < pageSize ?
+                        (pageSize*(currentPage-1))+(tableTwo.data.length) : pageSize*currentPage}} จากทั้งหมด
+                        {{listHistory.length}} </div>
+                </div>
+            </div>
+        </div>
+    </div>
