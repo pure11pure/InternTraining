@@ -5,7 +5,7 @@ import "./index.css";
 import UserDetail from "./page/UserDetail.jsx";
 import UserForm from "./page/UserForm.jsx";
 // import { UserProvider } from "./contexts/UserContext";
-import UserProvider from './contexts/UserContext'; 
+import { UserProvider } from './contexts/UserContext'; 
 
 const router = createBrowserRouter([
   {
