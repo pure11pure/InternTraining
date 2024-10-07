@@ -8,7 +8,7 @@
 
 - [https://docs.nestjs.com/first-steps]
 
-#### install project
+#### Set up project
 
 ```
 npm i -g @nestjs/cli
