@@ -26,10 +26,15 @@ function UserSearch() {
       if (debouncedSearchTerm) {
         try {
           const response = await fetch(
-            `https://66f4d3fe77b5e889709a979c.mockapi.io/users?name=${debouncedSearchTerm}`
+            `https://66f4d3fe77b5e889709a979c.mockapi.io/people?name=${debouncedSearchTerm}`
           );
           const data = await response.json();
-          setUsers(data);
+          console.log(data);
+          if (data == "Not found") {
+            setUsers([]);
+          } else {
+            setUsers(data);
+          }
         } catch (error) {
           console.error("Error fetching data:", error);
         } finally {
@@ -53,19 +58,24 @@ function UserSearch() {
         placeholder="Search by name"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="p-2 border border-1 border-gray-300 w-[40%]"
+        className="p-2 border border-1 border-gray-300 w-[40%] mb-2"
       />
 
-      <div className="h-[300px] overflow-auto">
+      <div className="h-[250px] overflow-auto">
         {/* แสดงข้อความ Loading ระหว่างดึงข้อมูล */}
         {loading && <p>Loading...</p>}
 
         {/* แสดงผลลัพธ์การค้นหาผู้ใช้ */}
         {users.length > 0 ? (
-          <div className="mt-3">
+          <div>
             {users.map((user, index) => (
-            //   <div key={user.id} className="bg-gray-100" >
-              <div key={user.id} className={index%2==0 ? "bg-gray-200 p-2" : "bg-gray-100 p-2"} >
+              //   <div key={user.id} className="bg-gray-100" >
+              <div
+                key={user.id}
+                className={
+                  index % 2 == 0 ? "bg-gray-200 p-2" : "bg-gray-100 p-2"
+                }
+              >
                 <p>
                   <b>Name:</b> {user.name}
                 </p>

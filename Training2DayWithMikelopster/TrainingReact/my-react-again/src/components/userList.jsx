@@ -7,11 +7,12 @@ function UserList() {
     //  Function  async สำหรับการดึงข้อมูล
     async function fetchUsers() {
       try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/users')
+        const response = await fetch('https://66f4d3fe77b5e889709a979c.mockapi.io/people')
         const data = await response.json()
         setUsers(data)
       } catch (error) {
         console.error('Error fetching data:', error)
+        setUsers([])
       }
     }
 

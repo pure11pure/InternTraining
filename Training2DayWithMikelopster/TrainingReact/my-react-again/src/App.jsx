@@ -3,6 +3,8 @@ import RegisterForm from "./components/RegisterForm";
 import SearchComponent from "./components/searchComponent";
 import UserList from "./components/userList";
 import UserSearch from "./components/searchApiComponent";
+import GreetAllPage from "./pages/greetAllPage";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -15,8 +17,12 @@ function App() {
         <UserList />
         <SearchComponent />
       </div>
-      <div className="flex flex-row p-5 w-full">
+      <div className="flex flex-row p-5 w-full h-[400px]">
         <UserSearch />
+        <GreetAllPage/>
+      </div>
+      <div className="flex flex-row w-full">
+        <Home/>
       </div>
     </div>
   );
