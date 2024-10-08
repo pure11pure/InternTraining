@@ -10,8 +10,10 @@ import UserSearch from "./components/searchApiComponent.jsx";
 import GreetAllPage from "./pages/greetAllPage.jsx";
 import Home from "./pages/Home.jsx";
 import MyForm from "./components/myForm.jsx";
-import UserProvider from "./contexts/userContext.jsx";
 import CounterComponent from "./components/counterComponent.jsx";
+
+import { Provider } from "react-redux"; // นำเข้า Provider จาก react-redux
+import { store } from "./app/store"; // นำเข้า store ที่คุณสร้างไว้
 
 const router = createBrowserRouter([
   {
@@ -54,6 +56,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );
