@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 
 // ข้อมูล mock json สามารถเรียกใช้ได้ เช่นการ fetch จาก local json file
 const mockData = [
@@ -46,7 +47,13 @@ function SearchComponent() {
 
   return (
     <div className="w-[70%] p-2 border">
-      <h1 className="text-2xl font-bold pb-2">Search & Filter Items</h1>
+      <div className="flex flex-row">
+        <h1 className="text-2xl font-bold pb-2">Search & Filter Items</h1>
+        <button className="px-2 bg-amber-700 text-white rounded font-bold m-2">
+        <Link to="/search">show</Link>
+        </button>
+      </div>
+
       <div className="flex flex-row w-full pb-2">
         {/* Input สำหรับกรอก search term */}
         <input
@@ -54,24 +61,26 @@ function SearchComponent() {
           placeholder="Search by name"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-
           className="p-2 border border-1 border-gray-300 w-[40%]"
-
         />
 
         {/* Dropdown สำหรับเลือก category */}
-        <select value={category} onChange={(e) => setCategory(e.target.value)}
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
           className="p-2 border border-1 border-gray-300 w-[30%]"
-          >
+        >
           <option value="All">All</option>
           <option value="Fruit">Fruit</option>
           <option value="Vegetable">Vegetable</option>
         </select>
 
         {/* Dropdown สำหรับเลือก order การเรียงลำดับ */}
-        <select value={order} onChange={(e) => setOrder(e.target.value)}
+        <select
+          value={order}
+          onChange={(e) => setOrder(e.target.value)}
           className="p-2 border border-1 border-gray-300 w-[30%]"
-          >
+        >
           <option value="asc">Price: Low to High</option>
           <option value="desc">Price: High to Low</option>
         </select>

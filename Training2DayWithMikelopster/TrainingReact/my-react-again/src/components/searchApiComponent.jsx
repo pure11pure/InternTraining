@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 
 function UserSearch() {
   // State สำหรับเก็บค่าที่ผู้ใช้พิมพ์ และข้อมูลที่ได้จาก API
@@ -51,7 +52,13 @@ function UserSearch() {
 
   return (
     <div className="w-[50%] p-2 border">
-      <h1 className="text-2xl font-bold pb-2">User Search</h1>
+      <div className="flex flex-row">
+        <h1 className="text-2xl font-bold pb-2">User Search</h1>
+        <button className="px-2 bg-amber-700 text-white rounded font-bold m-2">
+        <Link to="/userSearch">show</Link>
+        </button>
+      </div>
+
       {/* Input สำหรับพิมพ์ search term */}
       <input
         type="text"
