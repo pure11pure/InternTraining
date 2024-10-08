@@ -6,7 +6,8 @@ import UserSearch from "./components/searchApiComponent";
 import GreetAllPage from "./pages/greetAllPage";
 import Home from "./pages/Home";
 import Layout from "./pages/layout";
-import useFetchData from "./components/useFetchData";
+import useFetchData from "./้hooks/useFetchData";
+import MyForm from "./components/myForm";
 
 function App() {
   const { data, loading, error } = useFetchData(
@@ -44,6 +45,10 @@ function App() {
         ) : (
           <p>Error: {error.message}</p>
         )}
+      </div>
+      <div className="flex flex-col w-full justify-center items-center border p-5">
+        <h2 className="text-2xl font-bold">Fetched Data:</h2>
+        <MyForm/>
       </div>
     </div>
   );
