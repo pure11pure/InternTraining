@@ -10,6 +10,7 @@ import useFetchData from "./้hooks/useFetchData";
 import MyForm from "./components/myForm";
 import UserProvider from "./contexts/userContext";
 import UserProfile from "./components/userProfile";
+import CounterComponent from "./components/counterComponent";
 
 function App() {
   const { data, loading, error } = useFetchData(
@@ -58,6 +59,11 @@ function App() {
         <UserProvider>
           <UserProfile />
         </UserProvider>
+      </div>
+
+      <div className="flex flex-col w-full justify-center items-center border p-5">
+        <h2 className="text-2xl font-bold mb-3">use Context Data:</h2>
+        <CounterComponent/>
       </div>
     </div>
   );
