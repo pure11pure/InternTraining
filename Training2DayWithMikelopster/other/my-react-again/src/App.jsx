@@ -1,6 +1,7 @@
 /**
  * TODO: Case1
  */
+import React, { useState, useEffect } from "react"; // Ensure useState is imported
 
 import "./App.css";
 import { Link } from "react-router-dom";
@@ -22,6 +23,27 @@ function App() {
     "https://66f4d3fe77b5e889709a979c.mockapi.io/people"
   );
 
+  const [users, setUsers] = useState([]);
+
+  // ฟังก์ชันสำหรับดึงข้อมูลใหม่จาก API
+  const refreshUserList = async () => {
+    try {
+      const response = await fetch(
+        "https://66f4d3fe77b5e889709a979c.mockapi.io/people"
+      );
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setUsers([]);
+    }
+  };
+
+  // ดึงข้อมูลครั้งแรกเมื่อ component ถูก mount
+  useEffect(() => {
+    refreshUserList();
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col justify-center items-center mt-3">
@@ -31,10 +53,10 @@ function App() {
             <Link to="/regis">show</Link>
           </button>
         </div>
-        <RegisterForm />
+        <RegisterForm onRegisterSuccess={refreshUserList} />
       </div>
       <div className="flex flex-row p-5 w-full">
-        <UserList />
+        <UserList users={users} />
         <SearchComponent />
       </div>
       <div className="flex flex-row p-5 w-full h-[400px]">
