@@ -5,6 +5,7 @@ import UserList from "./components/userList";
 import UserSearch from "./components/searchApiComponent";
 import GreetAllPage from "./pages/greetAllPage";
 import Home from "./pages/Home";
+import Layout from "./pages/layout";
 
 function App() {
   return (
@@ -19,11 +20,15 @@ function App() {
       </div>
       <div className="flex flex-row p-5 w-full h-[400px]">
         <UserSearch />
-        <GreetAllPage/>
+        <GreetAllPage />
       </div>
       <div className="flex flex-row w-full">
-        <Home/>
+        <Home />
       </div>
+      <Layout>
+        <p className="text-2xl font-bold py-1">Register</p>
+        <RegisterForm />
+      </Layout>
     </div>
   );
 }
