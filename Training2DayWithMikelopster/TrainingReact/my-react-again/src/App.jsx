@@ -8,6 +8,8 @@ import Home from "./pages/Home";
 import Layout from "./pages/layout";
 import useFetchData from "./้hooks/useFetchData";
 import MyForm from "./components/myForm";
+import UserProvider from "./contexts/userContext";
+import UserProfile from "./components/userProfile";
 
 function App() {
   const { data, loading, error } = useFetchData(
@@ -48,7 +50,14 @@ function App() {
       </div>
       <div className="flex flex-col w-full justify-center items-center border p-5">
         <h2 className="text-2xl font-bold">Fetched Data:</h2>
-        <MyForm/>
+        <MyForm />
+      </div>
+
+      <div className="flex flex-col w-full justify-center items-center border p-5">
+        <h2 className="text-2xl font-bold mb-3">use Context Data:</h2>
+        <UserProvider>
+          <UserProfile />
+        </UserProvider>
       </div>
     </div>
   );
